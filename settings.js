@@ -54,16 +54,16 @@ global.doc5 = 'application/pdf'
 global.doc6 = 'application/vnd.android.package-archive'
 
 //owmner v card
-global.vcardowner = ['916909137213'] //ur owner number
-global.ownername = "🦄Dream Guy Xeon" //ur owner name
+global.vcardowner = ['6281271139724'] //ur owner number
+global.ownername = "Ri Gans" //ur owner name
 global.ytname = "YT: Xeon" //ur yt chanel name
 global.socialm = "GitHub: DGXeon" //ur github or insta name
-global.location = "India, Mizoram, Aizawl" //ur location
+global.location = "Wakanda Negri pelawak" //ur location
 
 //bot bomdy 
-global.owner = ['916909137213']
-global.ownertag = '916909137213' //ur tag number
-global.botname = 'Cheems Bot MD V4' //ur bot name
+global.owner = ['6281271139724']
+global.ownertag = '6281271139724' //ur tag number
+global.botname = 'Soplak Bot' //ur bot name
 global.linkz = "https://youtu.be/WiIqCdiDjFo" //your theme url which will be displayed on whatsapp
 global.websitex = "https://youtu.be/WiIqCdiDjFo" //ur website to be displayed
 global.botscript = 'https://github.com/DGXeon/CheemsBot-MD4' //script link
@@ -79,7 +79,7 @@ global.err4r = fs.readFileSync("./XeonMedia/theme/cheemspic.jpg") //ur error pic
 global.thumb = fs.readFileSync("./XeonMedia/theme/cheemspic.jpg") //ur thumb pic
 
 //damtabase
-global.premium = ['916909137213'] //ur premium numbers
+global.premium = ['6281271139724'] //ur premium numbers
 global.ntilinkytvid = []
 global.ntilinkytch = []
 global.ntilinkig = []
@@ -102,7 +102,7 @@ global.ntilink = []
 //omther
 global.sessionName = 'session'
 global.antitags = true
-global.prefa = ['','!','.','🐦','🐤','🗿']
+global.prefa = ['!']
 global.sp = '⭔'
 global.mess = {
     success: 'Done ✓',
