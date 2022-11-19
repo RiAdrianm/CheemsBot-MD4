@@ -91,20 +91,21 @@ global.antitags = false
 global.prefa = ['?']
 global.sp = '⭔'
 global.mess = {
-    success: 'Done ✓',
-    admin: 'This Feature Is Only For Admin!',
-    botAdmin: 'Bot Must Be Admin First!',
-    owner: 'This Feature Is Only For Owner!',
-    group: 'Feature Used Only For Groups!',
-    private: 'Features Used Only For Private Chat!',
-    bot: 'This Feature Is Only For Bot',
-    wait: 'In process...',
-    linkm: 'Where is the link?',
-    error: 'Error!!',
-    endLimit: 'Your Daily Limit Has Expired, The Limit Will Be Reset Every 12 Hours',
-    ban: 'You have been banned by the owner, if you want to be unbanned, chat owner.',
-    nsfw: 'The nsfw feature has not been activated, please contact the admin to activate',
-    banChat: 'The bot was banned in this group, please contact the owner to unban'
+    jobdone: '_Udah Onii-chan_',
+    useradmin: '_Ahh Gomenne, Hanya *admin* dan *owner* yang bisa melakukan Perintah itu!_',
+    botadmin: '_Jadiin Miuna Sebagai Admin Terlebih Dahulu!_',
+    botowner: '_Hanya Ri-niichan yang bisa melakukan perintah itu!_',
+    grouponly: '_Ahh Gomenne, Perintah Tersebut hanya dapat digunakan didalam group!_',
+    privateonly: '_Perintah Ini hanya dapat digunakan didalam chat pribadi/PM',
+    botonly: '_Hanya Miuna Yang Bisa menggunakan perintah ini!_',
+    waiting: ' _Chotto Matte Nee..._ ',
+    nolink: 'Emm, Linknya?',
+    error: 'Error Kak!',
+    banned: '_Gomenne , Kamu telah terbanned untuk menggunakan miuna!_!',
+    bangc: '_Group ini telah dibanned untuk menggunakan Miuna!_',
+    nonsfw: '_Anone Anone, Mode *HENTAI* Belum diaktifin._ \n_Suruh Admin Ketik *-Hentai On Terlebih dahulu!_',
+    mod: '_Ahh Gomenne, Kamu harus menjadi *Donatur* Terlebih dahulu untuk menggunakan perintah itu!_ \n_Ketik *-Donatur* Untuk info lebih lanjut!_',
+    lewd : 'https://ouo.io/Ti3nri Gotobun Series\nhttps://ouo.io/wO9KVu 177File Google Drive\nhttps://ouo.io/60BOhY 157File Google Drive\nhttps://ouo.io/oDbdXz 308File Google Drive\nhttps://ouo.io/ZOcQ4M 30file Google drive\nhttps://ouo.io/l32ays4 JellyTits 33File\nhttps://ouo.io/sfDP3Q Ganyu Video 700MB Mega\nhttps://ouo.io/xSJmw4 Elysia Video 200MB Mega\nhttps://ouo.io/nU4a8F Yelan Video 200MB Mega'
 }
     global.limitawal = {
     premium: "Infinity",
