@@ -174,7 +174,7 @@ XeonLft = await getBuffer(`https://hardianto.xyz/api/goodbye3?profile=${encodeUR
 	            const xmembers = metadata.participants.length
                 let unicorndoc = {key: {fromMe: false,"participant":"0@s.whatsapp.net", "remoteJid": "916909137213-1604595598@g.us"}, "message": {orderMessage: {itemCount: 9999999,status: 200, thumbnail: XeonWlcm, surface: 200, message: `${metadata.subject}`, orderTitle: 'xeon', sellerJid: '0@s.whatsapp.net'}}, contextInfo: {"forwardingScore":999,"isForwarded":true},sendEphemeral: true}
                mikutext = `
-✑ Hai Kak @${WAuserName.split("@")[0]}
+✑ Hai Kak @${xeonName.split("@")[0]}
 ✑ Selamat Datang Di *${metadata.subject}*.
 ✑ Tolong Dibaca Rules Group dibawah ini yah! 
 
@@ -195,7 +195,7 @@ XeonBotInc.sendMessage(anu.id, {text : mikutext, mentions : [num]})
                     let unicorndoc = {key: {fromMe: false,"participant":"0@s.whatsapp.net", "remoteJid": "916909137213-1604595598@g.us"}, "message": {orderMessage: {itemCount: 9999999,status: 200, thumbnail: xeonbuffer, surface: 200, message: `${metadata.subject}`, orderTitle: 'xeon', sellerJid: '0@s.whatsapp.net'}}, contextInfo: {"forwardingScore":999,"isForwarded":true},sendEphemeral: true}
                     mikutext = `
 ┬─────────────┈❖
-│✑ Beliau @${WAuserName.split("@")[0]}
+│✑ Beliau @${xeonName.split("@")[0]}
 │✑ Member Ke *${grpmembernum}*
 │✑ Waipunya *DAH MATI*
 │✑ _*Telah Keluar Dari Group*_
