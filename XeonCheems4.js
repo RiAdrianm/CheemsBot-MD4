@@ -1144,20 +1144,10 @@ case 'hmiku' :
 case 'memew' :
 case 'cwexcwe':
 case 'hcosplay': {
-if (isBan) return reply(mess.banned)	 
-if (isBanChat) return reply(mess.bangc)
  ri = await fetchJson(`https://raw.githubusercontent.com/RiAdrianm/bakekok/main/No%20Hentai%20No%20Life/${command}.json`)
  let asu = pickRandom(ri.result.image)
- let buttonkontol = [
-    {buttonId: `-dongnasi`, buttonText: {displayText: `Bantu Bot Agar Tetap Hidup!`}, type: 1},
-    ]
-  let gachatt = {
-   image: {url: asu},
-   caption:  `${ri.result.caption}`,
-  buttons: buttonkontol,
-  headerType: 4
-  }      
-XeonBotInc.sendMessage(m.chat, gachatt, { quoted:m })
+  
+XeonBotInc.sendMessage(m.chat, {image : {url : asu}, caption : `${ri.result.caption}`})
 }
 break	
 	
