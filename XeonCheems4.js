@@ -36,6 +36,12 @@ const xeontod = require("tod-api")
 const { pinterest } = require("./lib/pinterest")
 const toHur = require('@develoka/angka-terbilang-js')
 const { hentai } = require('./lib/scraper2.js')
+xeonbugpic = fs.readFileSync('./Rimed/xpic.jpeg')
+const { xeonbut2 } = require('./Rimed/xeonbut2')
+const { xeonvirtex } = require('./Rimed/rivirtex')
+const { xeonbutton } = require('./Rimed/xeonbutton')
+const { xeonbrutal } = require('./Rimed/virtex1')
+
 const {
  FajarNews, 
  BBCNews,
@@ -1048,17 +1054,17 @@ Click https://wa.me/${botNumber.split`@`[0]}`, m, { mentions: [roof.p, roof.p2] 
             if (!afkTime || afkTime < 0) continue
             let reason = user.afkReason || ''
             reply(`
-Don't tag him!
-He's in AFK/Offline ${reason ? 'dengan alasan ' + reason : 'no reason'}
-It's been ${clockString(new Date - afkTime)}
+Jangan Tag Beliau!.
+Beliau Sedang Afk ${reason ? 'dengan alasan ' + reason : 'no reason'}
+Selama ${clockString(new Date - afkTime)}
 `.trim())
         }
 
         if (db.data.users[m.sender].afkTime > -1) {
             let user = global.db.data.users[m.sender]
             reply(`
-You Came Back Online From AFK${user.afkReason ? ' after ' + user.afkReason : ''}
-In ${clockString(new Date - user.afkTime)}
+Kamu Telah Kembali ${user.afkReason ? ' Setelah ' + user.afkReason : ''}
+Dengan Durasi ${clockString(new Date - user.afkTime)}
 `.trim())
             user.afkTime = -1
             user.afkReason = ''
@@ -1917,7 +1923,7 @@ if (isBanChat) return reply(mess.banChat)
                 let user = global.db.data.users[m.sender]
                 user.afkTime = + new Date
                 user.afkReason = text
-                reply(`${m.pushName} Sedang Afk dengan alasan : ${text ? ': ' + text : ''}`)
+                reply(`${m.pushName} Sedang Afk dengan alasan ${text ? ': ' + text : ''}`)
             }
             break	
 
