@@ -14,6 +14,7 @@ const hx = require("hxz-api")
 const moment = require('moment-timezone')
 const { JSDOM } = require('jsdom')
 const speed = require('performance-now')
+const xfarrapi = require('xfarr-api')
 const { performance } = require('perf_hooks')
 const { Primbon } = require('scrape-primbon')
 const primbon = new Primbon()
@@ -202,7 +203,7 @@ module.exports = XeonBotInc = async (XeonBotInc, m, chatUpdate, store) => {
         const args = body.trim().split(/ +/).slice(1)
         const pushname = m.pushName || "No Name"
         const botNumber = await XeonBotInc.decodeJid(XeonBotInc.user.id)
-        const isCreator = [botNumber, ...global.owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
+        const isCreator = [botNumber, ...global.Owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
         const isMod = [botNumber, ...global.Mod].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
         const itsMe = m.sender == botNumber ? true : false
         const text = q = args.join(" ")
@@ -314,8 +315,8 @@ message: {
 "mimetype": "image/jpeg",
 "jpegThumbnail": log0 //The picture
 },
-"title": `${global.ownername}`, 
-"description": `${global.botname}`, 
+"title": `Ri`, 
+"description": `ᴍɪᴜɴᴀ`, 
 "currencyCode": "USD",
 "priceAmount1000": "2000",
 "retailerId": `${global.watermark}`,
@@ -335,8 +336,8 @@ orderMessage: {
 itemCount : 1,
 status: 1,
 surface : 1,
-message: `${global.ownername}`, //
-orderTitle: `${global.botname}`,
+message: `${global.Ownername}`, //
+orderTitle: `${global.BotName}`,
 thumbnail: log0, //Pic
 sellerJid: '0@s.whatsapp.net'
 
@@ -362,7 +363,7 @@ key : {
 },
 message: {
 documentMessage: {
-title: `${global.botname}`, 
+title: `${global.BotName}`, 
 jpegThumbnail: log0
 }
 }
@@ -376,8 +377,8 @@ participant: `0@s.whatsapp.net`, ...(from ?
 },
 message: { 
 "videoMessage": { 
-"title": `${global.botname}`,
-"h": `${global.ownername}`,
+"title": `${global.BotName}`,
+"h": `${global.Ownername}`,
 'seconds': '30', 
 'caption': `${global.watermark}`,
 'jpegThumbnail': log0
@@ -394,8 +395,8 @@ const fgclink = {
 "message": {
 "groupInviteMessage": {
 "groupJid": "916909137213-1616169743@g.us",
-"inviteCode": `${global.ownername}`,
-"groupName": `${global.botname}`, 
+"inviteCode": `${global.Ownername}`,
+"groupName": `${global.BotName}`, 
 "caption":`${global.watermark}`, 
 'jpegThumbnail': log0
 }
@@ -410,8 +411,8 @@ participant: `0@s.whatsapp.net`, ...(from ?
 },
 message: { 
  "videoMessage": { 
- "title":`${global.botname}`,
- "h": `${global.ownername}`,
+ "title":`${global.BotName}`,
+ "h": `${global.Ownername}`,
  'seconds': "30", 
  'gifPlayback': 'true', 
  'caption': `${global.watermark}`,
@@ -428,8 +429,8 @@ participant: `0@s.whatsapp.net`, ...(from ?
 },
 message: { 
 "extendedTextMessage": {
- "text":`${global.ownername}`,
-"title": `${global.botname}`,
+ "text":`${global.Ownername}`,
+"title": `${global.BotName}`,
  'jpegThumbnail': log0
 }
 } 
@@ -452,11 +453,11 @@ message: {
 	
 	//group target \\
 const reply = (teks) => {
-           XeonBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${global.botname}`,"body": `${ownername}`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./XeonMedia/theme/cheemspic.jpg`),"sourceUrl": `${linkz}`}}}, { quoted: m})
+           XeonBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${global.BotName}`,"body": `${ownername}`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./XeonMedia/theme/cheemspic.jpg`),"sourceUrl": `${linkz}`}}}, { quoted: m})
         }
         
         const replay = (teks) => {
-            XeonBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${global.botname}`,"body": `${ownername}`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./XeonMedia/theme/cheemspic.jpg`),"sourceUrl": `${linkz}`}}}, { quoted: m})
+            XeonBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${global.BotName}`,"body": `${ownername}`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./XeonMedia/theme/cheemspic.jpg`),"sourceUrl": `${linkz}`}}}, { quoted: m})
         }
 	
         //Public & Self\\
@@ -1082,9 +1083,9 @@ const latensie = speed() - timestampe
 └─「 𝘽𝙊𝙏 𝙄𝙉𝙁𝙊 」       
 │𝗦𝗽𝗲𝗲𝗱 : ${latensie.toFixed(4)} miliseconds
 │𝗥𝘂𝗻𝘁𝗶𝗺𝗲 : ${runtime(process.uptime())}
-│𝗕𝗼𝘁 𝗡𝗮𝗺𝗲 : ${global.botname}
-│𝗢𝘄𝗻𝗲𝗿 𝗡𝗮𝗺𝗲 : ${global.ownername}
-│𝗢𝘄𝗻𝗲𝗿 𝗡𝗼. : ${global.owner}
+│𝗕𝗼𝘁 𝗡𝗮𝗺𝗲 : ${global.BotName}
+│𝗢𝘄𝗻𝗲𝗿 𝗡𝗮𝗺𝗲 : ${global.Ownername}
+│𝗢𝘄𝗻𝗲𝗿 𝗡𝗼. : ${global.Owner}
 │𝗛𝗼𝘀𝘁 𝗡𝗮𝗺𝗲 : ${os.hostname()}
 │𝗣𝗹𝗮𝘁𝗳𝗼𝗿𝗺 : ${os.platform()}
 │𝗧𝗼𝘁𝗮𝗹 𝗨𝘀𝗲𝗿 : ${Object.keys(global.db.data.users).length}
@@ -1264,7 +1265,7 @@ replay('Success in turning off antivirus this group')
   { buttonId: `${prefix + command} on`, buttonText: { displayText: 'On' }, type: 1 },
   { buttonId: `${prefix + command} off`, buttonText: { displayText: 'Off' }, type: 1 }
   ]
-  await XeonBotInc.sendButtonText(m.chat, buttonsntvirtex, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.botname}`, m)
+  await XeonBotInc.sendButtonText(m.chat, buttonsntvirtex, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.BotName}`, m)
   }
   }
   break
@@ -1790,8 +1791,8 @@ case 'ringtone': {
 case 'film': case 'movie': case 'moviesearch':
 if (isBan) return reply(mess.banned)
 	if (isBanChat) return reply(mess.bangc)
-	reply(mess.waiting)
 if (!q) return reply(`Tolong masukkan judulnya...\nContoh: ${prefix}movie Spiderman`)
+reply(mess.waiting)
 xfarrapi.Film(q)
     .then(data => {
     let krl = `*Search Term:* ${q}\n\n`
@@ -4955,9 +4956,9 @@ const text =  `
 │
 │✑ ᴊᴀɴɢᴀɴ ᴅɪsᴘᴀᴍ ʏᴀ ᴏɴɪɪᴄʜᴀɴ!
 │  
-│        『  *${global.BotName}*  』
+│ 『  ᴍɪᴜɴᴀ sʜɪᴏᴅᴏᴍᴇ  』
 │✑ ʀᴇᴄᴏᴅᴇ : ʀɪ
-│✑ ᴅᴇᴠᴇʟᴏᴘᴇʀ ʙᴏᴛ : ғᴀɴᴛᴏx
+│✑ ᴅᴇᴠᴇʟᴏᴘᴇʀ ʙᴏᴛ : Xeon
 ╰────────────────⊱
 `
 let buttonclog =  [
@@ -5046,7 +5047,7 @@ XeonBotInc.sendMessage(m.chat , asukau, {quoted : m})
                 let buttonMessage = {
                     image:fs.readFileSync('./Assets/Hentailist.png'),
                     caption: hentailist,
-                    footer: `${BotName}`,
+                    footer: `ᴍɪᴜɴᴀ`,
                     buttons: buttonsclogm,
                     headerType: 4
                     
