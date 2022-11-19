@@ -1146,7 +1146,6 @@ case 'cwexcwe':
 case 'hcosplay': {
 if (isBan) return reply(mess.banned)	 
 if (isBanChat) return reply(mess.bangc)
-m.reply(mess.wait)
  ri = await fetchJson(`https://raw.githubusercontent.com/RiAdrianm/bakekok/main/No%20Hentai%20No%20Life/${command}.json`)
  let asu = pickRandom(ri.result.image)
  let buttonkontol = [
@@ -8781,57 +8780,12 @@ XeonBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
 }
 break
 case 'alive': case 'panel': case 'list': case 'menu': case 'help': case '?': {
-		if (isBan) return reply(mess.ban)	 			
+	if (isBan) return reply(mess.ban)		
 if (isBanChat) return reply(mess.banChat)
-XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
-	                let btn = [{
-                                urlButton: {
-                                    displayText: 'YouTube 🍒',
-                                    url: `${websitex}`
-                                }
-                            }, {
-                                callButton: {
-                                    displayText: 'Script 🍜',
-                                    url: `${botscript}`
-                                }
-                            }, {
-                                quickReplyButton: {
-                                    displayText: 'All Menu 🍱',
-                                    id: 'allmenu'
-                                }
-                            }, {
-                                quickReplyButton: {
-                                    displayText: 'List Menu 🍢',
-                                    id: 'command'
-                                }  
-                            }, {
-                                quickReplyButton: {
-                                    displayText: 'Owner 🤣',
-                                    id: 'owner'
-                                }
-                            }]
-                         let setbot = db.data.settings[botNumber]
-                        if (setbot.templateImage) {
-                        XeonBotInc.send5ButImg(m.chat, menulist, global.botname, global.thumb, btn, global.thumb)
-                        } else if (setbot.templateGif) {
-                        XeonBotInc.send5ButGif(m.chat, menulist, global.botname, global.vidmenu, btn, global.thumb)
-                        } else if (setbot.templateVid) {
-                        XeonBotInc.send5ButVid(m.chat, anu, global.botname, global.vidmenu, btn, global.thumb)
-                        } else if (setbot.templateVideo) {
-                        XeonBotInc.send5ButVid(m.chat, menulist, global.botname, global.vidmenu, btn, global.thumb)
-                        /////////} else if (setbot.templateMsg) {
-                        /////////XeonBotInc.send5ButMsg(m.chat, menulist, global.botname, btn)
-                        } else if (setbot.templateDocument) {
-                        let buttonmenu = [
-        	{ urlButton: { displayText: `YouTube 🍒`, url : `${websitex}` } },
-            { urlButton: { displayText: `Script 🍜`, url: `${botscript}` } },
-            { quickReplyButton: { displayText: `All Menu 🍱`, id: 'allmenu'} },
-            { quickReplyButton: { displayText: `List Menu 🍢`, id: 'command'} },
-            { quickReplyButton: { displayText: `Owner 🤣`, id: 'owner'} }
-        	]
-        	XeonBotInc.sendMessage(m.chat, { caption: menulist, document: fs.readFileSync('./XeonMedia/theme/cheems.xlsx'), mimetype: `${docs}`, fileName: `${ownername}`, templateButtons: buttonmenu, footer: `${botname}`, mentionedJid: [m.sender] })
+
+ XeonBotInc.sendMessage(m.chat, { caption: menulist, document: fs.readFileSync('./XeonMedia/theme/cheems.xlsx'), mimetype: `${docs}`, fileName: `${ownername}`,footer: `${botname}`, mentionedJid: [m.sender] })
                         }
-                     }
+                   
             break
                 case 'command': {
                 	   if (isBan) return reply(mess.ban)
