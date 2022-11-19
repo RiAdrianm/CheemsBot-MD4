@@ -334,7 +334,7 @@ participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "14169948404-1305080833
 "thumbnail": xeonbugpic,
 }}}
 const bhosdike = (teks) => {
- Miku.sendMessage(m.chat, { image: xeonbugpic, caption: wm, contextInfo:{"externalAdReply": {"title": BotName,"body": global.OwnerName,
+ XeonBotInc.sendMessage(m.chat, { image: xeonbugpic, caption: wm, contextInfo:{"externalAdReply": {"title": BotName,"body": global.OwnerName,
 previewType: "PHOTO",
 showAdAttribution: true,
 sourceUrl: websitex,
@@ -876,7 +876,7 @@ reply("Emoji error, please enter another emoji\nNOTE : Just enter 1 emoji")
           return isSurender || room.terjawab[index] ? `(${index + 1}) ${jawaban} ${room.terjawab[index] ? '@' + room.terjawab[index].split('@')[0] : ''}`.trim() : false
           }).filter(v => v).join('\n')}
           ${isSurender ? '' : `Perfect Player`}`.trim()
-          Miku.sendText(m.chat, caption, m, { contextInfo: { mentionedJid: parseMention(caption) }}).then(mes => { return _family100['family100'+m.chat].pesan = mesg }).catch(_ => _)
+          XeonBotInc.sendText(m.chat, caption, m, { contextInfo: { mentionedJid: parseMention(caption) }}).then(mes => { return _family100['family100'+m.chat].pesan = mesg }).catch(_ => _)
           if (isWin || isSurender) delete _family100['family100'+m.chat]
           }
 
