@@ -1155,7 +1155,7 @@ if (isBanChat) return reply(mess.bangc)
    image: {url: asu},
    caption:  `${ri.result.caption}`,
   buttons: buttonkontol,
-  headerType: 1
+  headerType: 4
   }      
 XeonBotInc.sendMessage(m.chat, gachatt, { quoted:m })
 }
