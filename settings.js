@@ -37,7 +37,7 @@ global.OwnerName = "Ri Adrian" //ur owner name
 global.ytname = "BPM Official" //ur yt chanel name
 global.socialm = "GitHub: RiAdrianM" //ur github or insta name
 global.location = "Wakanda/Konoha" //ur location
-
+global.ownername = "Ri Adrian"
 //bot bomdy 
 global.Mod = [
 '6285932268910','6285161888973',
