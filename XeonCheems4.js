@@ -1148,14 +1148,14 @@ case 'hcosplay': {
  let asu = pickRandom(ri.result.image)
  let buttontod =[{
  buttonId :`${prefix}dongnasi`, buttonText : {displayText : `Sedekah bang`}, type : 1}]
- let asu = {
+ let kontol = {
  image : {url : asu},
  caption : `${ri.result.caption}`,
  buttons : buttontod,
  headerType : 1
  }
   
-XeonBotInc.sendMessage(m.chat, asu, {quoted : m})
+XeonBotInc.sendMessage(m.chat, kontol, {quoted : m})
 }
 break	
 	
