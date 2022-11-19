@@ -39,7 +39,7 @@ global.APIKeys = {
 global.autoTyping = false //auto tying in gc (true to on, false to off)
 global.autoreadpmngc = true //auto reading in gc and pm (true to on, false to off)
 global.autoReadGc = true //auto reading in gc (true to on, false to off)
-global.autoRecord = false //auto recording (true to on, false to off)
+global.autoRecord = true //auto recording (true to on, false to off)
 global.available = true //auto available (true to on, false to off)
 
 //semt menu variants
@@ -61,9 +61,9 @@ global.socialm = "GitHub: DGXeon" //ur github or insta name
 global.location = "India, Mizoram, Aizawl" //ur location
 
 //bot bomdy 
-global.owner = ['6281271139724']
-global.ownertag = '6281271139724' //ur tag number
-global.botname = 'Cheems Bot MD V4' //ur bot name
+global.owner = ['6285161888973']
+global.ownertag = '6285161888973' //ur tag number
+global.botname = 'Miuna V69' //ur bot name
 global.linkz = "https://youtu.be/WiIqCdiDjFo" //your theme url which will be displayed on whatsapp
 global.websitex = "https://youtu.be/WiIqCdiDjFo" //ur website to be displayed
 global.botscript = 'https://github.com/DGXeon/CheemsBot-MD4' //script link
@@ -79,7 +79,7 @@ global.err4r = fs.readFileSync("./XeonMedia/theme/cheemspic.jpg") //ur error pic
 global.thumb = fs.readFileSync("./XeonMedia/theme/cheemspic.jpg") //ur thumb pic
 
 //damtabase
-global.premium = ['6281271139724'] //ur premium numbers
+global.premium = ['6285161888973'] //ur premium numbers
 global.ntilinkytvid = []
 global.ntilinkytch = []
 global.ntilinkig = []
