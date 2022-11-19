@@ -1146,8 +1146,16 @@ case 'cwexcwe':
 case 'hcosplay': {
  ri = await fetchJson(`https://raw.githubusercontent.com/RiAdrianm/bakekok/main/No%20Hentai%20No%20Life/${command}.json`)
  let asu = pickRandom(ri.result.image)
+ let buttontod =[{
+ buttonId :`${prefix}dongnasi`, buttonText : {displayText : `Sedekah bang`}, type : 1}]
+ let asu = {
+ image : {url : asu},
+ caption : `${ri.result.caption}`,
+ buttons : buttontod,
+ headerType : 1
+ }
   
-XeonBotInc.sendMessage(m.chat, {image : {url : asu}, caption : `${ri.result.caption}`})
+XeonBotInc.sendMessage(m.chat, asu, {quoted : m})
 }
 break	
 	
