@@ -8641,6 +8641,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 reply(respon)
             }
             break
+
             case 'speedtest': {
             	   if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
@@ -8772,8 +8773,212 @@ break
 case 'alive': case 'panel': case 'list': case 'menu': case 'help': case '?': {
 	if (isBan) return reply(mess.ban)		
 if (isBanChat) return reply(mess.banChat)
-
- XeonBotInc.sendMessage(m.chat, { caption: menulist, document: fs.readFileSync('./XeonMedia/theme/cheems.xlsx'), mimetype: `${docs}`, fileName: `${ownername}`,footer: `${botname}`, mentionedJid: [m.sender] })
+const text =  `
+╭─❲ ❀ ᴍɪᴜɴᴀ sʜɪᴏᴅᴏᴍᴇ ❀ ❳
+│
+│彡 ${ucapanWaktu} ᴋᴀᴋ *${pushname}.* 彡
+│
+│✑ɴᴀᴍᴀ ʙᴏᴛ : ᴍɪᴜɴᴀ sʜɪᴏᴅᴏᴍᴇ
+│✑sᴘᴇᴇᴅ  : ${latensie.toFixed(4)} ᴍɪʟɪᴅᴇᴛɪᴋ
+│✑ʀᴜɴᴛɪᴍᴇ : ${runtime(process.uptime())}
+│✑ɴᴏ. ᴏᴡɴᴇʀ : 𝟶𝟾𝟻𝟷𝟼𝟷𝟾𝟾𝟾𝟿𝟽𝟹
+│✑ɴᴀᴍᴀ ᴏᴡɴᴇʀ : ᴍ. ʀɪ
+│✑ɴᴏᴛᴇ : ᴊɪᴋᴀ ᴍᴇɴᴇᴍᴜᴋᴀɴ
+│ʙᴜɢ ʜᴀʀᴀᴘ ʟᴀᴘᴏʀ ᴅᴇɴɢᴀɴ 
+│ᴄᴀʀᴀ -ʀᴇᴘᴏʀᴛ
+│   
+│✑✑✑❀ ᴅᴏɴᴀᴛᴜʀ ᴍᴇɴᴜ ❀
+│
+│✑ ${prefix}ᴀɴɪᴍᴇᴏɴɢᴏɪɴɢ
+│✑ ${prefix}ᴀsᴜᴘᴀɴ [ɴᴀᴍᴀ ᴄʜᴀʀᴀ]
+│✑ ${prefix}ʙᴜɢɢᴄ [ʜᴀᴛɪ ʜᴀᴛɪ!!!]
+│✑ ${prefix}ʙᴜɢᴘᴍᴠ𝟷 [ʜᴀᴛɪ ʜᴀᴛɪ!!!]
+│✑ ${prefix}ʙᴜɢᴘᴍᴠ𝟸 [ʜᴀᴛɪ ʜᴀᴛɪ!!!]
+│✑ ${prefix}ʙᴜɢᴘᴍᴠ𝟹 [ʜᴀᴛɪ ʜᴀᴛɪ!!!]
+│✑ ${prefix}ɢᴏᴏɢʟᴇᴅʀɪᴠᴇ [ʟɪɴᴋ]
+│✑ ${prefix}ʜᴇɴᴛᴀɪᴍᴇɴᴜᴠ𝟸
+│✑ ${prefix}ᴋᴜsᴏɴɪᴍᴇ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}ɴᴇᴋᴏᴘᴏɪ [ᴜᴘᴅᴀᴛᴇ]
+│✑ ${prefix}ɴʜᴇɴᴛᴀɪ [ᴋᴏᴅᴇ]
+│✑ ${prefix}ɴʜᴇɴᴛᴀɪᴘᴅғ [ᴋᴏᴅᴇ]
+│✑ ${prefix}ɴʜᴇɴᴛᴀɪsᴇᴀʀᴄʜ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}ᴏᴛᴀᴋᴜᴅᴇsᴜ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}sᴄᴀɴɪᴍᴇ [ғᴏᴛᴏ]
+│✑ ${prefix}xɴxxsᴇᴀʀᴄʜ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}xɴxxᴅʟ [ʟɪɴᴋ]
+│ғɪᴛᴜʀ sᴄᴀɴɪᴍᴇ sᴀᴍᴀ sᴇᴘᴇʀᴛɪ
+│ᴡʜᴀᴛ ᴀɴɪᴍᴇ ɪs ᴛʜɪs (ᴛᴇʟᴇɢʀᴀᴍ)
+│ᴋᴇɢᴜɴᴀᴀɴɴʏᴀ? ɴʏᴀʀɪ ᴊᴜᴅᴜʟ  
+│ᴀɴɪᴍᴇ ʟᴇᴡᴀᴛ sᴇʙᴜᴀʜ ғᴏᴛᴏ
+│   
+│✑✑✑❀ ɢʀᴏᴜᴘ ᴍᴇɴᴜ ❀
+│
+│✑ ${prefix}ᴀɴᴛɪʟɪɴᴋ
+│✑ ${prefix}ᴄʟɪɴᴋ [ᴜʙᴀʜʟɪɴᴋɢᴄ]
+│✑ ${prefix}ᴅᴇʟᴇᴛᴇ [ʙᴀʟᴀs]
+│✑ ${prefix}ʜɪᴅᴇᴛᴀɢ [ᴛᴇxᴛ]
+│✑ ${prefix}ᴋɪᴄᴋ [ᴛᴀɢ/ʙᴀʟᴀs]
+│✑ ${prefix}ᴍᴀsᴜᴋɪɴ [ɴᴏᴍᴏʀ]
+│✑ ${prefix}ɴᴀɪᴋɪɴ [ᴛᴀɢ/ʙᴀʟᴀs]
+│✑ ${prefix}sᴇᴛɴᴀᴍᴇ [ᴛᴇxᴛ]
+│✑ ${prefix}sᴇᴛɢᴄᴘᴘ [ᴋɪʀɪᴍ ғᴏᴛᴏ]
+│✑ ${prefix}sᴇᴛᴅᴇsᴄ [ᴛᴇxᴛ]
+│✑ ${prefix}ᴛᴀɢᴀʟʟ [ᴛᴇxᴛ]
+│✑ ${prefix}ᴛᴜʀᴜɴɪɴ [ᴛᴀɢ]
+│
+│✑✑✑❀ ᴛᴏʙᴀᴛ ᴍᴇɴᴜ ❀
+│   
+│✑ ${prefix}ɴɪᴀᴛsʜᴏʟᴀᴛ
+│✑ ${prefix}ᴋɪsᴀʜɴᴀʙɪ [ɴᴀᴍᴀ]
+│   
+│✑✑✑❀ ɢᴀᴍᴇ ᴍᴇɴᴜ ❀
+│
+│✑ ${prefix}ᴄᴀᴋʟᴏɴᴛᴏɴɢ
+│✑ ${prefix}ғᴀᴍɪʟʏ𝟷𝟶𝟶
+│✑ ${prefix}ᴛᴇʙᴀᴋɢᴀᴍʙᴀʀ
+│✑ ${prefix}ᴛᴇʙᴀᴋᴋᴀʟɪᴍᴀᴛ
+│✑ ${prefix}ᴛᴇʙᴀᴋᴋᴀᴛᴀ
+│✑ ${prefix}sᴜɪᴛ [ᴛᴀɢ]
+│
+│✑✑✑❀ ғᴜɴ ᴍᴇɴᴜ ❀
+│
+│✑ ${prefix}ᴀʀᴛɪᴍɪᴍᴘɪ
+│✑ ${prefix}ᴅᴀʀᴋᴊᴏᴋᴇ
+│✑ ${prefix}ɢᴀʏᴄʜᴇᴄᴋ [ᴛᴀɢ]
+│✑ ${prefix}ʜᴏʀɴʏᴄʜᴇᴄᴋ [ᴛᴀɢ]
+│✑ ${prefix}ᴋᴀᴘᴀɴᴋᴀʜ [ᴛᴇxᴛ]
+│✑ ${prefix}ᴋᴇʙᴇɴᴀʀᴀɴ
+│✑ ${prefix}ᴘᴇᴅᴏᴄʜᴇᴄᴋ
+│✑ ${prefix}ᴘᴏʀɴʜᴜʙ [ʟᴏɢᴏ]
+│✑ ${prefix}ǫᴜᴏᴛᴇs
+│✑ ${prefix}ʀᴇᴀᴋsɪ
+│✑ ${prefix}sᴀʏ [ᴛᴇxᴛ]
+│✑ ${prefix}ᴛᴀɴᴛᴀɴɢᴀɴ
+│✑ ${prefix}ᴜɢʟʏᴄʜᴇᴄᴋ [ᴛᴀɢ]
+│✑ ${prefix}ᴡᴀɴɢʏ [ᴛᴇxᴛ]
+│
+│✑✑✑❀ ʟɪsᴛ ᴍᴇɴᴜ ❀
+│
+│✑ ${prefix}ғɪʟᴍ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}ᴋᴀʟᴋᴜʟᴀᴛᴏʀ
+│✑ ${prefix}ʟᴇᴡᴅ
+│✑ ${prefix}ʟɪsᴛɢᴄ
+│✑ ${prefix}ʟɪsᴛᴘᴄ
+│✑ ${prefix}ᴘʀᴏғɪʟᴇ
+│✑ ${prefix}ʀᴇǫᴜᴇsᴛ
+│✑ ${prefix}sᴘᴇᴀᴋ [ᴛᴇxᴛ]
+│✑ ${prefix}sᴄʀɪᴘᴛ
+│✑ ${prefix}xɴxxsᴇᴀʀᴄʜ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}xɴxxᴅʟ [ʟɪɴᴋ]
+│
+│✑✑✑❀ ᴏᴡɴᴇʀ ᴍᴇɴᴜ ❀
+│
+│✑ ${prefix}ʙᴀɴ
+│✑ ${prefix}ʙᴀɴɢʀᴏᴜᴘ
+│✑ ${prefix}ʙʟᴏᴄᴋ
+│✑ ${prefix}ʙʀᴏᴀᴅᴄᴀsᴛ
+│✑ ${prefix}ᴄᴏᴅᴇ𝟺𝟶𝟺
+│✑ ${prefix}ᴊᴏɪɴ
+│✑ ${prefix}ᴘᴜʙʟɪᴄ
+│✑ ${prefix}sᴇʟғ
+│✑ ${prefix}ᴜɴʙʟᴏᴄᴋ
+│
+│✑✑✑❀ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ᴍᴇɴᴜ ❀
+│
+│✑ ${prefix}ғʙ [ʟɪɴᴋ]
+│✑ ${prefix}ɢᴏᴏɢʟᴇᴅʀɪᴠᴇ [ʟɪɴᴋ]
+│✑ ${prefix}ᴋᴜsᴏɴɪᴍᴇ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}ᴏᴛᴀᴋᴜᴅᴇsᴜ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}ᴘʟᴀʏ [ʟɪɴᴋ]
+│✑ ${prefix}ᴍᴇᴅɪᴀғɪʀᴇ [ʟɪɴᴋ/ᴊᴜᴅᴜʟ]
+│✑ ${prefix}ɴʜᴇɴᴛᴀɪ [ᴋᴏᴅᴇ]
+│✑ ${prefix}ᴛᴡɪᴛᴛᴇʀ [ʟɪɴᴋ]
+│
+│✑✑✑❀ ᴄᴏᴠᴇʀᴛ ᴍᴇɴᴜ ❀
+│
+│✑ ${prefix}ᴇᴍᴏᴊɪ [ᴇᴍᴏᴛ]
+│✑ ${prefix}ᴘᴀᴛʀɪᴄᴋ [sᴛɪᴋᴇʀ]
+│✑ ${prefix}ʀᴇᴠᴇʀsᴇ [ᴀᴜᴅɪᴏ]
+│✑ ${prefix}sᴛɪᴄᴋᴇʀ
+│✑ ${prefix}ᴛᴏᴀᴜᴅɪᴏ [ᴋɪʀɪᴍ]
+│✑ ${prefix}ᴛᴏɪᴍɢ [ʙᴀʟᴀs]
+│✑ ${prefix}ᴛᴏʟᴇᴛᴛᴇʀ [ᴀɴɢᴋᴀ]
+│✑ ${prefix}ᴛᴏᴠɪᴅᴇᴏ [ʙᴀʟᴀs]
+│✑ ${prefix}ᴛᴏᴜʀʟ [ᴋɪʀɪᴍ]
+│✑ ${prefix}ᴛᴏɢɪғ [ᴋɪʀɪᴍ]
+│
+│✑✑✑❀ ᴡɪʙᴜ ᴍᴇɴᴜ ❀
+│
+│✑ ${prefix}ᴀɴɪᴍᴇ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}ᴀɴɪᴍᴇᴏɴɢᴏɪɴɢ
+│✑ ${prefix}ᴀɴɪᴍᴇǫᴜᴏᴛᴇ
+│✑ ${prefix}ᴀᴋɪʏᴀᴍᴀ
+│✑ ${prefix}ᴀsᴜɴᴀ
+│✑ ${prefix}ᴀᴡᴏᴏ
+│✑ ${prefix}ᴄʜɪʜᴏ
+│✑ ${prefix}ᴄʜɪᴛᴏɢᴇ
+│✑ ${prefix}ᴄʀᴏsᴘʟᴀʏ
+│✑ ${prefix}ᴅᴅʟᴀᴛᴇsᴛ [ᴅᴏᴜᴊɪɴ ᴅᴇsᴜ]
+│✑ ${prefix}ᴇʟᴀɪɴᴀ
+│✑ ${prefix}ғᴏxɢɪʀʟ
+│✑ ${prefix}ɢʀᴇᴍᴏʀʏ
+│✑ ${prefix}ɢᴀᴄʜᴀᴡᴀɪғᴜ
+│✑ ${prefix}ɢᴜʀᴀsᴛɪᴄᴋᴇʀ
+│✑ ${prefix}ʜᴇsᴛɪᴀ
+│✑ ${prefix}ʜɪɴᴀᴛᴀ
+│✑ ${prefix}ɪɴᴏʀɪ
+│✑ ${prefix}ɪsᴜᴢᴜ
+│✑ ${prefix}ᴋᴀᴏʀɪ
+│✑ ${prefix}ᴋᴏᴛᴏʀɪ
+│✑ ${prefix}ᴋᴜsᴏɴɪᴍᴇ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}ʟᴏʟɪ
+│✑ ${prefix}ᴍᴀɴɢᴀ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}ᴍᴇɢᴜᴍɪɴ
+│✑ ${prefix}ɴᴇᴋᴏ
+│✑ ${prefix}ɴᴇᴋᴏᴘᴏɪ [ᴜᴘᴅᴀᴛᴇ]
+│✑ ${prefix}ɴᴇᴢᴜᴋᴏ
+│✑ ${prefix}ɴʜᴇɴᴛᴀɪ [ᴋᴏᴅᴇ]
+│✑ ${prefix}ɴʜᴇɴᴛᴀɪᴘᴅғ [ᴋᴏᴅᴇ]
+│✑ ${prefix}ɴʜᴇɴᴛᴀɪsᴇᴀʀᴄʜ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}ᴏᴛᴀᴋᴜᴅᴇsᴜ [ᴊᴜᴅᴜʟ]
+│✑ ${prefix}ᴘᴘᴄᴏᴜᴘʟᴇ
+│✑ ${prefix}ǫᴜᴏᴛᴇsᴀɴɪᴍᴇ
+│✑ ${prefix}sᴀɢɪʀɪ
+│✑ ${prefix}sᴄᴀɴɪᴍᴇ [ғᴏᴛᴏ]
+│✑ ${prefix}sʜɪɴᴀ
+│✑ ${prefix}sʜɪɴᴋᴀ
+│✑ ${prefix}sʜɪɴᴏᴍɪʏᴀ
+│✑ ${prefix}ᴛᴇᴊɪɴᴀ
+│✑ ${prefix}ᴡᴀɪғᴜ [ᴛᴇxᴛ]
+│✑ ${prefix}ᴡᴀʟʟᴘᴀᴘᴇʀ
+│✑ ${prefix}ʏᴏᴛsᴜʙᴀ
+│
+│✑✑✑❀ ᴍᴇɴᴜ ʟᴀɪɴɴʏᴀ ❀
+│
+│✑ ${prefix}ᴄʜᴀɴɢᴇʟᴏɢ
+│✑ ${prefix}ᴄᴏᴠɪᴅ
+│✑ ${prefix}ғʟɪᴘᴛᴇxᴛ [ᴛᴇxᴛ]
+│✑ ${prefix}ɢᴏᴏɢʟᴇ [ᴛᴇxᴛ]
+│✑ ${prefix}ɢɪᴍᴀɢᴇ [ᴛᴇxᴛ]
+│✑ ${prefix}ɢᴇᴍᴘᴀ
+│✑ ${prefix}ʀᴇᴘᴏʀᴛ [ᴛᴇxᴛ]
+│✑ ${prefix}ᴛʀᴀɴsʟᴀᴛᴇ
+│✑ ${prefix}ᴛᴏʟᴇᴛᴛᴇʀ [ᴛᴇxᴛ]
+│✑ ${prefix}ᴡɪᴋɪ [ᴛᴇxᴛ]
+│
+│✑✑✑❀ ʜᴇɴᴛᴀɪ ᴍᴇɴᴜ❀
+│   
+│✑ ${prefix}ʜᴇɴᴛᴀɪᴍᴇɴᴜ
+│✑ ${prefix}ʜᴇɴᴛᴀɪᴍᴇɴᴜᴠ𝟸
+│
+│✑ ᴊᴀɴɢᴀɴ ᴅɪsᴘᴀᴍ ʏᴀ ᴏɴɪɪᴄʜᴀɴ!
+│  
+│        『  *${global.BotName}*  』
+│✑ ʀᴇᴄᴏᴅᴇ : ʀɪ
+│✑ ᴅᴇᴠᴇʟᴏᴘᴇʀ ʙᴏᴛ : Xeon
+╰────────────────⊱
+`
+ XeonBotInc.sendMessage(m.chat, { caption: text},{quoted: m})
                         }
                    
             break
