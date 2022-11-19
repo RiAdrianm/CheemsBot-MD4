@@ -491,14 +491,14 @@ jumlahharian = `${dataa.value}`
 }
         
 	//auto set bio\\
-	if (db.data.settings[botNumber].autobio) {
+	/*if (db.data.settings[botNumber].autobio) {
 	    let setting = global.db.data.settings[botNumber]
 	    if (new Date() * 1 - setting.status > 1000) {
 		let uptime = await runtime(process.uptime())
 		await XeonBotInc.setStatus(`${XeonBotInc.user.name} | Runtime : ${runtime(uptime)}`)
 		setting.status = new Date() * 1
 	    }
-	}
+	}*/
 	
 	//antispam or auto react
 //if (m.message && msgFilter.isFiltered(from)) {
