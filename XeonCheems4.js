@@ -510,16 +510,16 @@ if (autoreadsw) {
 		XeonBotInc.chatRead(from)
 	}
 	}
-//autoreader gc and pm
+/*//autoreader gc and pm
 if (global.autoreadpmngc) {
 if (command) {
 await XeonBotInc.sendPresenceUpdate('composing', m.chat)
 XeonBotInc.sendReadReceipt(from, m.sender, [m.key.id])}
 }
   //autoread gc only
-  if (global.autoReadGc) {
+ if (global.autoReadGc) {
   if (m.isGroup) { XeonBotInc.sendReadReceipt(m.chat, m.sender, [m.key.id]) }
-}
+}*/
   //auto recording all
     if (global.autoRecord) { if (m.chat) { XeonBotInc.sendPresenceUpdate('recording', m.chat) }
 }
@@ -10811,7 +10811,7 @@ break
                     }
                     return !0
                 }
-			//anti-tag
+/*			//anti-tag
 const listTag = [`${global.ownertag}@s.whatsapp.net`]
 const partiNum = (m.mtype === 'extendedTextMessage') ? m.message.extendedTextMessage.contextInfo.participant : ''
 //anti-tag 2
@@ -10831,7 +10831,7 @@ if (m.key.fromMe) return
 sendNye = fs.readFileSync('./XeonMedia/theme/yourtag.webp')
 XeonBotInc.sendReadReceipt(m.chat, m.sender, [m.key.id])
 XeonBotInc.sendMessage(from, {sticker:sendNye, contextInfo:{forwardingScore: 800, isForwarded: true}}, {quoted:m})
-}
+}*/
 		if (isCmd && budy.toLowerCase() != undefined) {
 		    if (m.chat.endsWith('broadcast')) return
 		    if (m.isBaileys) return
