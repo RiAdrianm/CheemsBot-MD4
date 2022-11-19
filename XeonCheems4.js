@@ -336,7 +336,7 @@ orderMessage: {
 itemCount : 1,
 status: 1,
 surface : 1,
-message: `${global.Ownername}`, //
+message: `${global.OwnerName}`, //
 orderTitle: `${global.BotName}`,
 thumbnail: log0, //Pic
 sellerJid: '0@s.whatsapp.net'
@@ -378,7 +378,7 @@ participant: `0@s.whatsapp.net`, ...(from ?
 message: { 
 "videoMessage": { 
 "title": `${global.BotName}`,
-"h": `${global.Ownername}`,
+"h": `${global.OwnerName}`,
 'seconds': '30', 
 'caption': `${global.watermark}`,
 'jpegThumbnail': log0
@@ -395,7 +395,7 @@ const fgclink = {
 "message": {
 "groupInviteMessage": {
 "groupJid": "916909137213-1616169743@g.us",
-"inviteCode": `${global.Ownername}`,
+"inviteCode": `${global.OwnerName}`,
 "groupName": `${global.BotName}`, 
 "caption":`${global.watermark}`, 
 'jpegThumbnail': log0
@@ -412,7 +412,7 @@ participant: `0@s.whatsapp.net`, ...(from ?
 message: { 
  "videoMessage": { 
  "title":`${global.BotName}`,
- "h": `${global.Ownername}`,
+ "h": `${global.OwnerName}`,
  'seconds': "30", 
  'gifPlayback': 'true', 
  'caption': `${global.watermark}`,
@@ -429,7 +429,7 @@ participant: `0@s.whatsapp.net`, ...(from ?
 },
 message: { 
 "extendedTextMessage": {
- "text":`${global.Ownername}`,
+ "text":`${global.OwnerName}`,
 "title": `${global.BotName}`,
  'jpegThumbnail': log0
 }
@@ -453,11 +453,11 @@ message: {
 	
 	//group target \\
 const reply = (teks) => {
-           XeonBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${global.BotName}`,"body": `${ownername}`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./XeonMedia/theme/cheemspic.jpg`),"sourceUrl": `${linkz}`}}}, { quoted: m})
+           XeonBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${global.BotName}`,"body": `${OwnerName}`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./XeonMedia/theme/cheemspic.jpg`),"sourceUrl": `${linkz}`}}}, { quoted: m})
         }
         
         const replay = (teks) => {
-            XeonBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${global.BotName}`,"body": `${ownername}`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./XeonMedia/theme/cheemspic.jpg`),"sourceUrl": `${linkz}`}}}, { quoted: m})
+            XeonBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${global.BotName}`,"body": `${OwnerName}`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./XeonMedia/theme/cheemspic.jpg`),"sourceUrl": `${linkz}`}}}, { quoted: m})
         }
 	
         //Public & Self\\
@@ -1084,7 +1084,7 @@ const latensie = speed() - timestampe
 │𝗦𝗽𝗲𝗲𝗱 : ${latensie.toFixed(4)} miliseconds
 │𝗥𝘂𝗻𝘁𝗶𝗺𝗲 : ${runtime(process.uptime())}
 │𝗕𝗼𝘁 𝗡𝗮𝗺𝗲 : ${global.BotName}
-│𝗢𝘄𝗻𝗲𝗿 𝗡𝗮𝗺𝗲 : ${global.Ownername}
+│𝗢𝘄𝗻𝗲𝗿 𝗡𝗮𝗺𝗲 : ${global.OwnerName}
 │𝗢𝘄𝗻𝗲𝗿 𝗡𝗼. : ${global.Owner}
 │𝗛𝗼𝘀𝘁 𝗡𝗮𝗺𝗲 : ${os.hostname()}
 │𝗣𝗹𝗮𝘁𝗳𝗼𝗿𝗺 : ${os.platform()}
