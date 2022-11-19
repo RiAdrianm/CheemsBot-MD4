@@ -8776,7 +8776,7 @@ if (isBanChat) return reply(mess.banChat)
 const text =  `
 ╭─❲ ❀ ᴍɪᴜɴᴀ sʜɪᴏᴅᴏᴍᴇ ❀ ❳
 │
-│彡 ${ucapanWaktu} ᴋᴀᴋ *${pushname}.* 彡
+│彡 Hai ᴋᴀᴋ *${pushname}.* 彡
 │
 │✑ɴᴀᴍᴀ ʙᴏᴛ : ᴍɪᴜɴᴀ sʜɪᴏᴅᴏᴍᴇ
 │✑sᴘᴇᴇᴅ  : ${latensie.toFixed(4)} ᴍɪʟɪᴅᴇᴛɪᴋ
