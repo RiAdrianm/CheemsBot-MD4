@@ -54,6 +54,7 @@
     "anime-wallpaper": "^1.0.2",
     "node-fetch": "^2.6.1",
     "node-webpmux": "^3.1.0",
+    "node-youtube-music": "^0.7.0",
     "os": "^0.1.2",
     "hxz-api": "^1.0.1",
     "minecraft-query": "^1.0.13",
