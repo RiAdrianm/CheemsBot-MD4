@@ -251,17 +251,18 @@ autoreadsw = true
           try {
             let isNumber = x => typeof x === 'number' && !isNaN(x)
             let limitUser = isPremium ? global.limitawal.premium : global.limitawal.free
-            let user = global.db.users[m.sender]
-if (typeof user !== 'object') global.db.users[m.sender] = {}
-if (user) {
-if (!isNumber(user.afkTime)) user.afkTime = -1
-if (!('afkReason' in user)) user.afkReason = ''
-if (!isNumber(user.limit)) user.limit = limitUser
-} else global.db.users[m.sender] = {
-afkTime: -1,
-afkReason: '',
-limit: limitUser,
-}    
+            let user = global.db.data.users[m.sender]
+            if (typeof user !== 'object') global.db.data.users[m.sender] = {}
+            if (user) {
+                if (!isNumber(user.afkTime)) user.afkTime = -1
+                if (!('afkReason' in user)) user.afkReason = ''
+                if (!isNumber(user.limit)) user.limit = limitUser
+            } else global.db.data.users[m.sender] = {
+                afkTime: -1,
+                afkReason: '',
+                limit: limitUser,
+            }
+    
             let chats = global.db.data.chats[m.chat]
             if (typeof chats !== 'object') global.db.data.chats[m.chat] = {}
             if (chats) {
@@ -491,14 +492,14 @@ jumlahharian = `${dataa.value}`
 }
         
 	//auto set bio\\
-	/*if (db.data.settings[botNumber].autobio) {
+	if (db.data.settings[botNumber].autobio) {
 	    let setting = global.db.data.settings[botNumber]
 	    if (new Date() * 1 - setting.status > 1000) {
 		let uptime = await runtime(process.uptime())
 		await XeonBotInc.setStatus(`${XeonBotInc.user.name} | Runtime : ${runtime(uptime)}`)
 		setting.status = new Date() * 1
 	    }
-	}*/
+	}
 	
 	//antispam or auto react
 //if (m.message && msgFilter.isFiltered(from)) {
@@ -1038,29 +1039,30 @@ Click https://wa.me/${botNumber.split`@`[0]}`, m, { mentions: [roof.p, roof.p2] 
 	    delete this.suit[roof.id]
 	    }
 	    }
+	    
 	    let mentionUser = [...new Set([...(m.mentionedJid || []), ...(m.quoted ? [m.quoted.sender] : [])])]
-for (let jid of mentionUser) {
-let user = global.db.users[jid]
-if (!user) continue
-let afkTime = user.afkTime
-if (!afkTime || afkTime < 0) continue
-let reason = user.afkReason || ''
-reply(`
-Tolong jangan tag Beliau!
-Beliau lagi AFK ${reason ? 'Dengan alasan ' + reason : 'no reason'}
-Selama ${clockString(new Date - afkTime)}
+	    for (let jid of mentionUser) {
+            let user = global.db.data.users[jid]
+            if (!user) continue
+            let afkTime = user.afkTime
+            if (!afkTime || afkTime < 0) continue
+            let reason = user.afkReason || ''
+            reply(`
+Don't tag him!
+He's in AFK/Offline ${reason ? 'dengan alasan ' + reason : 'no reason'}
+It's been ${clockString(new Date - afkTime)}
 `.trim())
-}
+        }
 
-if (db.users[m.sender].afkTime > -1) {
-let user = global.db.users[m.sender]
-reply(`
-Beliau telah online ${user.afkReason ? ' Setelah ' + user.afkReason : ''}
-Selama ${clockString(new Date - user.afkTime)}
+        if (db.data.users[m.sender].afkTime > -1) {
+            let user = global.db.data.users[m.sender]
+            reply(`
+You Came Back Online From AFK${user.afkReason ? ' after ' + user.afkReason : ''}
+In ${clockString(new Date - user.afkTime)}
 `.trim())
-user.afkTime = -1
-user.afkReason = ''
-}
+            user.afkTime = -1
+            user.afkReason = ''
+        }
         
        //react function
 const reactionMessage = {
@@ -1910,14 +1912,14 @@ break
  break
 
  case 'afk': {
-    if (isBan) return reply(mess.banned)	 			
- if (isBanChat) return reply(mess.bangc)
- let user = global.db.users[m.sender]
- user.afkTime = + new Date
- user.afkReason = args.join(" ")
- replay(`${m.pushName} Sekarang lagi afk.\nAlasan AFK : ${args.join(" ") ? args.join(" ") : ''}`)
- }
- break
+		if (isBan) return reply(mess.ban)	 			
+if (isBanChat) return reply(mess.banChat)
+                let user = global.db.data.users[m.sender]
+                user.afkTime = + new Date
+                user.afkReason = text
+                reply(`${m.pushName} Sedang Afk dengan alasan : ${text ? ': ' + text : ''}`)
+            }
+            break	
 
 
  case 'fliptext': {
