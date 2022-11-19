@@ -39,6 +39,14 @@ global.socialm = "GitHub: DGXeon" //ur github or insta name
 global.location = "India, Mizoram, Aizawl" //ur location
 
 //bot bomdy 
+global.Mod = [
+'6285932268910','6285161888973',
+'6287732807549','6282131598537',
+'6282187335678','62895340056411',
+'6285326909912','6285216108886',
+'62895421407219','6289694074626',
+'6285700291728','6281292544870',
+'6285156638320']
 global.owner = ['6285161888973']
 global.ownertag = '6285161888973' //ur tag number
 global.botname = 'Miuna V69' //ur bot name
@@ -49,7 +57,7 @@ global.reactmoji = "🤝" //ur menu react emoji
 global.themeemoji = "👌" //ur theme emoji
 global.packname = "Cheems Bot Stickers\n\n\n\n\n\n\n\n\n\n\n🦄🦄🦄 " //ur sticker watermark packname
 global.author = "🦄Dream Guy Xeon" //ur sticker watermark author
-
+global.lolhuman = "MuhammadRioAdrianMaulana872000"
 //Bot theme media
 global.thum = fs.readFileSync("./XeonMedia/theme/cheemspic.jpg") //ur thumb pic
 global.log0 = fs.readFileSync("./XeonMedia/theme/cheemspic.jpg") //ur logo pic
