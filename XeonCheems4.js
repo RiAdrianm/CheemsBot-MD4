@@ -1146,9 +1146,7 @@ case 'cwexcwe':
 case 'hcosplay': {
 if (isBan) return reply(mess.banned)	 
 if (isBanChat) return reply(mess.bangc)
-if (!m.isGroup) return replay(mess.grouponly)
-if (!AntiNsfw) return reply(mess.nonsfw)
-reply(mess.wait)
+m.reply(mess.wait)
  ri = await fetchJson(`https://raw.githubusercontent.com/RiAdrianm/bakekok/main/No%20Hentai%20No%20Life/${command}.json`)
  let asu = pickRandom(ri.result.image)
  let buttonkontol = [
