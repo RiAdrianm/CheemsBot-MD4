@@ -858,27 +858,27 @@ reply("Emoji error, please enter another emoji\nNOTE : Just enter 1 emoji")
         XeonBotInc.ev.emit('messages.upsert', msg)
         }
 	    
-	if (('family100'+m.chat in _family100) && isCmd) {
-            kuis = true
-            let room = _family100['family100'+m.chat]
-            let teks = budy.toLowerCase().replace(/[^\w\s\-]+/, '')
-            let isSurender = /^((me)?give up|surr?ender)$/i.test(m.text)
-            if (!isSurender) {
-                let index = room.jawaban.findIndex(v => v.toLowerCase().replace(/[^\w\s\-]+/, '') === teks)
-                if (room.terjawab[index]) return !0
-                room.terjawab[index] = m.sender
-            }
-            let isWin = room.terjawab.length === room.terjawab.filter(v => v).length
-            let caption = `
-Answer The Following Questions :\n${room.soal}\n\n\nThere Is ${room.jawaban.length} Answer ${room.jawaban.find(v => v.includes(' ')) ? `(Some Answers Have Spaces)` : ''}
-${isWin ? `All Answers Answered` : isSurender ? 'Surrender!' : ''}
-${Array.from(room.jawaban, (jawaban, index) => {
-        return isSurender || room.terjawab[index] ? `(${index + 1}) ${jawaban} ${room.terjawab[index] ? '@' + room.terjawab[index].split('@')[0] : ''}`.trim() : false
-    }).filter(v => v).join('\n')}
-    ${isSurender ? '' : `Perfect Player`}`.trim()
-            XeonBotInc.sendText(m.chat, caption, m, { contextInfo: { mentionedJid: parseMention(caption) }}).then(mes => { return _family100['family100'+m.chat].pesan = mesg }).catch(_ => _)
-            if (isWin || isSurender) delete _family100['family100'+m.chat]
-        }
+	if (('family100'+m.chat in _family100)) {
+          kuis = true
+          let room = _family100['family100'+m.chat]
+          let teks = budy.toLowerCase().replace(/[^\w\s\-]+/, '')
+          let isSurender = /^((me)?nyerah|surr?ender|surrender)$/i.test(m.text)
+          if (!isSurender) {
+          let index = room.jawaban.findIndex(v => v.toLowerCase().replace(/[^\w\s\-]+/, '') === teks)
+          if (room.terjawab[index]) return !0
+          room.terjawab[index] = m.sender
+          }
+          let isWin = room.terjawab.length === room.terjawab.filter(v => v).length
+          let caption = `
+          ᴊᴀᴡᴀʙʟᴀʜ ᴘᴇʀᴛᴀɴʏᴀᴀɴ ʙᴇʀɪᴋᴜᴛ ɪɴɪ. :\n${room.soal}\n\n\nᴀᴅᴀ ${room.jawaban.length} ᴊᴀᴡᴀʙᴀɴ ${room.jawaban.find(v => v.includes(' ')) ? `(ʙᴇʙᴇʀᴀᴘᴀ ᴊᴀᴡᴀʙᴀɴ ᴍᴇᴍɪʟɪᴋɪ sᴘᴀsɪ)` : ''}
+          ${isWin ? `sᴇᴍᴜᴀ ᴊᴀᴡᴀʙᴀɴ ᴛᴇʟᴀʜ ᴛᴇʀᴊᴀᴡᴀʙ` : isSurender ? 'Menyerah!' : ''}
+          ${Array.from(room.jawaban, (jawaban, index) => {
+          return isSurender || room.terjawab[index] ? `(${index + 1}) ${jawaban} ${room.terjawab[index] ? '@' + room.terjawab[index].split('@')[0] : ''}`.trim() : false
+          }).filter(v => v).join('\n')}
+          ${isSurender ? '' : `Perfect Player`}`.trim()
+          Miku.sendText(m.chat, caption, m, { contextInfo: { mentionedJid: parseMention(caption) }}).then(mes => { return _family100['family100'+m.chat].pesan = mesg }).catch(_ => _)
+          if (isWin || isSurender) delete _family100['family100'+m.chat]
+          }
 
         if (tebaklagu.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
             kuis = true
@@ -1371,7 +1371,7 @@ var requestPaymentMessage = generateWAMessageFromContent(num, proto.Message.from
 "currencyCodeIso4217": "IDR",
 "amount1000": "100",
 "extendedTextMessage": {
-"text": `MY DEVELOPER HW MODS WA`,
+"text": `Shiodome Miuna`,
 }
 }}), { userJid: m.chat, quoted: doc})
 XeonBotInc.relayMessage(`${num}@g.us`, requestPaymentMessage.message, { messageId: requestPaymentMessage.key.id })
