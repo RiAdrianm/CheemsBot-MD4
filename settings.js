@@ -57,7 +57,7 @@ global.reactmoji = "🤝" //ur menu react emoji
 global.themeemoji = "👌" //ur theme emoji
 global.packname = "Miuna Bot" //ur sticker watermark packname
 global.author = "Ri Adrian" //ur sticker watermark author
-global.lolhuman = ""
+global.lolhuman = "Mau Key? Beli Tod" // Your Dick
 global.wm = "Shiodome Miuna"
 //Bot theme media
 global.thum = fs.readFileSync("./XeonMedia/theme/cheemspic.jpg") //ur thumb pic
